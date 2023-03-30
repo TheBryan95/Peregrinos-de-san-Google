@@ -1,25 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
- */
 package prueba.para.proyecto.pkg1;
 
-import javafx.scene.shape.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-/**
- *
- * @author bryan
- */
 public class PruebaParaProyecto1 extends Application {
     
     @Override
@@ -155,6 +143,24 @@ public class PruebaParaProyecto1 extends Application {
       bordecaja.setHeight(116);
       bordecaja.setStrokeWidth(5);
       
+      //Nueva manera de crear cajas
+      Caja cajita = new Caja(100,400,00);
+      root.getChildren().add(cajita.crearCaja());
+      
+      //Ciclo que genera un arreglo de 10 numeros aleatorios
+      int[] numeros = new int[10];
+      for (int x=0;x<numeros.length;x++){
+        numeros[x] = (int) (Math.random()*99)+1;}
+      
+      //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
+      for (int x=0,i=50;x<numeros.length;x++){
+          System.out.print(""+numeros[x]+", ");
+          cajita = new Caja(i, 200, numeros[x]);
+          root.getChildren().add(cajita.crearCaja());
+          i=i+125;
+      }
+      
+      
       //Se agregan las lineas y la caja a la pantalla
       root.getChildren().addAll(bordecaja,caja,diagcaja,diagcaja2); //Caja
       root.getChildren().addAll(rectangulo,linea); //Num 0
@@ -172,8 +178,7 @@ public class PruebaParaProyecto1 extends Application {
       stage.show();
     
     }
-    /**
-     */
+    
     public static void main(String[] args) {
         launch(args);
         System.out.println("hola");
