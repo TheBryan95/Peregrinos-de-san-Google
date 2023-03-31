@@ -153,12 +153,13 @@ public class PruebaParaProyecto1 extends Application {
         numeros[x] = (int) (Math.random()*99)+1;}
       
       //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
-      for (int x=0,i=50;x<numeros.length;x++){
+      
+      /*for (int x=0,i=50;x<numeros.length;x++){
           System.out.print(""+numeros[x]+", ");
           cajita = new Caja(i, 200, numeros[x]);
           root.getChildren().add(cajita.crearCaja());
           i=i+125;
-      }
+      }*/
       
       
       //Se agregan las lineas y la caja a la pantalla
