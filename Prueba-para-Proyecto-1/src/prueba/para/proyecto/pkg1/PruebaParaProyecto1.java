@@ -144,7 +144,7 @@ public class PruebaParaProyecto1 extends Application {
       bordecaja.setStrokeWidth(5);
       
       //Nueva manera de crear cajas
-      Caja cajita = new Caja(100,400,01);
+      Caja cajita = new Caja(100,400,06);
       root.getChildren().add(cajita.crearCaja());
       
       //Ciclo que genera un arreglo de 10 numeros aleatorios

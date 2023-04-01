@@ -57,6 +57,27 @@ public class Caja {
                 Group uno=Dibujar1(xinicial, yinicial);
                 return uno;
             }
+            case 2 -> {
+                Group dos = Dibujar2( xinicial, yinicial);
+                return dos;
+            }
+            case 3 -> {
+                Group tres =Dibujar3( xinicial, yinicial);
+                return tres;
+            }
+            case 4 -> {
+                Group cuatro =Dibujar4( xinicial, yinicial);
+                return cuatro;
+            }
+            case 5 -> {
+                Group cinco =Dibujar5( xinicial, yinicial);
+                return cinco;
+            }
+            case 6 -> {
+                Group seis =Dibujar6( xinicial, yinicial);
+                return seis;
+            }
+            
             default -> throw new AssertionError();
         }
     }
@@ -81,6 +102,80 @@ public class Caja {
         vertical1.setStrokeWidth(7);
         uno.getChildren().addAll(vertical1,diagonal1);
         return uno;
+    }
+    
+    public Group Dibujar2(int xinicial,int yinicial){
+        Group dos = new Group();
+        Line linea1_2 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_2.setStrokeWidth(7);
+        Line linea2_2 = new Line(xinicial+15,yinicial,xinicial+15,yinicial+25);
+        linea2_2.setStrokeWidth(7);
+        Line linea3_2 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea3_2.setStrokeWidth(7);
+        Line linea4_2 = new Line(xinicial,yinicial+25,xinicial,yinicial+50);
+        linea4_2.setStrokeWidth(7);
+        Line linea5_2 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea5_2.setStrokeWidth(7);
+        dos.getChildren().addAll(linea1_2, linea2_2, linea3_2, linea4_2, linea5_2);
+        return dos;
+    }   
+
+    public Group Dibujar3(int xinicial,int yinicial){
+        Group tres = new Group();
+        Line linea1_3 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_3.setStrokeWidth(7);
+        Line linea2_3 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea2_3.setStrokeWidth(7);
+        Line linea3_3 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea3_3.setStrokeWidth(7);
+        Line lineaVertical_3 = new Line(xinicial+15,yinicial,xinicial+15,yinicial+50);
+        lineaVertical_3.setStrokeWidth(7);
+        tres.getChildren().addAll(linea1_3, linea2_3, linea3_3, lineaVertical_3);
+        return tres;
+    }
+
+    public Group Dibujar4(int xinicial,int yinicial){
+        Group cuatro = new Group();
+        Line linea1_4 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea1_4.setStrokeWidth(7);
+        Line linea2_4 = new Line(xinicial,yinicial+25,xinicial,yinicial);
+        linea2_4.setStrokeWidth(7);
+        Line lineaVertical_4 = new Line(xinicial+15,yinicial,xinicial+15,yinicial+50);
+        lineaVertical_4.setStrokeWidth(7);
+        cuatro.getChildren().addAll(linea1_4,linea2_4, lineaVertical_4);
+        return cuatro;
+    }
+
+    public Group Dibujar5(int xinicial,int yinicial){
+        Group cinco = new Group();
+        Line linea1_5 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_5.setStrokeWidth(7);
+        Line linea2_5 = new Line(xinicial,yinicial,xinicial,yinicial+25);
+        linea2_5.setStrokeWidth(7);
+        Line linea3_5 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea3_5.setStrokeWidth(7);
+        Line linea4_5 = new Line(xinicial+15,yinicial+25,xinicial+15,yinicial+50);
+        linea4_5.setStrokeWidth(7);
+        Line linea5_5 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea5_5.setStrokeWidth(7);
+        cinco.getChildren().addAll(linea1_5, linea2_5, linea3_5, linea4_5, linea5_5);
+        return cinco;
+    }
+
+    public Group Dibujar6(int xinicial,int yinicial){
+        Group seis = new Group();
+        Line linea1_6 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_6.setStrokeWidth(7);
+        Line linea2_6= new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea2_6.setStrokeWidth(7);
+        Line linea3_6 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea3_6.setStrokeWidth(7);
+        Line linea4_6 = new Line(xinicial+15,yinicial+25,xinicial+15,yinicial+50);
+        linea4_6.setStrokeWidth(7);
+        Line lineaVertical_6 = new Line(xinicial,yinicial,xinicial,yinicial+50);
+        lineaVertical_6.setStrokeWidth(7);
+        seis.getChildren().addAll(linea1_6,linea2_6,linea3_6,linea4_6,lineaVertical_6);
+        return seis;
     }
     
     public int getXinicial() {
