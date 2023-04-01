@@ -53,6 +53,10 @@ public class Caja {
                 Group cero=Dibujar0( xinicial, yinicial);
                 return cero;
             }
+            case 1 ->{
+                Group uno=Dibujar1(xinicial, yinicial);
+                return uno;
+            }
             default -> throw new AssertionError();
         }
     }
@@ -67,6 +71,16 @@ public class Caja {
         linea.setStrokeWidth(7);
         cero.getChildren().addAll(rectangulo,linea);
         return cero;
+    }
+    public Group Dibujar1(int xinicial,int yinicial){
+        Group uno = new Group();
+        xinicial+=5;  
+        Line diagonal1 = new Line(xinicial-10, yinicial+15, xinicial-1, yinicial);
+        diagonal1.setStrokeWidth(7);
+        Line vertical1 = new Line(xinicial, yinicial, xinicial, yinicial+50);
+        vertical1.setStrokeWidth(7);
+        uno.getChildren().addAll(vertical1,diagonal1);
+        return uno;
     }
     
     public int getXinicial() {
