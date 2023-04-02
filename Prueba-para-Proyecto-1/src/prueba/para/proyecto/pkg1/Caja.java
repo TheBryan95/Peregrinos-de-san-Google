@@ -1,9 +1,11 @@
 package prueba.para.proyecto.pkg1;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class Caja {
     int xinicial,yinicial,numcaja;
@@ -47,6 +49,32 @@ public class Caja {
         return caja;
     }
     
+    public void moverCaja(int x,int y){
+    /*Translate translate = new Translate();
+    fondo.getTransforms().addAll(translate);
+    borde.getTransforms().addAll(translate);*/
+    TranslateTransition tt = new TranslateTransition(Duration.millis(2000),borde);
+    tt.setByX(x);
+    tt.setByY(y);
+    tt.setAutoReverse(true);
+    tt.play();
+    TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000),fondo);
+    tt2.setByX(x);
+    tt2.setByY(y);
+    tt2.setAutoReverse(true);
+    tt2.play();
+    TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000),dig1);
+    tt3.setByX(x);
+    tt3.setByY(y);
+    tt3.setAutoReverse(true);
+    tt3.play();
+    TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000),dig2);
+    tt4.setByX(x);
+    tt4.setByY(y);
+    tt4.setAutoReverse(true);
+    tt4.play();
+    }
+    
     public Group elegirNumDibujar(int xinicial,int yinicial,int digito){
         switch (digito) {
             case 0 -> {
@@ -76,6 +104,18 @@ public class Caja {
             case 6 -> {
                 Group seis =Dibujar6( xinicial, yinicial);
                 return seis;
+            }
+            case 7 -> {
+                Group siete =Dibujar7( xinicial, yinicial);
+                return siete;
+            }
+            case 8 -> {
+                Group ocho =Dibujar8( xinicial, yinicial);
+                return ocho;
+            }
+            case 9 -> {
+                Group nueve =Dibujar9( xinicial, yinicial);
+                return nueve;
             }
             
             default -> throw new AssertionError();
@@ -176,6 +216,50 @@ public class Caja {
         lineaVertical_6.setStrokeWidth(7);
         seis.getChildren().addAll(linea1_6,linea2_6,linea3_6,linea4_6,lineaVertical_6);
         return seis;
+    }
+    
+    public Group Dibujar7 (int xinicial, int yinicial){
+        Group siete = new Group();
+        Line linea1_7 = new Line(xinicial,yinicial,xinicial+20,yinicial);
+        linea1_7.setStrokeWidth(7);
+        Line linea2_7 = new Line(xinicial+10,yinicial+25,xinicial+20,yinicial+25);
+        linea2_7.setStrokeWidth(7);
+        Line lineaVertical_7 = new Line(xinicial+20,yinicial,xinicial,yinicial+50);
+        lineaVertical_7.setStrokeWidth(7);
+        siete.getChildren().addAll(linea1_7,lineaVertical_7);
+        return siete;
+    }
+    
+    public Group Dibujar8(int xinicial,int yinicial){
+        Group ocho = new Group();
+        Line linea1_8 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_8.setStrokeWidth(7);
+        Line linea2_8 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea2_8.setStrokeWidth(7);
+        Line linea3_8 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea3_8.setStrokeWidth(7);
+        Line lineaVertical_8 = new Line(xinicial,yinicial,xinicial,yinicial+50);
+        lineaVertical_8.setStrokeWidth(7);
+        Line lineaVertical2_8 = new Line(xinicial+15,yinicial,xinicial+15,yinicial+50);
+        lineaVertical2_8.setStrokeWidth(7);
+        ocho.getChildren().addAll(linea1_8,linea2_8,linea3_8,lineaVertical_8,lineaVertical2_8);
+        return ocho;
+    }
+
+    public Group Dibujar9(int xinicial,int yinicial){
+        Group nueve= new Group();
+        Line linea1_9 = new Line(xinicial,yinicial,xinicial+15,yinicial);
+        linea1_9.setStrokeWidth(7);
+        Line linea2_9 = new Line(xinicial,yinicial+25,xinicial+15,yinicial+25);
+        linea2_9.setStrokeWidth(7);
+        Line linea3_9 = new Line(xinicial,yinicial+50,xinicial+15,yinicial+50);
+        linea3_9.setStrokeWidth(7);
+        Line lineaVertical_9 = new Line(xinicial,yinicial,xinicial,yinicial+25);
+        lineaVertical_9.setStrokeWidth(7);
+        Line lineaVertical2_9 = new Line(xinicial+15,yinicial,xinicial+15,yinicial+50);
+        lineaVertical2_9.setStrokeWidth(7);
+        nueve.getChildren().addAll(linea1_9,linea2_9,linea3_9,lineaVertical_9,lineaVertical2_9);
+        return nueve;
     }
     
     public int getXinicial() {
