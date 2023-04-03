@@ -41,10 +41,9 @@ public class Caja {
         
         int digito1=numcaja/10;
         int digito2=numcaja%10;
-        Group dig1=elegirNumDibujar( xinicial+25, yinicial+25, digito1);
-        Group dig2=elegirNumDibujar( xinicial+65, yinicial+25, digito2);
-        this.dig1= dig1;
-        this.dig2= dig2;
+        this.dig1=elegirNumDibujar( xinicial+25, yinicial+25, digito1);
+        this.dig2=elegirNumDibujar( xinicial+65, yinicial+25, digito2);
+        
         caja.getChildren().addAll(borde,fondo,dig1,dig2);
 
         return caja;
@@ -59,22 +58,18 @@ public class Caja {
         st.setToY(tamano);
         st.play();
         
-        
         ScaleTransition st2 = new ScaleTransition(Duration.seconds(2),fondo);
-        
         st2.setToX(tamano);
         st2.setToY(tamano);
         st2.play();
         
         ScaleTransition st3 = new ScaleTransition(Duration.seconds(2),dig1);
-        
         st3.setToX(tamano);
         st3.setToY(tamano);
         st3.play();
         
         
         ScaleTransition st4 = new ScaleTransition(Duration.seconds(2),dig2);
-        
         st4.setToX(tamano);
         st4.setToY(tamano);
         st4.play();
@@ -85,22 +80,18 @@ public class Caja {
         TranslateTransition tt = new TranslateTransition(Duration.millis(2000),borde);
         tt.setByX(x);
         tt.setByY(y);
-        tt.setAutoReverse(true);
         tt.play();
         TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000),fondo);
         tt2.setByX(x);
         tt2.setByY(y);
-        tt2.setAutoReverse(true);
         tt2.play();
         TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000),dig1);
         tt3.setByX(x);
         tt3.setByY(y);
-        tt3.setAutoReverse(true);
         tt3.play();
         TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000),dig2);
         tt4.setByX(x);
         tt4.setByY(y);
-        tt4.setAutoReverse(true);
         tt4.play();
     }
     
