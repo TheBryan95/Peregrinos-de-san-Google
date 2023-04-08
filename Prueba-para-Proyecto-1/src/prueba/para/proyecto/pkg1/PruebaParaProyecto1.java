@@ -21,7 +21,7 @@ public class PruebaParaProyecto1 extends Application {
         text.setPromptText("Numero de Cajas");
         Button boton = new Button();
         boton.setLayoutX(480);
-        Slider slider = new Slider(0, 200, 100);
+        Slider slider = new Slider(20, 200, 100);
         slider.setLayoutX(50);
         Slider slider2 = new Slider(-200, 200, 0);
         slider2.setLayoutX(250);
@@ -41,7 +41,7 @@ public class PruebaParaProyecto1 extends Application {
         });
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
-        Group fondo = grua.dibujarGrua();
+        Group fondo = grua.dibujarGrua(scene);
         Group carro =grua.crearcarroGrua(110);
         Group carro2 =grua.crearSegundoCarroGrua(710);
         root.getChildren().addAll(fondo,carro,carro2);
@@ -108,8 +108,13 @@ public class PruebaParaProyecto1 extends Application {
             for (int j = 0; j < numeros.length; j++) {
                     Caja caja = (Caja) cajas.get(j);
                     Group cajit = (Group) cajas2.get(j);
+                    if (slider.getValue()<100) {
+                        caja.moverCaja(cajit, -slider.getValue()*j/2, 0);
+                    }
+                    else{
+                        caja.moverCaja(cajit, slider.getValue()*j/2, 0);
+                    }
                     
-                    caja.moverCaja(cajit, -slider.getValue()*j/2, 0);
                     
                     caja.tamanoCaja(cajit,slider.getValue());
                 }
