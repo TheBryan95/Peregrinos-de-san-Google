@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -13,7 +15,12 @@ public class PruebaParaProyecto1 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        //Se inician sliders y label que iran en pantalla
+        //Se inician sliders, label, boton y caja de texto que iran en pantalla
+        TextField text = new TextField();
+        text.setLayoutX(500);
+        text.setPromptText("Numero de Cajas");
+        Button boton = new Button();
+        boton.setLayoutX(480);
         Slider slider = new Slider(0, 200, 100);
         slider.setLayoutX(50);
         Slider slider2 = new Slider(-200, 200, 0);
@@ -22,8 +29,10 @@ public class PruebaParaProyecto1 extends Application {
         slider2.setShowTickLabels(true);
         Label l =new Label();
         l.setLayoutX(400);
+        Label l2 = new Label();
+        l2.setLayoutX(650);
         //Se inicia la pantalla 
-        Group root = new Group(slider,slider2,l);//Se le agregan los sliders y label a root
+        Group root = new Group(slider,slider2,l,l2,text,boton);//Se le agregan los elemenos a la pantalla
         Scene scene = new Scene(root,1300,600,Color.LIGHTSKYBLUE);
         Stage stage = new Stage();
         //Actualiza el label cuando se mueve el slider 2
@@ -41,41 +50,74 @@ public class PruebaParaProyecto1 extends Application {
         grua.moverCarro(carro2, -600);
         //Nueva manera de crear cajas
         Caja cajita1 = new Caja(100,185,06);
-        root.getChildren().add(cajita1.crearCaja());
+        Group caji = cajita1.crearCaja();
+        root.getChildren().add(caji);
         Caja cajita2 = new Caja(700,350,23);
-        root.getChildren().add(cajita2.crearCaja());
+        Group caji2 = cajita2.crearCaja();
+        root.getChildren().add(caji2);
         //Funcion mover caja
-        cajita1.moverCaja(600, 0);
-        
-        cajita2.moverCaja(-600, 0);
+        cajita1.moverCaja(caji,600, 0);
+        cajita2.moverCaja(caji2,-600, 0);
         //Funcion que mueve el carro de la grua con el slider
         
         
         //Ciclo que genera un arreglo de 10 numeros aleatorios
         int[] numeros = new int[9];
         ArrayList<Caja> cajas = new ArrayList();
+        ArrayList<Group> cajas2 = new ArrayList();
         for (int x=0;x<numeros.length;x++){
           numeros[x] = (int) (Math.random()*99)+1;}
 
         //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
-
+        
         for (int x=0,i=90;x<numeros.length;x++){
             System.out.print(""+numeros[x]+", ");
             Caja cajita = new Caja(i, 480, numeros[x]);
             cajas.add(cajita);
-            root.getChildren().add(cajita.crearCaja());
+            Group cajis = cajita.crearCaja();
+            cajas2.add(cajis);
+            
             i=i+125;
         }
+        root.getChildren().addAll(cajas2);//Se agrega todo el arreglo de cajas a la pantalla  para poder eliminarla con un boton
+        //boton que genera nuevo arreglo y elimina el anterior de la pantalla
+        boton.setOnAction((event) -> {
+            root.getChildren().removeAll(cajas2);
+            cajas.clear();
+            cajas2.clear();
+            int[] numeros2 = new int[Integer.parseInt(text.getText())];
+            for (int x=0;x<numeros2.length;x++){
+              numeros2[x] = (int) (Math.random()*99)+1;}
+
+            //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
+
+            for (int x=0,i=90;x<numeros2.length;x++){
+                System.out.print(""+numeros2[x]+", ");
+                Caja cajita = new Caja(i, 480, numeros2[x]);
+                cajas.add(cajita);
+                Group cajis = cajita.crearCaja();
+                cajas2.add(cajis);
+
+                i=i+125;
+            }
+            root.getChildren().addAll(cajas2);  
+        });
+        
         //Slider que cambia el tamaño de las cajas al moverlo
         slider.setOnMouseReleased(event -> {
             for (int j = 0; j < numeros.length; j++) {
                     Caja caja = (Caja) cajas.get(j);
-                    caja.tamanoCaja(slider.getValue());
+                    Group cajit = (Group) cajas2.get(j);
+                    
+                    caja.moverCaja(cajit, -slider.getValue()*j/2, 0);
+                    
+                    caja.tamanoCaja(cajit,slider.getValue());
                 }
         });
+        //Slider de prueba para probar movimiento de caja
         slider2.setOnMousePressed(event -> {
             grua.moverCarro(carro,(int) slider2.getValue());
-            cajita1.moverCaja(slider2.getValue(), 0);
+            cajita1.moverCaja(caji,slider2.getValue(), 0);
             
         });
         //Se inicia la pantalla

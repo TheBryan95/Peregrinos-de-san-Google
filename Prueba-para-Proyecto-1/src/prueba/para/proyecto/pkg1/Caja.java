@@ -50,49 +50,23 @@ public class Caja {
     }
     
     //Funcion que cambia el tamaño de una caja
-    public void tamanoCaja(double tamano){
+    public void tamanoCaja(Group caja,double tamano){
         
         tamano=tamano/100;
-        ScaleTransition st = new ScaleTransition(Duration.seconds(2),borde);
+        ScaleTransition st = new ScaleTransition(Duration.seconds(2),caja);
         st.setToX(tamano);
         st.setToY(tamano);
         st.play();
-        
-        ScaleTransition st2 = new ScaleTransition(Duration.seconds(2),fondo);
-        st2.setToX(tamano);
-        st2.setToY(tamano);
-        st2.play();
-        
-        ScaleTransition st3 = new ScaleTransition(Duration.seconds(2),dig1);
-        st3.setToX(tamano);
-        st3.setToY(tamano);
-        st3.play();
-        
-        
-        ScaleTransition st4 = new ScaleTransition(Duration.seconds(2),dig2);
-        st4.setToX(tamano);
-        st4.setToY(tamano);
-        st4.play();
+       
         
     }
     
-    public void moverCaja(double x,double y){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),borde);
+    public void moverCaja(Group caja,double x,double y){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),caja);
         tt.setByX(x);
         tt.setByY(y);
         tt.play();
-        TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000),fondo);
-        tt2.setByX(x);
-        tt2.setByY(y);
-        tt2.play();
-        TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000),dig1);
-        tt3.setByX(x);
-        tt3.setByY(y);
-        tt3.play();
-        TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000),dig2);
-        tt4.setByX(x);
-        tt4.setByY(y);
-        tt4.play();
+        
     }
     
     public Group elegirNumDibujar(int xinicial,int yinicial,int digito){
