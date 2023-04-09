@@ -1,5 +1,6 @@
 package prueba.para.proyecto.pkg1;
 
+import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -40,39 +41,32 @@ public class Caja {
         
         int digito1=numcaja/10;
         int digito2=numcaja%10;
-        Group dig1=elegirNumDibujar( xinicial+25, yinicial+25, digito1);
-        Group dig2=elegirNumDibujar( xinicial+65, yinicial+25, digito2);
-        this.dig1= dig1;
-        this.dig2= dig2;
+        this.dig1=elegirNumDibujar( xinicial+25, yinicial+25, digito1);
+        this.dig2=elegirNumDibujar( xinicial+65, yinicial+25, digito2);
+        
         caja.getChildren().addAll(borde,fondo,dig1,dig2);
 
         return caja;
     }
     
-    public void moverCaja(int x,int y){
-    /*Translate translate = new Translate();
-    fondo.getTransforms().addAll(translate);
-    borde.getTransforms().addAll(translate);*/
-    TranslateTransition tt = new TranslateTransition(Duration.millis(2000),borde);
-    tt.setByX(x);
-    tt.setByY(y);
-    tt.setAutoReverse(true);
-    tt.play();
-    TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000),fondo);
-    tt2.setByX(x);
-    tt2.setByY(y);
-    tt2.setAutoReverse(true);
-    tt2.play();
-    TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000),dig1);
-    tt3.setByX(x);
-    tt3.setByY(y);
-    tt3.setAutoReverse(true);
-    tt3.play();
-    TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000),dig2);
-    tt4.setByX(x);
-    tt4.setByY(y);
-    tt4.setAutoReverse(true);
-    tt4.play();
+    //Funcion que cambia el tamaño de una caja
+    public void tamanoCaja(Group caja,double tamano){
+        
+        tamano=tamano/100;
+        ScaleTransition st = new ScaleTransition(Duration.seconds(2),caja);
+        st.setToX(tamano);
+        st.setToY(tamano);
+        st.play();
+       
+        
+    }
+    
+    public void moverCaja(Group caja,double x,double y){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),caja);
+        tt.setByX(x);
+        tt.setByY(y);
+        tt.play();
+        
     }
     
     public Group elegirNumDibujar(int xinicial,int yinicial,int digito){
