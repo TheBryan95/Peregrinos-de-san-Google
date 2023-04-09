@@ -1,5 +1,6 @@
 package prueba.para.proyecto.pkg1;
 
+import java.io.File;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -8,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -15,11 +18,12 @@ public class PruebaParaProyecto1 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        Group root = new Group();//Se le agregan los elemenos a la pantalla
         //Se inician sliders, label, boton y caja de texto que iran en pantalla
         TextField text = new TextField();
-        text.setLayoutX(500);
+        text.setLayoutX(550);
         text.setPromptText("Numero de Cajas");
-        Button boton = new Button();
+        Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         Slider slider = new Slider(20, 200, 100);
         slider.setLayoutX(50);
@@ -32,9 +36,22 @@ public class PruebaParaProyecto1 extends Application {
         Label l2 = new Label();
         l2.setLayoutX(650);
         //Se inicia la pantalla 
-        Group root = new Group(slider,slider2,l,l2,text,boton);//Se le agregan los elemenos a la pantalla
-        Scene scene = new Scene(root,1300,600,Color.LIGHTSKYBLUE);
+        String imagePath = "ciudad.jpg";
+        Image image = new Image(new File(imagePath).toURI().toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(1300);
+        imageView.setFitHeight(600);
+        imageView.setPreserveRatio(true);
+        root.getChildren().add(imageView);
+        root.getChildren().add(text);
+        root.getChildren().add(boton);
+        root.getChildren().add(slider);
+        root.getChildren().add(slider2);
+        root.getChildren().add(l);
+        root.getChildren().add(l2);
+        Scene scene = new Scene(root, 1300, 600);
         Stage stage = new Stage();
+
         //Actualiza el label cuando se mueve el slider 2
         slider2.setOnMouseReleased(event -> {
             l.setText(""+(int)slider2.getValue());
