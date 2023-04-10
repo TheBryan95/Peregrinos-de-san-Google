@@ -1,7 +1,9 @@
 package prueba.para.proyecto.pkg1;
 
+import java.util.ArrayList;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -61,12 +63,20 @@ public class Caja {
         
     }
     
-    public void moverCaja(Group caja,double x,double y){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),caja);
+    public TranslateTransition moverCaja(Group caja,double x,double y){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),caja);
         tt.setByX(x);
         tt.setByY(y);
-        tt.play();
+//        tt.play();
         
+        return tt;
+    }
+    public void moverCajaSecuencia(ArrayList<TranslateTransition> secuencia){
+        SequentialTransition st = new SequentialTransition();
+        for (int i = 0; i < secuencia.size(); i++) {
+            st.getChildren().add(secuencia.get(i));
+        }
+        st.play();
     }
     
     public Group elegirNumDibujar(int xinicial,int yinicial,int digito){
