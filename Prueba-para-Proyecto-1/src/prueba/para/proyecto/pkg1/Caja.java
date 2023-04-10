@@ -1,6 +1,7 @@
 package prueba.para.proyecto.pkg1;
 
 import java.util.ArrayList;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.animation.SequentialTransition;
@@ -52,13 +53,25 @@ public class Caja {
     }
     
     //Funcion que cambia el tamaño de una caja
-    public void tamanoCaja(Group caja,double tamano){
-        
+    public void tamanoCaja(Group caja,double tamano,int j){
+        ParallelTransition pt = new ParallelTransition();
         tamano=tamano/100;
+        if (tamano>100) {
+            TranslateTransition tt1 = new TranslateTransition(Duration.seconds(1),caja);
+            tt1.setByX(tamano*j/2);
+            pt.getChildren().add(tt1);
+        }
+        else{
+            TranslateTransition tt1 = new TranslateTransition(Duration.seconds(1),caja);
+            tt1.setByX(-tamano*j/2);
+            pt.getChildren().add(tt1);
+        }
         ScaleTransition st = new ScaleTransition(Duration.seconds(2),caja);
+        
         st.setToX(tamano);
         st.setToY(tamano);
-        st.play();
+        pt.getChildren().add(st);
+        pt.play();
        
         
     }
