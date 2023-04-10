@@ -4,6 +4,7 @@
  */
 package prueba.para.proyecto.pkg1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -22,18 +23,33 @@ public class Ordenamiento {
    int[] numeros;
    Timeline timeline; 
    int j;
+   ArrayList<Caja> cajas = new ArrayList();
+   ArrayList<Group> cajas2 = new ArrayList();
    Caja cajita;
 
     
-    
-public void empezarordenamiento(Group root){
-    numeros = new int[10];
+public void nuevoarreglo(Group root,int largo){
+    root.getChildren().removeAll(cajas2);
+    cajas2.clear();
+    cajas.clear();
+    numerosaleatorios(largo);
+    sinOrdenar(root);
+    j=0;
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> ordenamiento(root)));
+    timeline.setCycleCount(numeros.length + 1);
+    timeline.play();
+
+}   
+public void numerosaleatorios(int largo){
+    numeros = new int[largo];
       for (int x=0;x<numeros.length;x++){
-        numeros[x] = (int) (Math.random()*99)+1;}
-      
+        numeros[x] = (int) (Math.random()*99)+1;
+      }
+}
+public void empezarordenamiento(Group root,int largo){
+      numerosaleatorios(largo);
       sinOrdenar(root);
       j=0;
-      
       timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> ordenamiento(root)));
       timeline.setCycleCount(numeros.length + 1);
       timeline.play();
@@ -53,33 +69,46 @@ public void ordenamiento(Group root){
             ordenado(root);
         }
       else{
-          timeline.stop();
-          
+          timeline.stop(); 
       }
       j++;
       
     }
 
 public void sinOrdenar(Group root){
-    for (int x=0,i=50;x<numeros.length;x++){
-          System.out.print(""+numeros[x]+", ");
-          cajita = new Caja(i, 200, numeros[x]);
-          
-          root.getChildren().add(cajita.crearCaja());
-          i=i+125;
-      }
-      cajita = new Caja(100,400,00);
+    root.getChildren().removeAll(cajas2);
+    cajas.clear();
+    cajas2.clear();
+    for (int x=0,i=90;x<numeros.length;x++){
+            //System.out.print(""+numeros[x]+", ");
+            cajita = new Caja(i, 480, numeros[x]);
+            cajas.add(cajita);
+            Group cajis = cajita.crearCaja();
+            cajas2.add(cajis);
 
+            i=i+125;
+//          cajita = new Caja(i, 200, numeros[x]);
+//          
+//          root.getChildren().add(cajita.crearCaja());
+//          i=i+125;
+        }
+    root.getChildren().addAll(cajas2);
+      //cajita = new Caja(100,400,00);
+      
 }
 
 public void ordenado(Group root){
-    for (int x=0,i=50;x<numeros.length;x++){
-        System.out.print(""+numeros[x]+", ");
+    cajas.clear();
+    cajas2.clear();
+    for (int x=0,i=90;x<numeros.length;x++){
+        //System.out.print(""+numeros[x]+", ");
         cajita = new Caja(i, 350, numeros[x]);
-          
-        root.getChildren().add(cajita.crearCaja());
+        cajas.add(cajita);
+        Group cajis = cajita.crearCaja();
+        cajas2.add(cajis);
         i=i+125;
     }
+    root.getChildren().addAll(cajas2);
 }
 
 }

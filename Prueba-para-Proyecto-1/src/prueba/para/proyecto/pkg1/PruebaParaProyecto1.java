@@ -42,13 +42,7 @@ public class PruebaParaProyecto1 extends Application {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().add(imageView);
-        root.getChildren().add(text);
-        root.getChildren().add(boton);
-        root.getChildren().add(slider);
-        root.getChildren().add(slider2);
-        root.getChildren().add(l);
-        root.getChildren().add(l2);
+        root.getChildren().addAll(imageView,text,boton,slider,slider2,l,l2);
         Scene scene = new Scene(root, 1300, 600);
         Stage stage = new Stage();
 
@@ -56,6 +50,7 @@ public class PruebaParaProyecto1 extends Application {
         slider2.setOnMouseReleased(event -> {
             l.setText(""+(int)slider2.getValue());
         });
+        
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
@@ -83,41 +78,51 @@ public class PruebaParaProyecto1 extends Application {
         ArrayList<Caja> cajas = new ArrayList();
         ArrayList<Group> cajas2 = new ArrayList();
         for (int x=0;x<numeros.length;x++){
-          numeros[x] = (int) (Math.random()*99)+1;}
-
-        //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
+            numeros[x] = (int) (Math.random()*99)+1;}
         
-        for (int x=0,i=90;x<numeros.length;x++){
-            System.out.print(""+numeros[x]+", ");
-            Caja cajita = new Caja(i, 480, numeros[x]);
-            cajas.add(cajita);
-            Group cajis = cajita.crearCaja();
-            cajas2.add(cajis);
-            
-            i=i+125;
-        }
-        root.getChildren().addAll(cajas2);//Se agrega todo el arreglo de cajas a la pantalla  para poder eliminarla con un boton
+        //Prueba funciones ordenamiento
+        Ordenamiento a = new Ordenamiento();
+        a.empezarordenamiento(root,9);
+        
+        //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
+//        
+//        for (int x=0,i=90;x<numeros.length;x++){
+//            System.out.print(""+numeros[x]+", ");
+//            Caja cajita = new Caja(i, 480, numeros[x]);
+//            cajas.add(cajita);
+//            Group cajis = cajita.crearCaja();
+//            cajas2.add(cajis);
+//            
+//            i=i+125;
+//        }
+//        root.getChildren().addAll(cajas2);//Se agrega todo el arreglo de cajas a la pantalla  para poder eliminarla con un boton
+        
+
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
+        
         boton.setOnAction((event) -> {
-            root.getChildren().removeAll(cajas2);
-            cajas.clear();
-            cajas2.clear();
-            int[] numeros2 = new int[Integer.parseInt(text.getText())];
-            for (int x=0;x<numeros2.length;x++){
-              numeros2[x] = (int) (Math.random()*99)+1;}
+            Ordenamiento b = new Ordenamiento();
+            b.nuevoarreglo(root, Integer.parseInt(text.getText()));
+//            root.getChildren().removeAll(cajas2);
+//            cajas.clear();
+//            cajas2.clear();
+
+//            int[] numeros2 = new int[Integer.parseInt(text.getText())];
+//            for (int x=0;x<numeros2.length;x++){
+//              numeros2[x] = (int) (Math.random()*99)+1;}
 
             //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
 
-            for (int x=0,i=90;x<numeros2.length;x++){
-                System.out.print(""+numeros2[x]+", ");
-                Caja cajita = new Caja(i, 480, numeros2[x]);
-                cajas.add(cajita);
-                Group cajis = cajita.crearCaja();
-                cajas2.add(cajis);
-
-                i=i+125;
-            }
-            root.getChildren().addAll(cajas2);  
+//            for (int x=0,i=90;x<numeros2.length;x++){
+//                System.out.print(""+numeros2[x]+", ");
+//                Caja cajita = new Caja(i, 480, numeros2[x]);
+//                cajas.add(cajita);
+//                Group cajis = cajita.crearCaja();
+//                cajas2.add(cajis);
+//
+//                i=i+125;
+//            }
+//            root.getChildren().addAll(cajas2);  
         });
         
         //Slider que cambia el tamaño de las cajas al moverlo
@@ -142,6 +147,8 @@ public class PruebaParaProyecto1 extends Application {
             cajita1.moverCaja(caji,slider2.getValue(), 0);
             
         });
+        
+            
         //Se inicia la pantalla
         stage.setScene(scene);
         stage.show();
