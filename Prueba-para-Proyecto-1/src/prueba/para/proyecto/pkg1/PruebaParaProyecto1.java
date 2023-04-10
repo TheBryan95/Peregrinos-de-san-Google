@@ -2,6 +2,8 @@ package prueba.para.proyecto.pkg1;
 
 import java.io.File;
 import java.util.ArrayList;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,8 +15,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PruebaParaProyecto1 extends Application {
+    
+        ArrayList<Caja> cajas = new ArrayList();
+        ArrayList<Group> cajas2 = new ArrayList();
+   Timeline timeline; 
+   int j;
+   Caja cajita;
+    
     
     @Override
     public void start(Stage primaryStage) {
@@ -74,15 +84,16 @@ public class PruebaParaProyecto1 extends Application {
         
         
         //Ciclo que genera un arreglo de 10 numeros aleatorios
-        int[] numeros = new int[9];
-        ArrayList<Caja> cajas = new ArrayList();
-        ArrayList<Group> cajas2 = new ArrayList();
-        for (int x=0;x<numeros.length;x++){
-            numeros[x] = (int) (Math.random()*99)+1;}
-        
+//        int[] numeros = new int[9];
+//        for (int x=0;x<numeros.length;x++){
+//            numeros[x] = (int) (Math.random()*99)+1;}
+//        
+
         //Prueba funciones ordenamiento
-        Ordenamiento a = new Ordenamiento();
-        a.empezarordenamiento(root,9);
+//        Ordenamiento a = new Ordenamiento();
+//        a.empezarordenamiento(root,9);
+
+        empezarordenamiento(cajas,cajas2,root,9);
         
         //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
 //        
@@ -101,25 +112,30 @@ public class PruebaParaProyecto1 extends Application {
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         
         boton.setOnAction((event) -> {
-            Ordenamiento b = new Ordenamiento();
-            b.nuevoarreglo(root, Integer.parseInt(text.getText()));
+            root.getChildren().clear();
+            timeline.stop();
+            root.getChildren().addAll(imageView,text,boton,slider,slider2,l,l2);
+            
+            root.getChildren().addAll(fondo,carro,carro2,caji,caji2);
+            root.getChildren().removeAll(cajas2);
+            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()));
 //            root.getChildren().removeAll(cajas2);
 //            cajas.clear();
 //            cajas2.clear();
-
+//
 //            int[] numeros2 = new int[Integer.parseInt(text.getText())];
 //            for (int x=0;x<numeros2.length;x++){
 //              numeros2[x] = (int) (Math.random()*99)+1;}
-
-            //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
-
+//
+//            //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
+//
 //            for (int x=0,i=90;x<numeros2.length;x++){
 //                System.out.print(""+numeros2[x]+", ");
 //                Caja cajita = new Caja(i, 480, numeros2[x]);
 //                cajas.add(cajita);
 //                Group cajis = cajita.crearCaja();
 //                cajas2.add(cajis);
-//
+////
 //                i=i+125;
 //            }
 //            root.getChildren().addAll(cajas2);  
@@ -127,7 +143,7 @@ public class PruebaParaProyecto1 extends Application {
         
         //Slider que cambia el tamaño de las cajas al moverlo
         slider.setOnMouseReleased(event -> {
-            for (int j = 0; j < numeros.length; j++) {
+            for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
                     Group cajit = (Group) cajas2.get(j);
                     if (slider.getValue()<100) {
@@ -162,4 +178,91 @@ public class PruebaParaProyecto1 extends Application {
         System.out.println("Hola Jeremy :D");
     }
     
+
+    
+public void nuevoarreglo(Group root,int largo){
+    root.getChildren().removeAll(cajas2);
+    cajas2.clear();
+    cajas.clear();
+    int numeros[]=numerosaleatorios(largo);
+    sinOrdenar(cajas,cajas2,root,numeros);
+    j=0;
+    timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> ordenamiento(cajas,cajas2,root,numeros)));
+    timeline.setCycleCount(numeros.length + 1);
+    timeline.play();
+
+}   
+public int[] numerosaleatorios(int largo){
+    int[]numeros = new int[largo];
+      for (int x=0;x<numeros.length;x++){
+        numeros[x] = (int) (Math.random()*99)+1;
+      }
+      return numeros;
+}
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo){
+      int []numeros=numerosaleatorios(largo);
+      sinOrdenar(cajas,cajas2,root,numeros);
+      j=0;
+      timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> ordenamiento(cajas,cajas2,root,numeros)));
+      timeline.setCycleCount(numeros.length + 1);
+      timeline.play();
+      
+}    
+
+    
+public void ordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros){
+      if (j < numeros.length) {  
+            int key = numeros[j];  
+            int i = j-1;  
+            while ( (i > -1) && ( numeros [i] > key ) ) {
+                numeros [i+1] = numeros [i];
+                i--;  
+            }
+            numeros[i+1] = key;
+            ordenado(cajas,cajas2,root,numeros);
+        }
+      else{
+          timeline.stop(); 
+      }
+      j++;
+      
+    }
+
+public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
+    root.getChildren().removeAll(cajas2);
+    cajas.clear();
+    cajas2.clear();
+    for (int x=0,i=90;x<numeros.length;x++){
+            //System.out.print(""+numeros[x]+", ");
+            cajita = new Caja(i, 480, numeros[x]);
+            cajas.add(cajita);
+            Group cajis = cajita.crearCaja();
+            cajas2.add(cajis);
+
+            i=i+125;
+//          cajita = new Caja(i, 200, numeros[x]);
+//          
+//          root.getChildren().add(cajita.crearCaja());
+//          i=i+125;
+        }
+    root.getChildren().addAll(cajas2);
+      //cajita = new Caja(100,400,00);
+      
+}
+
+public void ordenado(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
+    root.getChildren().removeAll(cajas2);
+    cajas.clear();
+    cajas2.clear();
+    for (int x=0,i=90;x<numeros.length;x++){
+        //System.out.print(""+numeros[x]+", ");
+        cajita = new Caja(i, 350, numeros[x]);
+        cajas.add(cajita);
+        Group cajis = cajita.crearCaja();
+        cajas2.add(cajis);
+        i=i+125;
+    }
+    root.getChildren().addAll(cajas2);
+}
+
 }
