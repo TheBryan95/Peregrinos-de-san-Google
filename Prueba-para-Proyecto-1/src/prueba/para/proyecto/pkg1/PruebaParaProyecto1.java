@@ -34,8 +34,6 @@ public class PruebaParaProyecto1 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-      PathTransition transition = new PathTransition();
-      
       //Se inicia la pantalla
       pasoActual = new Label("");
       
@@ -53,9 +51,7 @@ public class PruebaParaProyecto1 extends Application {
       
       stage.setScene(scene);
       stage.show();
-      
-      
-              
+        
     }
     public static void main(String[] args) {
         launch(args);
