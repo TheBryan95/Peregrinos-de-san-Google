@@ -150,12 +150,8 @@ public class PruebaParaProyecto1 extends Application {
         
         //Slider que cambia el tamaño de las cajas al moverlo
         slider.setOnMouseReleased(event -> {
-            for (int j = 0; j < cajas.size(); j++) {
-                    Caja caja = (Caja) cajas.get(j);
-                    Group cajit = (Group) cajas2.get(j);
-                    
-                    caja.tamanoCaja(cajit,slider.getValue(),j);
-                }
+            
+            moverjuntotamaño(slider.getValue());
         });
         //Slider de prueba para probar movimiento de caja
         slider2.setOnMousePressed(event -> {
@@ -180,7 +176,22 @@ public class PruebaParaProyecto1 extends Application {
     
 
     
+public void moverjuntotamaño(double valor){
+for (int j = 0; j < cajas.size(); j++) {
+                    Caja caja = (Caja) cajas.get(j);
+                    Group cajit = (Group) cajas2.get(j);
+                    if (valor<100) {
+                        TranslateTransition tt = caja.moverCaja(cajit, -valor*j/2, 0);
+                        tt.play();
+                    }
+                    else{
+                        TranslateTransition tt =caja.moverCaja(cajit, valor*j/2, 0);
+                        tt.play();
+                    }
+                    caja.tamanoCaja(cajit,valor,j);
+                }
 
+}
 
 public int[] numerosaleatorios(int largo){
     int[]numeros = new int[largo];
