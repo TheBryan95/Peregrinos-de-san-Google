@@ -1,7 +1,10 @@
 package prueba.para.proyecto.pkg1;
 
+import java.util.ArrayList;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -50,23 +53,43 @@ public class Caja {
     }
     
     //Funcion que cambia el tamaño de una caja
-    public void tamanoCaja(Group caja,double tamano){
-        
+    public void tamanoCaja(Group caja,double tamano,int j){
+        ParallelTransition pt = new ParallelTransition();
         tamano=tamano/100;
+        if (tamano>100) {
+            TranslateTransition tt1 = new TranslateTransition(Duration.seconds(1),caja);
+            tt1.setByX(tamano*j/2);
+            pt.getChildren().add(tt1);
+        }
+        else{
+            TranslateTransition tt1 = new TranslateTransition(Duration.seconds(1),caja);
+            tt1.setByX(-tamano*j/2);
+            pt.getChildren().add(tt1);
+        }
         ScaleTransition st = new ScaleTransition(Duration.seconds(2),caja);
+        
         st.setToX(tamano);
         st.setToY(tamano);
-        st.play();
+        pt.getChildren().add(st);
+        pt.play();
        
         
     }
     
-    public void moverCaja(Group caja,double x,double y){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000),caja);
+    public TranslateTransition moverCaja(Group caja,double x,double y){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(1000),caja);
         tt.setByX(x);
         tt.setByY(y);
-        tt.play();
+//        tt.play();
         
+        return tt;
+    }
+    public void moverCajaSecuencia(ArrayList<TranslateTransition> secuencia){
+        SequentialTransition st = new SequentialTransition();
+        for (int i = 0; i < secuencia.size(); i++) {
+            st.getChildren().add(secuencia.get(i));
+        }
+        st.play();
     }
     
     public Group elegirNumDibujar(int xinicial,int yinicial,int digito){
