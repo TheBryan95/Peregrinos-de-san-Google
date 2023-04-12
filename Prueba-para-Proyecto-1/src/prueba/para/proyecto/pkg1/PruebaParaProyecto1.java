@@ -25,7 +25,7 @@ public class PruebaParaProyecto1 extends Application {
    Timeline timeline; 
    int j;
    Caja cajita;
-    ArrayList<TranslateTransition> movimientos = new ArrayList<>();
+    ArrayList movimientos = new ArrayList<>();
     
     @Override
     public void start(Stage primaryStage) {
@@ -39,6 +39,9 @@ public class PruebaParaProyecto1 extends Application {
         boton.setLayoutX(480);
         Slider slider = new Slider(20, 200, 100);
         slider.setLayoutX(50);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        
         Slider slider2 = new Slider(-200, 200, 0);
         slider2.setLayoutX(250);
         slider2.setShowTickMarks(true);
@@ -81,12 +84,12 @@ public class PruebaParaProyecto1 extends Application {
         Group caji2 = cajita2.crearCaja();
         root.getChildren().add(caji2);
         //Funcion mover caja
-        ArrayList translate = new ArrayList<>();
-        translate.add(cajita1.moverCaja(caji, 0,150));
-        translate.add(cajita2.moverCaja(caji2, -600, 0));
-        translate.add(cajita1.moverCaja(caji, 600, 0));
-        translate.add(cajita1.moverCaja(caji, 0, -150));
-        cajita1.moverCajaSecuencia(translate);
+//        ArrayList translate = new ArrayList<>();
+//        translate.add(cajita1.moverCaja(caji, 0,150));
+//        translate.add(cajita2.moverCaja(caji2, -600, 0));
+//        translate.add(cajita1.moverCaja(caji, 600, 0));
+//        translate.add(cajita1.moverCaja(caji, 0, -150));
+//        cajita1.moverCajaSecuencia(translate);
         
         //Funcion que mueve el carro de la grua con el slider
         
@@ -101,7 +104,7 @@ public class PruebaParaProyecto1 extends Application {
 //        Ordenamiento a = new Ordenamiento();
 //        a.empezarordenamiento(root,9);
 
-        empezarordenamiento(cajas,cajas2,root,9);
+        empezarordenamiento(cajas,cajas2,root,16);
         //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
 //        
 //        for (int x=0,i=90;x<numeros.length;x++){
@@ -177,15 +180,17 @@ public class PruebaParaProyecto1 extends Application {
 
     
 public void moverjuntotamaño(double valor){
-for (int j = 0; j < cajas.size(); j++) {
+    for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
                     Group cajit = (Group) cajas2.get(j);
                     if (valor<100) {
-                        TranslateTransition tt = caja.moverCaja(cajit, -valor*j/2, 0);
+                        TranslateTransition tt = caja.moverCaja(cajit, -valor*j*1.3, 0);
+                        tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
                     else{
-                        TranslateTransition tt =caja.moverCaja(cajit, valor*j/2, 0);
+                        TranslateTransition tt =caja.moverCaja(cajit, valor*j*1.3, 0);
+                        tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
                     caja.tamanoCaja(cajit,valor,j);
@@ -239,7 +244,8 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
-    for (int x=0,i=90;x<numeros.length;x++){
+    
+    for (int x=0,i=70;x<numeros.length;x++){
             //System.out.print(""+numeros[x]+", ");
             cajita = new Caja(i, 480, numeros[x]);
             cajas.add(cajita);
@@ -252,7 +258,9 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 //          root.getChildren().add(cajita.crearCaja());
 //          i=i+125;
         }
+    
     root.getChildren().addAll(cajas2);
+    moverjuntotamaño(45);
       //cajita = new Caja(100,400,00);
       
 }
@@ -261,12 +269,12 @@ public void ordenado(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,in
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
-    SequentialTransition st = new SequentialTransition();
-    for (int i = 0; i < movimientos.size(); i++) {
-        st.getChildren().add(movimientos.get(i));
-    }
-    st.play();
-    for (int x=0,i=90;x<numeros.length;x++){
+//    SequentialTransition st = new SequentialTransition();
+//    for (int i = 0; i < movimientos.size(); i++) {
+//        st.getChildren().add((TranslateTransition)movimientos.get(i));
+//    }
+//    st.play();
+    for (int x=0,i=70;x<numeros.length;x++){
         //System.out.print(""+numeros[x]+", ");
         cajita = new Caja(i, 480, numeros[x]);
         cajas.add(cajita);
@@ -276,6 +284,7 @@ public void ordenado(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,in
     }
     
     root.getChildren().addAll(cajas2);
+    moverjuntotamaño(45);
 }
 
 }

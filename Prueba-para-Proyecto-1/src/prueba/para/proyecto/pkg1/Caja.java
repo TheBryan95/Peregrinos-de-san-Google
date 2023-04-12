@@ -56,7 +56,7 @@ public class Caja {
     public void tamanoCaja(Group caja,double tamano,int j){
         ParallelTransition pt = new ParallelTransition();
         tamano=tamano/100;
-        ScaleTransition st = new ScaleTransition(Duration.seconds(1),caja);
+        ScaleTransition st = new ScaleTransition(Duration.millis(01),caja);
         
         st.setToX(tamano);
         st.setToY(tamano);
