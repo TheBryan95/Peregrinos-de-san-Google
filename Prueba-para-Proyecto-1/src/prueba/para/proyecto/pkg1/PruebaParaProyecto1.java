@@ -10,15 +10,12 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -116,72 +113,18 @@ public class PruebaParaProyecto1 extends Application {
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
-//        Group carro =grua.crearcarroGrua(110);
-//        Group carro2 =grua.crearSegundoCarroGrua(710);
         root.getChildren().add(fondo);
-//            root.getChildren().addAll(fondo,carro,carro2);
-        //Funcion mover grua
-//        grua.moverCarro(carro, 600);
-//        grua.moverCarro(carro2, -600);
-        //Nueva manera de crear cajas
-//        Caja cajita1 = new Caja(100,185,06);
-//        Group caji = cajita1.crearCaja();
-//        root.getChildren().add(caji);
-//        Caja cajita2 = new Caja(700,185,23);
-//        Group caji2 = cajita2.crearCaja();
-//        root.getChildren().add(caji2);
-        //Funcion mover caja
-//        ArrayList translate = new ArrayList<>();
-//        translate.add(cajita1.moverCaja(caji, 0,150));
-//        translate.add(cajita2.moverCaja(caji2, -600, 0));
-//        translate.add(cajita1.moverCaja(caji, 600, 0));
-//        translate.add(cajita1.moverCaja(caji, 0, -150));
-//        cajita1.moverCajaSecuencia(translate);
-        
-        //Funcion que mueve el carro de la grua con el slider
-        
-        
-        //Ciclo que genera un arreglo de 10 numeros aleatorios
-//        int[] numeros = new int[9];
-//        for (int x=0;x<numeros.length;x++){
-//            numeros[x] = (int) (Math.random()*99)+1;}
-//        
 
-        //Prueba funciones ordenamiento
-//        Ordenamiento a = new Ordenamiento();
-//        a.empezarordenamiento(root,9);
 
         empezarordenamiento(cajas,cajas2,root,16, foor,primer,segundo, wile,primerwile,segunwile,finall);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
-        
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
             root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall); ////////////
             root.getChildren().add(fondo);
-//            root.getChildren().addAll(fondo,carro,carro2);
             root.getChildren().removeAll(cajas2);
             empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
-//            root.getChildren().removeAll(cajas2);
-//            cajas.clear();
-//            cajas2.clear();
-//
-//            int[] numeros2 = new int[Integer.parseInt(text.getText())];
-//            for (int x=0;x<numeros2.length;x++){
-//              numeros2[x] = (int) (Math.random()*99)+1;}
-//
-//            //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
-//
-//            for (int x=0,i=90;x<numeros2.length;x++){
-//                System.out.print(""+numeros2[x]+", ");
-//                Caja cajita = new Caja(i, 480, numeros2[x]);
-//                cajas.add(cajita);
-//                Group cajis = cajita.crearCaja();
-//                cajas2.add(cajis);
-////
-//                i=i+125;
-//            }
-//            root.getChildren().addAll(cajas2);  
         });
         
             
@@ -232,9 +175,6 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
       SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
-//      timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> ordenamiento(cajas,cajas2,root,numeros)));
-//      timeline.setCycleCount(numeros.length + 1);
-//      timeline.play();
       animacion.play();
 }    
 
@@ -244,14 +184,13 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
       SequentialTransition Labels = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
       Group carro =grua.crearcarroGrua(120-42);
-      //Group carro2 =grua.crearSegundoCarroGrua(710);
       root.getChildren().addAll(carro);
       int indice=0;
         for (int i = 1; i < numeros.length; i++) {
             
-            int valorActual = numeros[i];//
+            int valorActual = numeros[i];
             Labels.getChildren().add(cambioColor(foor));
-            int j = i - 1;//
+            int j = i - 1;
             Labels.getChildren().add(cambioColor(primer));
             
             
@@ -266,7 +205,7 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transicionup.setByY(-100);
                 
-                numeros[j + 1] = numeros[j]; //
+                numeros[j + 1] = numeros[j]; 
                 Labels.getChildren().add(cambioColor(primerwile));
                 
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
@@ -283,7 +222,7 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
                 cajas2.set(j, cajaJ2);
-                j--;//
+                j--;
                 Labels.getChildren().add(cambioColor(segunwile));
             }
           
@@ -298,36 +237,6 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
         }
         Labels.play();
         return animacion;
-    
-
-
-
-
-
-    /*if (j < numeros.length) {  
-            int key = numeros[j];  
-            Caja caux = cajas.get(key);
-            Group caux2 = cajas2.get(key);
-            movimientos.add(caux.moverCaja(caux2, 0, -100));
-            
-            int i = j-1;  
-            while ( (i > -1) && ( numeros [i] > key ) ) {
-                Caja cc1 = cajas.get(i);
-                Group c1 = cajas2.get(i);
-                numeros [i+1] = numeros [i];
-                i--;  
-                movimientos.add(cc1.moverCaja(c1, 0, 100));
-            }
-            
-            numeros[i+1] = key;
-            ordenado(cajas,cajas2,root,numeros);
-        }
-      else{
-//          timeline.stop(); 
-          
-          
-      }
-      //j++;*/
     }
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
@@ -336,43 +245,13 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     cajas2.clear();
     
     for (int x=0,i=70;x<numeros.length;x++){
-            //System.out.print(""+numeros[x]+", ");
             cajita = new Caja(i, 480, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearCaja();
             cajas2.add(cajis);
 
             i=i+125;
-//          cajita = new Caja(i, 200, numeros[x]);
-//          
-//          root.getChildren().add(cajita.crearCaja());
-//          i=i+125;
         }
-    
-    root.getChildren().addAll(cajas2);
-    moverjuntotamaño(45);
-      //cajita = new Caja(100,400,00);
-      
-}
-
-
-public void ordenado(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
-    root.getChildren().removeAll(cajas2);
-    cajas.clear();
-    cajas2.clear();
-//    SequentialTransition st = new SequentialTransition();
-//    for (int i = 0; i < movimientos.size(); i++) {
-//        st.getChildren().add((TranslateTransition)movimientos.get(i));
-//    }
-//    st.play();
-    for (int x=0,i=70;x<numeros.length;x++){
-        //System.out.print(""+numeros[x]+", ");
-        cajita = new Caja(i, 480, numeros[x]);
-        cajas.add(cajita);
-        Group cajis = cajita.crearCaja();
-        cajas2.add(cajis);
-        i=i+125;
-    }
     
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
