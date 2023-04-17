@@ -3,6 +3,7 @@ package prueba.para.proyecto.pkg1;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
@@ -31,6 +32,15 @@ public class PruebaParaProyecto1 extends Application {
     @Override
     public void start(Stage primaryStage) {
         
+        Label Titulo = new Label("Algoritmo");
+        Label foor = new Label("for (int i = 1; i < n; ++i)");
+        Label primer = new Label("int key = arr[i];");
+        Label segundo = new Label("int j = i - 1;");
+        Label wile = new Label("while (j >= 0 && arr[j] > key)");
+        Label primerwile = new Label("arr[j + 1] = arr[j];");
+        Label segunwile = new Label("j = j - 1;");
+        Label finall = new Label("arr[j + 1] = key;");
+        
         Group root = new Group();//Se le agregan los elemenos a la pantalla
         //Se inician sliders, label, boton y caja de texto que iran en pantalla
         TextField text = new TextField();
@@ -50,9 +60,56 @@ public class PruebaParaProyecto1 extends Application {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,l,l2);
+        root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+        
+        Titulo.setLayoutX(1350);
+        Titulo.setScaleX(1.5);
+        Titulo.setScaleY(1.5);
+        Titulo.setStyle("-fx-font-weight: bold;");
+    
+    
+        foor.setLayoutX(1350);
+        foor.setLayoutY(50);
+        foor.setScaleX(1.5);
+        foor.setScaleY(1.5);
+
+
+        primer.setLayoutX(1380);
+        primer.setLayoutY(75);
+        primer.setScaleX(1.5);
+        primer.setScaleY(1.5);
+
+
+        segundo.setLayoutX(1375);
+        segundo.setLayoutY(100);
+        segundo.setScaleX(1.5);
+        segundo.setScaleY(1.5);
+
+
+        wile.setLayoutX(1400);
+        wile.setLayoutY(125);
+        wile.setScaleX(1.5);
+        wile.setScaleY(1.5);
+
+
+        primerwile.setLayoutX(1400);
+        primerwile.setLayoutY(150);
+        primerwile.setScaleX(1.5);
+        primerwile.setScaleY(1.5);
+
+
+        segunwile.setLayoutX(1390);
+        segunwile.setLayoutY(175);
+        segunwile.setScaleX(1.5);
+        segunwile.setScaleY(1.5);
+
+
+        finall.setLayoutX(1340);
+        finall.setLayoutY(200);
+        finall.setScaleX(1.5);
+        finall.setScaleY(1.5);
        
-        Scene scene = new Scene(root, 1300, 600);
+        Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
 
         
@@ -94,17 +151,17 @@ public class PruebaParaProyecto1 extends Application {
 //        Ordenamiento a = new Ordenamiento();
 //        a.empezarordenamiento(root,9);
 
-        empezarordenamiento(cajas,cajas2,root,16);
+        empezarordenamiento(cajas,cajas2,root,16, foor,primer,segundo, wile,primerwile,segunwile,finall);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,l,l2);
+            root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall); ////////////
             root.getChildren().add(fondo);
 //            root.getChildren().addAll(fondo,carro,carro2);
             root.getChildren().removeAll(cajas2);
-            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()));
+            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
 //            root.getChildren().removeAll(cajas2);
 //            cajas.clear();
 //            cajas2.clear();
@@ -169,12 +226,12 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo){
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = ordenamiento(cajas2,root,numeros);
+      SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
 //      timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> ordenamiento(cajas,cajas2,root,numeros)));
 //      timeline.setCycleCount(numeros.length + 1);
 //      timeline.play();
@@ -182,19 +239,24 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }    
 
     
-public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros){
+public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
       SequentialTransition animacion = new SequentialTransition();
+      SequentialTransition Labels = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
       Group carro =grua.crearcarroGrua(120-42);
       //Group carro2 =grua.crearSegundoCarroGrua(710);
       root.getChildren().addAll(carro);
+      int indice=0;
         for (int i = 1; i < numeros.length; i++) {
             
-            int valorActual = numeros[i];
-            int j = i - 1;
+            int valorActual = numeros[i];//
+            Labels.getChildren().add(cambioColor(foor));
+            int j = i - 1;//
+            Labels.getChildren().add(cambioColor(primer));
             
             
-            while (j >= 0 && numeros[j] > valorActual) {
+            while (j >= 0 && numeros[j] > valorActual) { //
+                Labels.getChildren().add(cambioColor(wile));
                 Group caj = cajas2.get(j);
                 Rectangle rect = (Rectangle) caj.getChildren().get(0);
                 
@@ -204,7 +266,8 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transicionup.setByY(-100);
                 
-                numeros[j + 1] = numeros[j];
+                numeros[j + 1] = numeros[j]; //
+                Labels.getChildren().add(cambioColor(primerwile));
                 
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transiciondown.setByY(100);
@@ -220,13 +283,20 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
                 cajas2.set(j, cajaJ2);
-                j--;
+                j--;//
+                Labels.getChildren().add(cambioColor(segunwile));
             }
           
-            numeros[j + 1] = valorActual;
+            numeros[j + 1] = valorActual;//
+            Labels.getChildren().add(cambioColor(finall));
             
-
+            if (indice==numeros.length){
+            Labels.stop();
         }
+            
+            
+        }
+        Labels.play();
         return animacion;
     
 
@@ -306,6 +376,13 @@ public void ordenado(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,in
     
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
+}
+
+public SequentialTransition cambioColor(Label label){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
 }
 
 }
