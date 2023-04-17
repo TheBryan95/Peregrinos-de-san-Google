@@ -3,6 +3,7 @@ package prueba.para.proyecto.pkg1;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -34,15 +35,7 @@ public class PruebaParaProyecto1 extends Application {
         text.setPromptText("Numero de Cajas");
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
-        Slider slider = new Slider(20, 200, 100);
-        slider.setLayoutX(50);
-        slider.setShowTickMarks(true);
-        slider.setShowTickLabels(true);
         
-        Slider slider2 = new Slider(-200, 200, 0);
-        slider2.setLayoutX(250);
-        slider2.setShowTickMarks(true);
-        slider2.setShowTickLabels(true);
         Label l =new Label();
         l.setLayoutX(400);
         Label l2 = new Label();
@@ -54,32 +47,29 @@ public class PruebaParaProyecto1 extends Application {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,slider,slider2,l,l2);
+        root.getChildren().addAll(imageView,text,boton,l,l2);
        
         Scene scene = new Scene(root, 1300, 600);
         Stage stage = new Stage();
 
-        //Actualiza el label cuando se mueve el slider 2
-        slider2.setOnMouseReleased(event -> {
-            l.setText(""+(int)slider2.getValue());
-        });
         
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
-        Group carro =grua.crearcarroGrua(110);
-        Group carro2 =grua.crearSegundoCarroGrua(710);
-        root.getChildren().addAll(fondo,carro,carro2);
+//        Group carro =grua.crearcarroGrua(110);
+//        Group carro2 =grua.crearSegundoCarroGrua(710);
+        root.getChildren().add(fondo);
+//            root.getChildren().addAll(fondo,carro,carro2);
         //Funcion mover grua
-        grua.moverCarro(carro, 600);
-        grua.moverCarro(carro2, -600);
+//        grua.moverCarro(carro, 600);
+//        grua.moverCarro(carro2, -600);
         //Nueva manera de crear cajas
-        Caja cajita1 = new Caja(100,185,06);
-        Group caji = cajita1.crearCaja();
-        root.getChildren().add(caji);
-        Caja cajita2 = new Caja(700,185,23);
-        Group caji2 = cajita2.crearCaja();
-        root.getChildren().add(caji2);
+//        Caja cajita1 = new Caja(100,185,06);
+//        Group caji = cajita1.crearCaja();
+//        root.getChildren().add(caji);
+//        Caja cajita2 = new Caja(700,185,23);
+//        Group caji2 = cajita2.crearCaja();
+//        root.getChildren().add(caji2);
         //Funcion mover caja
 //        ArrayList translate = new ArrayList<>();
 //        translate.add(cajita1.moverCaja(caji, 0,150));
@@ -102,28 +92,15 @@ public class PruebaParaProyecto1 extends Application {
 //        a.empezarordenamiento(root,9);
 
         empezarordenamiento(cajas,cajas2,root,2);
-        //Ciclo que dibuja 10 cajas(con la nueva manera) cada una con un numero aleatorio asignado para despues dibujarlo
-//        
-//        for (int x=0,i=90;x<numeros.length;x++){
-//            System.out.print(""+numeros[x]+", ");
-//            Caja cajita = new Caja(i, 480, numeros[x]);
-//            cajas.add(cajita);
-//            Group cajis = cajita.crearCaja();
-//            cajas2.add(cajis);
-//            
-//            i=i+125;
-//        }
-//        root.getChildren().addAll(cajas2);//Se agrega todo el arreglo de cajas a la pantalla  para poder eliminarla con un boton
         
-
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,slider,slider2,l,l2);
-            
-            root.getChildren().addAll(fondo,carro,carro2,caji,caji2);
+            root.getChildren().addAll(imageView,text,boton,l,l2);
+            root.getChildren().add(fondo);
+//            root.getChildren().addAll(fondo,carro,carro2);
             root.getChildren().removeAll(cajas2);
             empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()));
 //            root.getChildren().removeAll(cajas2);
@@ -146,18 +123,6 @@ public class PruebaParaProyecto1 extends Application {
 //                i=i+125;
 //            }
 //            root.getChildren().addAll(cajas2);  
-        });
-        
-        //Slider que cambia el tamaño de las cajas al moverlo
-        slider.setOnMouseReleased(event -> {
-            
-            moverjuntotamaño(slider.getValue());
-        });
-        //Slider de prueba para probar movimiento de caja
-        slider2.setOnMousePressed(event -> {
-            grua.moverCarro(carro,(int) slider2.getValue());
-            cajita1.moverCaja(caji,slider2.getValue(), 0);
-            
         });
         
             
@@ -217,31 +182,42 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
     
 public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros){
       SequentialTransition animacion = new SequentialTransition();
+      MovimientoGrua grua = new MovimientoGrua();
+      Group carro =grua.crearcarroGrua(110);
+      Group carro2 =grua.crearSegundoCarroGrua(710);
+      root.getChildren().addAll(carro,carro2);
         for (int i = 1; i < numeros.length; i++) {
             int valorActual = numeros[i];
             int j = i - 1;
             while (j >= 0 && numeros[j] > valorActual) {
                 
+                TranslateTransition transicion = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                transicion.setByX(-(67));
+                
+                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                transicionup.setByY(-100);
                 numeros[j + 1] = numeros[j];
                 
-                TranslateTransition transicion = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
-                transicion.setByX((j + 1) * -(120 + 10));
+                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                transiciondown.setByY(100);
                 
                 TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j));
-                transicion2.setByX(i * (120 + 10));
+                transicion2.setByX((67));
                 
-                animacion.getChildren().addAll(transicion, transicion2);
                 
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                animacion.getChildren().addAll(transicionup,pt,transiciondown);
+             
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
-                Group cajaI2 = (Group) cajas2.get(i);
+                Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
-                cajas2.set(i, cajaJ2);
+                cajas2.set(j, cajaJ2);
                 j--;
             }
+            
             numeros[j + 1] = valorActual;
-            TranslateTransition transicion = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j + 1));
-            transicion.setByX((j + 1) * -(120 + 10));
-            animacion.getChildren().add(transicion);
+            
+
         }
         return animacion;
     
