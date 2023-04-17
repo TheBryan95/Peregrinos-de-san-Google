@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -91,8 +94,7 @@ public class PruebaParaProyecto1 extends Application {
 //        Ordenamiento a = new Ordenamiento();
 //        a.empezarordenamiento(root,9);
 
-        empezarordenamiento(cajas,cajas2,root,2);
-        
+        empezarordenamiento(cajas,cajas2,root,16);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         
         boton.setOnAction((event) -> {
@@ -183,29 +185,35 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros){
       SequentialTransition animacion = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
-      Group carro =grua.crearcarroGrua(110);
-      Group carro2 =grua.crearSegundoCarroGrua(710);
-      root.getChildren().addAll(carro,carro2);
+      Group carro =grua.crearcarroGrua(120-42);
+      //Group carro2 =grua.crearSegundoCarroGrua(710);
+      root.getChildren().addAll(carro);
         for (int i = 1; i < numeros.length; i++) {
+            
             int valorActual = numeros[i];
             int j = i - 1;
+            
+            
             while (j >= 0 && numeros[j] > valorActual) {
+                Group caj = cajas2.get(j);
+                Rectangle rect = (Rectangle) caj.getChildren().get(0);
                 
                 TranslateTransition transicion = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transicion.setByX(-(67));
                 
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transicionup.setByY(-100);
+                
                 numeros[j + 1] = numeros[j];
                 
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
                 transiciondown.setByY(100);
                 
+                
                 TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j));
                 transicion2.setByX((67));
                 
-                
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, (int) (rect.getX()-58.5), (int) (rect.getX()-58.5)+67));
                 animacion.getChildren().addAll(transicionup,pt,transiciondown);
              
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
@@ -214,7 +222,7 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 cajas2.set(j, cajaJ2);
                 j--;
             }
-            
+          
             numeros[j + 1] = valorActual;
             
 
