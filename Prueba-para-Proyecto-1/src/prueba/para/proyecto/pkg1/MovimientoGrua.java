@@ -12,8 +12,6 @@ public class MovimientoGrua {
    
     
     public  Group dibujarGrua(Scene scene){
-        
-        int largo = (int) scene.getWidth();
         int alto = (int) scene.getHeight();
         Group grua = new Group();
         for (int i = 0,j=alto; i < 5; i++) {
@@ -46,13 +44,13 @@ public class MovimientoGrua {
         
         
         for (int i = 0,j=alto; i < 5; i++) {
-            Line linea3 = new Line(largo-15, j,largo-15, j-100);
+            Line linea3 = new Line(1300-15, j,1300-15, j-100);
             linea3.setStrokeWidth(7);
-            Line linea4 = new Line(largo-65,j,largo-65,j-100);
+            Line linea4 = new Line(1300-65,j,1300-65,j-100);
             linea4.setStrokeWidth(7);
             
-            Line diag = new Line(largo-15, j, largo-65, j-100);
-            Line diag2 = new Line(largo-65, j, largo-15, j-100);
+            Line diag = new Line(1300-15, j, 1300-65, j-100);
+            Line diag2 = new Line(1300-65, j, 1300-15, j-100);
             diag.setStrokeWidth(7);
             diag2.setStrokeWidth(7);
             if (i%2==0) {
@@ -73,9 +71,9 @@ public class MovimientoGrua {
             j=j-100;
         }
         
-        Line linea5= new Line(5, 100, largo-15, 100);
+        Line linea5= new Line(5, 100, 1300-15, 100);
         linea5.setStrokeWidth(7);
-        Line linea6= new Line(55, 140, largo-65, 140);
+        Line linea6= new Line(55, 140, 1300-65, 140);
         linea6.setStrokeWidth(7);
         grua.getChildren().addAll(linea5,linea6);
         return grua;
@@ -100,11 +98,11 @@ public class MovimientoGrua {
         Group carrito = new Group(cuerda2,carro2);
         return carrito;
     }
-    public void moverCarro(Group carro,int x){
-            for (int i = 0; i < carro.getChildren().size(); i++) {
-                TranslateTransition tt = new TranslateTransition(Duration.seconds(2),carro.getChildren().get(i));
-                tt.setByX(x);
-                tt.play();
-            }
+    public TranslateTransition moverCarro(Group carro,int x,int x2){
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5),carro);
+                tt.setFromX(x);
+                tt.setToX(x2);
+            return tt;
+            
         }
 }
