@@ -2,11 +2,13 @@ package prueba.para.proyecto.pkg1;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -26,6 +28,9 @@ public class PruebaParaProyecto1 extends Application {
     ArrayList<Group> cajas2 = new ArrayList(); 
     int j;
     Caja cajita;
+    SequentialTransition Labels = new SequentialTransition();
+    
+    int indice =0;
     @Override
     public void start(Stage primaryStage) {
         
@@ -46,6 +51,9 @@ public class PruebaParaProyecto1 extends Application {
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         
+        Button boton2 = new Button("Empezar");
+        boton2.setLayoutX(200);
+        
         Label l =new Label();
         l.setLayoutX(400);
         Label l2 = new Label();
@@ -57,7 +65,8 @@ public class PruebaParaProyecto1 extends Application {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+        
+        root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2);
         
         Titulo.setLayoutX(1350);
         Titulo.setScaleX(1.5);
@@ -116,15 +125,15 @@ public class PruebaParaProyecto1 extends Application {
         root.getChildren().add(fondo);
 
 
-        empezarordenamiento(cajas,cajas2,root,16, foor,primer,segundo, wile,primerwile,segunwile,finall);
+        empezarordenamiento(cajas,cajas2,root,3, foor,primer,segundo, wile,primerwile,segunwile,finall,boton2);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall); ////////////
+            root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2); ////////////
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
+            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall,boton2);
         });
         
             
@@ -169,75 +178,94 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall,Button boton2){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
       SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
-      animacion.play();
+      
+      boton2.setOnAction((event) -> {
+            animacion.play();
+            Labels.play(); 
+            animacion.play();
+        });
+      
+
+      if (indice == numeros.length){
+          Labels.stop();
+      }
+      
 }    
 
     
 public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
       SequentialTransition animacion = new SequentialTransition();
-      SequentialTransition Labels = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
-      Group carro =grua.crearcarroGrua(120-42);
+      Group carro =grua.crearcarroGrua(78);
       root.getChildren().addAll(carro);
-      int indice=0;
+      
         for (int i = 1; i < numeros.length; i++) {
+            Labels.getChildren().add(cambioColor(foor));
+            Labels.getChildren().add(cambioColor2(foor));
             
             int valorActual = numeros[i];
-            Labels.getChildren().add(cambioColor(foor));
-            int j = i - 1;
             Labels.getChildren().add(cambioColor(primer));
+            Labels.getChildren().add(cambioColor2(primer));
+            int j = i - 1;
+            Labels.getChildren().add(cambioColor(segundo));
+            Labels.getChildren().add(cambioColor2(segundo));
             
             
             while (j >= 0 && numeros[j] > valorActual) { //
                 Labels.getChildren().add(cambioColor(wile));
+                
                 Group caj = cajas2.get(j);
                 Rectangle rect = (Rectangle) caj.getChildren().get(0);
                 
-                TranslateTransition transicion = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
                 transicion.setByX(-(67));
                 
-                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
                 transicionup.setByY(-100);
+                Labels.getChildren().add(cambioColor2(wile));
+                
                 
                 numeros[j + 1] = numeros[j]; 
                 Labels.getChildren().add(cambioColor(primerwile));
                 
-                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j+1));
+                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
                 transiciondown.setByY(100);
                 
                 
-                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(0.5),cajas2.get(j));
+                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
                 transicion2.setByX((67));
+                Labels.getChildren().add(cambioColor2(primerwile));
                 
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, (int) (rect.getX()-58.5), (int) (rect.getX()-58.5)+67));
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, (int) (rect.getX())));
+                
                 animacion.getChildren().addAll(transicionup,pt,transiciondown);
              
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
                 cajas2.set(j, cajaJ2);
+                
                 j--;
                 Labels.getChildren().add(cambioColor(segunwile));
+                Labels.getChildren().add(cambioColor2(segunwile));
             }
           
             numeros[j + 1] = valorActual;//
             Labels.getChildren().add(cambioColor(finall));
-            
-            if (indice==numeros.length){
-            Labels.stop();
+            Labels.getChildren().add(cambioColor2(finall));
+            indice++;
+    
         }
-            
-            
-        }
-        Labels.play();
         return animacion;
+        
     }
+
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
     root.getChildren().removeAll(cajas2);
@@ -257,10 +285,19 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     moverjuntotamaño(45);
 }
 
-public SequentialTransition cambioColor(Label label){
+
+
+
+public Transition cambioColor(Label label){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    //colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
+}
+
+public Transition cambioColor2(Label label){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
 
