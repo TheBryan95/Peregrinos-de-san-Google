@@ -100,12 +100,12 @@ public class MovimientoGrua {
         Group carrito = new Group(cuerda2,carro2);
         return carrito;
     }
-    public TranslateTransition moverCarro(Group carro,int x,int x2){
-            
-                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5),carro);
-                tt.setFromX(x);
-                tt.setToX(x2);
-            return tt;
-            
+
+    public TranslateTransition moverCarro(Group carro,int x){
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5),carro);
+        tt.setByX(x);
+
+        return tt;
+
         }
 }
