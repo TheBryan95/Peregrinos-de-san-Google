@@ -178,6 +178,62 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
+public static void burbuja(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                // intercambiar arr[j] y arr[j+1]
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+public static void cocktail(int[] arr) {
+    boolean swapped = true;
+    int start = 0;
+    int end = arr.length - 1;
+
+    while (swapped) {
+        swapped = false;
+
+        // Pasada hacia adelante
+        for (int i = start; i < end; i++) {
+            if (arr[i] > arr[i + 1]) {
+                // intercambiar arr[i] y arr[i+1]
+                int temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+                swapped = true;
+            }
+        }
+        if (!swapped) {
+            break;
+        }
+
+        // Actualizar el extremo derecho
+        end--;
+
+        // Pasada hacia atrás
+        for (int i = end-1; i >= start; i--) {
+            if (arr[i] > arr[i + 1]) {
+                // intercambiar arr[i] y arr[i+1]
+                int temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+                swapped = true;
+            }
+        }
+
+        // Actualizar el extremo izquierdo
+        start++;
+    }
+}
+
+
 public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall,Button boton2){
      
       int []numeros=numerosaleatorios(largo);
