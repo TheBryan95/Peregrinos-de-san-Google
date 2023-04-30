@@ -178,21 +178,49 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public static void burbuja(int[] arr) {
-    int n = arr.length;
+
+
+public SequentialTransition burbuja(ArrayList<Group> cajas2,Group root,int[] numeros) {
+    SequentialTransition animacion = new SequentialTransition();
+    int n = numeros.length;
     for (int i = 0; i < n-1; i++) {
         for (int j = 0; j < n-i-1; j++) {
-            if (arr[j] > arr[j+1]) {
+            if (numeros[j] > numeros[j+1]) {
                 // intercambiar arr[j] y arr[j+1]
-                int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                int temp = numeros[j];
+                numeros[j] = numeros[j+1];
+                numeros[j+1] = temp;
+                
+                
+                
+                TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                transicion.setByX(-(67));
+                
+                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                transicionup.setByY(-100);
+                
+                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                transiciondown.setByY(100);
+                
+                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
+                transicion2.setByX((67));
+                
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                
+                animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                
+                Group cajaJ2 = (Group) cajas2.get(j + 1);
+                Group cajaI2 = (Group) cajas2.get(j);
+                cajas2.set(j + 1, cajaI2);
+                cajas2.set(j, cajaJ2);
             }
         }
     }
+    return animacion;
 }
 
-public static void cocktail(int[] arr) {
+public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root) {
+    SequentialTransition animacion = new SequentialTransition();
     boolean swapped = true;
     int start = 0;
     int end = arr.length - 1;
@@ -208,6 +236,27 @@ public static void cocktail(int[] arr) {
                 arr[i] = arr[i+1];
                 arr[i+1] = temp;
                 swapped = true;
+                
+                TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transicion.setByX(-(67));
+                
+                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transicionup.setByY(-100);
+                
+                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transiciondown.setByY(100);
+                
+                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                transicion2.setByX((67));
+                
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                
+                animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                
+                Group cajaJ2 = (Group) cajas2.get(i + 1);
+                Group cajaI2 = (Group) cajas2.get(i);
+                cajas2.set(i + 1, cajaI2);
+                cajas2.set(i, cajaJ2);
             }
         }
         if (!swapped) {
@@ -225,12 +274,33 @@ public static void cocktail(int[] arr) {
                 arr[i] = arr[i+1];
                 arr[i+1] = temp;
                 swapped = true;
+                TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transicion.setByX(-(67));
+                
+                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transicionup.setByY(-100);
+                
+                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                transiciondown.setByY(100);
+                
+                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                transicion2.setByX(67);
+                
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                
+                animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                
+                Group cajaJ2 = (Group) cajas2.get(i + 1);
+                Group cajaI2 = (Group) cajas2.get(i);
+                cajas2.set(i + 1, cajaI2);
+                cajas2.set(i, cajaJ2);
             }
+            
         }
-
         // Actualizar el extremo izquierdo
         start++;
     }
+    return animacion;
 }
 
 
@@ -239,7 +309,10 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
+      //SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
+      //SequentialTransition animacion = burbuja(cajas2,root,numeros);
+      SequentialTransition animacion = cocktail(numeros,cajas2,root);
+      
       
       boton2.setOnAction((event) -> {
             animacion.play();
@@ -284,6 +357,7 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
                 transicionup.setByY(-100);
+                
                 Labels.getChildren().add(cambioColor2(wile));
                 
                 
