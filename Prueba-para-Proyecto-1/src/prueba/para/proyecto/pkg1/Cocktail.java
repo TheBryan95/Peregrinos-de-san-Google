@@ -25,9 +25,10 @@ public class Cocktail extends Stage {
     double [] posx = new double[99];
     int j;
     Caja cajita;
-    
+    TextField velo = new TextField();
     public Cocktail() {
         
+        Label Nombre = new Label("Ordenamiento Cocktail");
         Label Titulo = new Label("Algoritmo");
         Label foor = new Label("for (int i = 1; i < n; ++i)");
         Label primer = new Label("int key = arr[i];");
@@ -45,6 +46,9 @@ public class Cocktail extends Stage {
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         
+        velo.setLayoutX(750);
+        velo.setPromptText("Velocidad");
+        
         Label l =new Label();
         l.setLayoutX(400);
         Label l2 = new Label();
@@ -56,7 +60,12 @@ public class Cocktail extends Stage {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+        
+        Nombre.setLayoutX(40);
+        Nombre.setScaleX(1.5);
+        Nombre.setScaleY(1.5);
+        Nombre.setStyle("-fx-font-weight: bold;");
         
         Titulo.setLayoutX(1350);
         Titulo.setScaleX(1.5);
@@ -115,15 +124,21 @@ public class Cocktail extends Stage {
         root.getChildren().add(fondo);
 
 
-        empezarordenamiento(cajas,cajas2,root,16, foor,primer,segundo, wile,primerwile,segunwile,finall);
+        empezarordenamiento(cajas,cajas2,root,16,1, foor,primer,segundo, wile,primerwile,segunwile,finall);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,l,l2,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall); ////////////
+            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall); ////////////
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
+            if (velo.getText().isEmpty()||text.getText().isEmpty() ) {
+                velo.setPromptText("Necesita ingresar un valor");
+                text.setPromptText("Necesita ingresar un valor");
+            } else {
+                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
+            }
+            
         });
         
             
@@ -141,18 +156,18 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
       
-      SequentialTransition animacion = cocktail(numeros,cajas2,root);
+      SequentialTransition animacion = cocktail(numeros,cajas2,root,velo);
       animacion.play();
 }  
     
     
-    public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root) {
+    public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root,double velo) {
         SequentialTransition animacion = new SequentialTransition();
         boolean swapped = true;
         int start = 0;
@@ -170,16 +185,16 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     arr[i+1] = temp;
                     swapped = true;
 
-                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicion.setByX(-(67));
 
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicionup.setByY(-100);
 
-                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transiciondown.setByY(100);
 
-                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicion2.setByX((67));
 
                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
@@ -207,16 +222,16 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     arr[i] = arr[i+1];
                     arr[i+1] = temp;
                     swapped = true;
-                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicion.setByX(-(67));
 
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicionup.setByY(-100);
 
-                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(i+1));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transiciondown.setByY(100);
 
-                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicion2.setByX(67);
 
                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
