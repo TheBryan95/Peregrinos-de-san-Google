@@ -180,44 +180,37 @@ public int[] numerosaleatorios(int largo){
 }
 
 
-public SequentialTransition burbuja(ArrayList<Group> cajas2,Group root,int[] numeros) {
-    SequentialTransition animacion = new SequentialTransition();
-    int n = numeros.length;
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
-            if (numeros[j] > numeros[j+1]) {
-                // intercambiar arr[j] y arr[j+1]
-                int temp = numeros[j];
-                numeros[j] = numeros[j+1];
-                numeros[j+1] = temp;
-                
-                
-                
-                TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                transicion.setByX(-(67));
-                
-                TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                transicionup.setByY(-100);
-                
-                TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                transiciondown.setByY(100);
-                
-                TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
-                transicion2.setByX((67));
-                
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
-                
-                animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                
-                Group cajaJ2 = (Group) cajas2.get(j + 1);
-                Group cajaI2 = (Group) cajas2.get(j);
-                cajas2.set(j + 1, cajaI2);
-                cajas2.set(j, cajaJ2);
-            }
-        }
+public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros){
+         SequentialTransition animacion = new SequentialTransition();
+         int n = numeros.length;
+         for(int i = 0; i < n-1; i++){
+             for (int j = 0; j < n-i-1; j++){
+                 if (numeros[j] > numeros[j+1]){
+                     // intercambiar numeros[j] y numeros[j+1]
+                    int temp = numeros[j];
+                    numeros[j] = numeros[j+1];
+                    numeros[j+1] = temp;
+                    
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                     transicionup.setByY(-100);
+                     TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                     transicion.setByX(-(67));
+                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
+                     transicion2.setByX((67));
+                     TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
+                     transiciondown.setByY(100);
+                     
+                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                     Group cajaJ2 = (Group) cajas2.get(j + 1);
+                     Group cajaI2 = (Group) cajas2.get(j);
+                     cajas2.set(j + 1, cajaI2);
+                     cajas2.set(j, cajaJ2);
+                 }
+             }
+         }
+          return animacion;
     }
-    return animacion;
-}
 
 public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root) {
     SequentialTransition animacion = new SequentialTransition();
@@ -309,7 +302,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      //SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
+      //SequentialTransition animacion = insercion(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
       //SequentialTransition animacion = burbuja(cajas2,root,numeros);
       SequentialTransition animacion = cocktail(numeros,cajas2,root);
       
@@ -328,7 +321,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }    
 
     
-public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int[] numeros, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
+public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[] numeros, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
       SequentialTransition animacion = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
       Group carro =grua.crearcarroGrua(78);
