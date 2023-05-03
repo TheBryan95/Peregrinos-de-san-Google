@@ -26,7 +26,6 @@ public class PruebaParaProyecto1 extends Application {
     
     ArrayList<Caja> cajas = new ArrayList();
     ArrayList<Group> cajas2 = new ArrayList(); 
-    double [] posx = new double[99];
     int j;
     Caja cajita;
     SequentialTransition Labels = new SequentialTransition();
@@ -159,7 +158,6 @@ public void moverjuntotamaño(double valor){
                     Group cajit = (Group) cajas2.get(j);
                     if (valor<100) {
                         TranslateTransition tt = caja.moverCaja(cajit, -valor*j*1.3, 0);
-                        posx[j]=valor*j*1.3;
                         tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
@@ -180,26 +178,12 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public static void burbuja(int[] arr) {
-    int n = arr.length;
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
-            if (arr[j] > arr[j+1]) {
-                // intercambiar arr[j] y arr[j+1]
-                int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
-            }
-        }
-    }
-}
-
 public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall,Button boton2){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = ordenamientob(cajas2,root,numeros);
+      SequentialTransition animacion = ordenamiento(cajas2,root,numeros, foor,primer,segundo, wile,primerwile,segunwile,finall);
       
       boton2.setOnAction((event) -> {
             animacion.play();
@@ -258,9 +242,9 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
                 transicion2.setByX((67));
                 Labels.getChildren().add(cambioColor2(primerwile));
                 
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, (int) posx[j+1]));
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, (int) (rect.getX())));
                 
-                animacion.getChildren().addAll(transicionup,pt,transiciondown,grua.moverCarro(carro, (int) -posx[j]));
+                animacion.getChildren().addAll(transicionup,pt,transiciondown);
              
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);
@@ -282,37 +266,6 @@ public SequentialTransition  ordenamiento(ArrayList<Group> cajas2,Group root,int
         
     }
 
-public SequentialTransition  ordenamientob(ArrayList<Group> cajas2,Group root,int[] numeros){
-         SequentialTransition animacion = new SequentialTransition();
-         int n = numeros.length;
-         for(int i = 0; i < n-1; i++){
-             for (int j = 0; j < n-i-1; j++){
-                 if (numeros[j] > numeros[j+1]){
-                     // intercambiar numeros[j] y numeros[j+1]
-                    int temp = numeros[j];
-                    numeros[j] = numeros[j+1];
-                    numeros[j+1] = temp;
-                    
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                     transicionup.setByY(-100);
-                     TranslateTransition transicion = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                     transicion.setByX(-(67));
-                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
-                     transicion2.setByX((67));
-                     TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(1),cajas2.get(j+1));
-                     transiciondown.setByY(100);
-                     
-                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
-                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                     Group cajaJ2 = (Group) cajas2.get(j + 1);
-                     Group cajaI2 = (Group) cajas2.get(j);
-                     cajas2.set(j + 1, cajaI2);
-                     cajas2.set(j, cajaJ2);
-                 }
-             }
-         }
-          return animacion;
-    }
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
     root.getChildren().removeAll(cajas2);
