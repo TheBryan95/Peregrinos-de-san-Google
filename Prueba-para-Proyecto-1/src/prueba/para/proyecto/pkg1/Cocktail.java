@@ -136,7 +136,14 @@ public class Cocktail extends Stage {
                 velo.setPromptText("Necesita ingresar un valor");
                 text.setPromptText("Necesita ingresar un valor");
             } else {
+                try {
                 empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall);
+                } catch (NumberFormatException e) {
+                    Label error = new Label("Error necesita ser un numero");
+                    error.setLayoutX(550);
+                    error.setLayoutY(50);
+                    root.getChildren().add(error);
+                }
             }
             
         });
