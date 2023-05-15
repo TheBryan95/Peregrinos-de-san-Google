@@ -226,7 +226,7 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
             
             
             while (j >= 0 && numeros[j] > valorActual) { 
-                Labels.getChildren().add(cambioColor(wile));
+                animacion.getChildren().add(cambioColor(wile));
                 
                 Group caj = cajas2.get(j);
                 Rectangle rect = (Rectangle) caj.getChildren().get(0);

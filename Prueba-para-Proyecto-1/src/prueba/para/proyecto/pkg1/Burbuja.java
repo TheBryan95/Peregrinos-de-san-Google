@@ -170,7 +170,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }    
 
     
-public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label segunfoor,Label iff, Label primerif,Label segunif,Label tercerif){
         SequentialTransition animacion = new SequentialTransition();
         MovimientoGrua grua = new MovimientoGrua();
         Group carro = grua.crearcarroGrua(78);
