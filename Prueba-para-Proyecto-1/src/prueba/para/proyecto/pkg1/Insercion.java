@@ -26,7 +26,6 @@ public class Insercion extends Stage {
     ArrayList<Group> cajas2 = new ArrayList(); 
     int j;
     Caja cajita;
-    SequentialTransition Labels = new SequentialTransition();
     int indice =0;
     TextField velo = new TextField();
     
@@ -199,15 +198,11 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       SequentialTransition animacion = insercion(cajas2,root,numeros,velo, foor,primer,segundo, wile,primerwile,segunwile,finall);
       boton2.setOnAction((event) -> {
             animacion.play();
-            Labels.play(); 
-            animacion.play();
         });
       
-
       if (indice == numeros.length){
-          Labels.stop();
+          animacion.stop();
       }
-      
 }  
     
 public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
@@ -217,19 +212,20 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
       root.getChildren().addAll(carro);
       
         for (int i = 1; i < numeros.length; i++) {
-            Labels.getChildren().add(cambioColor(foor));
-            Labels.getChildren().add(cambioColor2(foor));
+            animacion.getChildren().add(cambioColor(foor));
+            
             
             int valorActual = numeros[i];
-            Labels.getChildren().add(cambioColor(primer));
-            Labels.getChildren().add(cambioColor2(primer));
+            animacion.getChildren().add(cambioColor(primer));
+            
+            
             int j = i - 1;
-            Labels.getChildren().add(cambioColor(segundo));
-            Labels.getChildren().add(cambioColor2(segundo));
+            animacion.getChildren().add(cambioColor(segundo));
+            
             
             
             while (j >= 0 && numeros[j] > valorActual) { //
-                Labels.getChildren().add(cambioColor(wile));
+                animacion.getChildren().add(cambioColor(wile));
                 
                 Group caj = cajas2.get(j);
                 Rectangle rect = (Rectangle) caj.getChildren().get(0);
@@ -240,11 +236,10 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transicionup.setByY(-100);
                 
-                Labels.getChildren().add(cambioColor2(wile));
-                
                 
                 numeros[j + 1] = numeros[j]; 
-                Labels.getChildren().add(cambioColor(primerwile));
+                animacion.getChildren().add(cambioColor(primerwile));
+                animacion.getChildren().add(cambioColor(segunwile));
                 
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transiciondown.setByY(100);
@@ -252,7 +247,7 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 
                 TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
                 transicion2.setByX((67));
-                Labels.getChildren().add(cambioColor2(primerwile));
+               
                 
                 ParallelTransition pt = new ParallelTransition(transicion,transicion2);
                 
@@ -263,14 +258,13 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 cajas2.set(j + 1, cajaI2);
                 cajas2.set(j, cajaJ2);
                 
+
                 j--;
-                Labels.getChildren().add(cambioColor(segunwile));
-                Labels.getChildren().add(cambioColor2(segunwile));
+
             }
           
             numeros[j + 1] = valorActual;//
-            Labels.getChildren().add(cambioColor(finall));
-            Labels.getChildren().add(cambioColor2(finall));
+            animacion.getChildren().add(cambioColor(finall));
             indice++;
     
         }
@@ -303,14 +297,14 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 public Transition cambioColor(Label label){
     SequentialTransition colorChange = new SequentialTransition(label);
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    //colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
-    return colorChange;
-}
-
-public Transition cambioColor2(Label label){
-    SequentialTransition colorChange = new SequentialTransition(label);
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
+
+//public Transition cambioColor2(Label label){
+//    SequentialTransition colorChange = new SequentialTransition(label);
+//    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+//    return colorChange;
+//}
 
 }

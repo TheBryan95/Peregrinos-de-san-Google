@@ -31,13 +31,12 @@ public class Burbuja extends Stage {
     public Burbuja() {
         Label Nombre = new Label("Ordenamiento Burbuja");
         Label Titulo = new Label("Algoritmo");
-        Label foor = new Label("for (int i = 1; i < n; ++i)");
-        Label primer = new Label("int key = arr[i];");
-        Label segundo = new Label("int j = i - 1;");
-        Label wile = new Label("while (j >= 0 && arr[j] > key)");
-        Label primerwile = new Label("arr[j + 1] = arr[j];");
-        Label segunwile = new Label("j = j - 1;");
-        Label finall = new Label("arr[j + 1] = key;");
+        Label foor = new Label("for (int i = 0; i < n-1; i++)");
+        Label segunfoor = new Label("for (int j = 0; j < n-i-1; j++)");
+        Label iff = new Label("if (numeros[j] > numeros[j+1])");
+        Label primerif = new Label("int temp = numeros[j]");
+        Label segunif = new Label("numeros[j] = numeros[j+1]");
+        Label tercerif = new Label("numeros[j+1] = temp");
         
         Group root = new Group();//Se le agregan los elemenos a la pantalla
         //Se inician sliders, label, boton y caja de texto que iran en pantalla
@@ -61,7 +60,7 @@ public class Burbuja extends Stage {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
@@ -80,40 +79,36 @@ public class Burbuja extends Stage {
         foor.setScaleY(1.5);
 
 
-        primer.setLayoutX(1380);
-        primer.setLayoutY(75);
-        primer.setScaleX(1.5);
-        primer.setScaleY(1.5);
+        segunfoor.setLayoutX(1380);
+        segunfoor.setLayoutY(75);
+        segunfoor.setScaleX(1.5);
+        segunfoor.setScaleY(1.5);
 
 
-        segundo.setLayoutX(1375);
-        segundo.setLayoutY(100);
-        segundo.setScaleX(1.5);
-        segundo.setScaleY(1.5);
+        iff.setLayoutX(1400);
+        iff.setLayoutY(100);
+        iff.setScaleX(1.5);
+        iff.setScaleY(1.5);
 
 
-        wile.setLayoutX(1400);
-        wile.setLayoutY(125);
-        wile.setScaleX(1.5);
-        wile.setScaleY(1.5);
+        primerif.setLayoutX(1400);
+        primerif.setLayoutY(125);
+        primerif.setScaleX(1.5);
+        primerif.setScaleY(1.5);
 
 
-        primerwile.setLayoutX(1400);
-        primerwile.setLayoutY(150);
-        primerwile.setScaleX(1.5);
-        primerwile.setScaleY(1.5);
+        segunif.setLayoutX(1405);
+        segunif.setLayoutY(150);
+        segunif.setScaleX(1.5);
+        segunif.setScaleY(1.5);
 
 
-        segunwile.setLayoutX(1390);
-        segunwile.setLayoutY(175);
-        segunwile.setScaleX(1.5);
-        segunwile.setScaleY(1.5);
+        tercerif.setLayoutX(1400);
+        tercerif.setLayoutY(175);
+        tercerif.setScaleX(1.5);
+        tercerif.setScaleY(1.5);
 
 
-        finall.setLayoutX(1340);
-        finall.setLayoutY(200);
-        finall.setScaleX(1.5);
-        finall.setScaleY(1.5);
        
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
@@ -125,12 +120,12 @@ public class Burbuja extends Stage {
         root.getChildren().add(fondo);
 
 
-        empezarordenamiento(cajas,cajas2,root,16,1, foor,primer,segundo, wile,primerwile,segunwile,finall);
+        empezarordenamiento(cajas,cajas2,root,16,1, foor,segunfoor,iff, primerif,segunif,tercerif);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall);
+            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
             if (velo.getText().isEmpty()||text.getText().isEmpty() ) {
@@ -138,7 +133,7 @@ public class Burbuja extends Stage {
                 text.setPromptText("Necesita ingresar un valor");
             } else {
                 try {
-                    empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()) ,foor,primer,segundo, wile,primerwile,segunwile,finall);
+                    empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
                 } catch (NumberFormatException e) {
                     Label error = new Label("Error necesita ser un numero");
                     error.setLayoutX(550);
@@ -165,46 +160,54 @@ public int[] numerosaleatorios(int largo){
       }
       return numeros;
 }
-public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label foor,Label segunfoor,Label iff,Label primerif,Label segunif,Label tercerif){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = burbuja(cajas2,root,numeros,velo);
+      SequentialTransition animacion = burbuja(cajas2,root,numeros,velo,foor,segunfoor,iff, primerif,segunif,tercerif);
       animacion.play();
 }    
 
     
-public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label segunfoor,Label iff,Label primerif,Label segunif,Label tercerif){
          SequentialTransition animacion = new SequentialTransition();
          int n = numeros.length;
+         
          for(int i = 0; i < n-1; i++){
+            animacion.getChildren().add(cambioColor(foor));
              for (int j = 0; j < n-i-1; j++){
+                 animacion.getChildren().add(cambioColor(segunfoor));
                  if (numeros[j] > numeros[j+1]){
+                     animacion.getChildren().add(cambioColor(iff));
                      // intercambiar numeros[j] y numeros[j+1]
                     int temp = numeros[j];
+                    animacion.getChildren().add(cambioColor(primerif));
                     numeros[j] = numeros[j+1];
+                    animacion.getChildren().add(cambioColor(segunif));
                     numeros[j+1] = temp;
+                    animacion.getChildren().add(cambioColor(tercerif));
+                    
                     
                     TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
-                     transicionup.setByY(-100);
-                     TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
-                     transicion.setByX(-(67));
-                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
-                     transicion2.setByX((67));
-                     TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
-                     transiciondown.setByY(100);
+                    transicionup.setByY(-100);
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
+                    transicion.setByX(-(67));
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
+                    transicion2.setByX((67));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
+                    transiciondown.setByY(100);
                      
-                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
-                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                     Group cajaJ2 = (Group) cajas2.get(j + 1);
-                     Group cajaI2 = (Group) cajas2.get(j);
-                     cajas2.set(j + 1, cajaI2);
-                     cajas2.set(j, cajaJ2);
-                 }
-             }
-         }
-          return animacion;
+                    ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                    animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                    Group cajaJ2 = (Group) cajas2.get(j + 1);
+                    Group cajaI2 = (Group) cajas2.get(j);
+                    cajas2.set(j + 1, cajaI2);
+                    cajas2.set(j, cajaJ2);
+                }
+            }
+        }
+        return animacion;
     }
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
@@ -247,8 +250,8 @@ public void moverjuntotamaño(double valor){
 }
 public SequentialTransition cambioColor(Label label){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
 }
