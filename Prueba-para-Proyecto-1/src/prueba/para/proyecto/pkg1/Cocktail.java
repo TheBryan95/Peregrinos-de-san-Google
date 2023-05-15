@@ -176,6 +176,9 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
     
     public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root,double velo) {
         SequentialTransition animacion = new SequentialTransition();
+        MovimientoGrua grua = new MovimientoGrua();
+        Group carro = grua.crearcarroGrua(78);
+        root.getChildren().addAll(carro);
         boolean swapped = true;
         int start = 0;
         int end = arr.length - 1;
@@ -204,7 +207,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicion2.setByX((67));
 
-                    ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                    ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, i+1,velo));
 
                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
 

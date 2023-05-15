@@ -208,8 +208,10 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
       SequentialTransition animacion = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
-      Group carro =grua.crearcarroGrua(78);
-      root.getChildren().addAll(carro);
+      Group carro = grua.crearcarroGrua(78);
+      MovimientoGrua grua2 = new MovimientoGrua();
+      Group carro2 = grua2.crearSegundoCarroGrua(78);
+      root.getChildren().addAll(carro,carro2);
       
         for (int i = 1; i < numeros.length; i++) {
             animacion.getChildren().add(cambioColor(foor));
@@ -223,9 +225,8 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
             animacion.getChildren().add(cambioColor(segundo));
             
             
-            
-            while (j >= 0 && numeros[j] > valorActual) { //
-                animacion.getChildren().add(cambioColor(wile));
+            while (j >= 0 && numeros[j] > valorActual) { 
+                Labels.getChildren().add(cambioColor(wile));
                 
                 Group caj = cajas2.get(j);
                 Rectangle rect = (Rectangle) caj.getChildren().get(0);
@@ -249,9 +250,9 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 transicion2.setByX((67));
                
                 
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j-1, velo));
                 
-                animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                animacion.getChildren().addAll(transicionup,grua2.moverCarro(carro2, j, velo),pt,transiciondown);
              
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);
@@ -263,8 +264,8 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
 
             }
           
-            numeros[j + 1] = valorActual;//
             animacion.getChildren().add(cambioColor(finall));
+            numeros[j + 1] = valorActual;//
             indice++;
     
         }

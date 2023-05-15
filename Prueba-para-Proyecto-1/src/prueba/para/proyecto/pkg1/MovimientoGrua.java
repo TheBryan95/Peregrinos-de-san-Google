@@ -9,7 +9,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class MovimientoGrua {
-   
+    
+    int posx = 0;
     
     public  Group dibujarGrua(Scene scene){
         
@@ -85,7 +86,7 @@ public class MovimientoGrua {
         carro1.setFill(Color.BLUE);
         carro1.setStroke(Color.BLACK);
         carro1.setStrokeWidth(3);
-        Line cuerda = new Line(x+40, 100, x+40, 250);
+        Line cuerda = new Line(x+40, 100, x+40, 500);
         cuerda.setStrokeWidth(7);
         Group carro = new Group(cuerda,carro1);
         return carro;
@@ -101,10 +102,10 @@ public class MovimientoGrua {
         return carrito;
     }
 
-    public TranslateTransition moverCarro(Group carro,int x){
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5),carro);
-        tt.setByX(x);
-
+    public TranslateTransition moverCarro(Group carro,int j,double velo){
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(velo),carro);
+        tt.setByX(((j)-posx)*67);
+        posx=j;
         return tt;
 
         }
