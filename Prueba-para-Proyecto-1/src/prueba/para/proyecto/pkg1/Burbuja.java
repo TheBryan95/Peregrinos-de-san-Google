@@ -176,7 +176,10 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 
     
 public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
-         SequentialTransition animacion = new SequentialTransition();
+        SequentialTransition animacion = new SequentialTransition();
+        MovimientoGrua grua = new MovimientoGrua();
+        Group carro = grua.crearcarroGrua(78);
+        root.getChildren().addAll(carro);
          int n = numeros.length;
          for(int i = 0; i < n-1; i++){
              for (int j = 0; j < n-i-1; j++){
@@ -195,7 +198,7 @@ public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] nu
                      TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                      transiciondown.setByY(100);
                      
-                     ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                     ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo));
                      animacion.getChildren().addAll(transicionup,pt,transiciondown);
                      Group cajaJ2 = (Group) cajas2.get(j + 1);
                      Group cajaI2 = (Group) cajas2.get(j);
