@@ -240,31 +240,40 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
       
-      SequentialTransition animacion = cocktail(numeros,cajas2,root,velo);
+      SequentialTransition animacion = cocktail(numeros,cajas2,root,velo,wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
       animacion.play();
 }  
     
     
-    public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root,double velo) {
+    public SequentialTransition cocktail(int[] arr, ArrayList<Group> cajas2,Group root,double velo, Label wile, Label swaped, Label foor, Label iff, Label primeriff, Label seguniff, Label terceriff, Label swaped2, Label ifSwaped, Label breakk, Label end1, Label segunfoor, Label iff2, Label primeriff2,Label seguniff2, Label terceriff2, Label swaped3, Label start1) {
         SequentialTransition animacion = new SequentialTransition();
         MovimientoGrua grua = new MovimientoGrua();
         Group carro = grua.crearcarroGrua(78);
         root.getChildren().addAll(carro);
+        
         boolean swapped = true;
         int start = 0;
         int end = arr.length - 1;
 
         while (swapped) {
+            animacion.getChildren().add(cambioColor(wile));
             swapped = false;
+            animacion.getChildren().add(cambioColor(swaped));
 
             // Pasada hacia adelante
             for (int i = start; i < end; i++) {
+                animacion.getChildren().add(cambioColor(foor));
                 if (arr[i] > arr[i + 1]) {
+                    animacion.getChildren().add(cambioColor(iff));
                     // intercambiar arr[i] y arr[i+1]
                     int temp = arr[i];
+                    animacion.getChildren().add(cambioColor(primeriff));
                     arr[i] = arr[i+1];
+                    animacion.getChildren().add(cambioColor(seguniff));
                     arr[i+1] = temp;
+                    animacion.getChildren().add(cambioColor(terceriff));
                     swapped = true;
+                    animacion.getChildren().add(cambioColor(swaped2));
 
                     TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicion.setByX(-(67));
@@ -289,20 +298,29 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                 }
             }
             if (!swapped) {
+                animacion.getChildren().add(cambioColor(ifSwaped));
+                animacion.getChildren().add(cambioColor(breakk));
                 break;
             }
 
             // Actualizar el extremo derecho
+           
             end--;
-
+            animacion.getChildren().add(cambioColor(end1));
             // Pasada hacia atrás
             for (int i = end-1; i >= start; i--) {
+                animacion.getChildren().add(cambioColor(seguniff));
                 if (arr[i] > arr[i + 1]) {
+                    animacion.getChildren().add(cambioColor(iff2));
                     // intercambiar arr[i] y arr[i+1]
                     int temp = arr[i];
+                    animacion.getChildren().add(cambioColor(primeriff2));
                     arr[i] = arr[i+1];
+                    animacion.getChildren().add(cambioColor(seguniff2));
                     arr[i+1] = temp;
+                    animacion.getChildren().add(cambioColor(terceriff2));
                     swapped = true;
+                    animacion.getChildren().add(cambioColor(swaped3));
                     TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
                     transicion.setByX(-(67));
 
@@ -328,6 +346,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
             }
             // Actualizar el extremo izquierdo
             start++;
+            animacion.getChildren().add(cambioColor(start1));
         }
         return animacion;
 }
@@ -371,8 +390,8 @@ public void moverjuntotamaño(double valor){
 }
 public SequentialTransition cambioColor(Label label){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
     
