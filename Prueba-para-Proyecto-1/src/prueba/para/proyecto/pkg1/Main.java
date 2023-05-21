@@ -9,13 +9,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
      @Override
     public void start(Stage primaryStage) {
         Label l1 = new Label("Menu de ordenamientos Visuales");
+        l1.setFont(Font.font("Times New Roman", 14));
         
         l1.setScaleX(2);
         l1.setScaleY(2);
@@ -34,19 +39,27 @@ public class Main extends Application {
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         
-        
+        botonInsert.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), null)));
+        botonInsert.setTextFill(Color.WHITE);
+        botonInsert.setFont(Font.font("Times New Roman", 14));
         botonInsert.setLayoutX(230);
         botonInsert.setLayoutY(200);
         botonInsert.setPrefWidth(200);
         botonInsert.setScaleX(2);
         botonInsert.setScaleY(2);
         
+        botonBubble.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), null)));
+        botonBubble.setTextFill(Color.WHITE);
+        botonBubble.setFont(Font.font("Times New Roman", 14));
         botonBubble.setLayoutX(230);
         botonBubble.setLayoutY(450);
         botonBubble.setPrefWidth(200);
         botonBubble.setScaleX(2);
         botonBubble.setScaleY(2);
         
+        botonCocktail.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), null)));
+        botonCocktail.setTextFill(Color.WHITE);
+        botonCocktail.setFont(Font.font("Times New Roman", 14));
         botonCocktail.setLayoutX(230);
         botonCocktail.setLayoutY(680);
         botonCocktail.setPrefWidth(200);
