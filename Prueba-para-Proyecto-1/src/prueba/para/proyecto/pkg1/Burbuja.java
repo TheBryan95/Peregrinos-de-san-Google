@@ -201,12 +201,13 @@ public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] nu
                     TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                     transiciondown.setByY(100);
                      
-                     ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo));
-                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                     Group cajaJ2 = (Group) cajas2.get(j + 1);
-                     Group cajaI2 = (Group) cajas2.get(j);
-                     cajas2.set(j + 1, cajaI2);
-                     cajas2.set(j, cajaJ2);
+                    animacion.getChildren().add(grua.moverCarro(carro, j,velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,grua.moverCarro(carro, j+1,velo),transicion2);
+                    animacion.getChildren().addAll(transicionup,pt,transiciondown);
+                    Group cajaJ2 = (Group) cajas2.get(j + 1);
+                    Group cajaI2 = (Group) cajas2.get(j);
+                    cajas2.set(j + 1, cajaI2);
+                    cajas2.set(j, cajaJ2);
                  }
              }
          }

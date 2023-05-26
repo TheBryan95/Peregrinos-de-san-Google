@@ -250,7 +250,8 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 transicion2.setByX((67));
                
                 
-                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j-1, velo));
+                animacion.getChildren().addAll(grua.moverCarro(carro, j, velo),grua2.moverCarro(carro2, j+1, velo));
+                ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j, velo));
                 
                 animacion.getChildren().addAll(transicionup,grua2.moverCarro(carro2, j, velo),pt,transiciondown);
              

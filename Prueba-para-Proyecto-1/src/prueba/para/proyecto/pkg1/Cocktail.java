@@ -293,7 +293,8 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicion2.setByX((67));
 
-                    ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, i+1,velo));
+                    animacion.getChildren().add(grua.moverCarro(carro, i,velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,grua.moverCarro(carro, i+1,velo),transicion2);
 
                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
 
@@ -338,8 +339,9 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 
                     TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicion2.setByX(67);
-
-                    ParallelTransition pt = new ParallelTransition(transicion,transicion2);
+                    
+                    animacion.getChildren().add(grua.moverCarro(carro, i,velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,grua.moverCarro(carro, i+1,velo),transicion2);
 
                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
 
