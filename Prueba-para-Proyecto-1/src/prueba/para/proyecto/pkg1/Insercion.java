@@ -214,22 +214,20 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
       root.getChildren().addAll(carro,carro2);
       
         for (int i = 1; i < numeros.length; i++) {
-            animacion.getChildren().add(cambioColor(foor));
+            animacion.getChildren().add(cambioColor(foor,velo));
             
             
             int valorActual = numeros[i];
-            animacion.getChildren().add(cambioColor(primer));
+            animacion.getChildren().add(cambioColor(primer,velo));
             
             
             int j = i - 1;
-            animacion.getChildren().add(cambioColor(segundo));
+            animacion.getChildren().add(cambioColor(segundo,velo));
             
             
             while (j >= 0 && numeros[j] > valorActual) { 
-                animacion.getChildren().add(cambioColor(wile));
-                
-                Group caj = cajas2.get(j);
-                Rectangle rect = (Rectangle) caj.getChildren().get(0);
+                animacion.getChildren().add(cambioColor(wile,velo));
+               
                 
                 TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transicion.setByX(-(67));
@@ -239,8 +237,8 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 
                 
                 numeros[j + 1] = numeros[j]; 
-                animacion.getChildren().add(cambioColor(primerwile));
-                animacion.getChildren().add(cambioColor(segunwile));
+                animacion.getChildren().add(cambioColor(primerwile,velo));
+                animacion.getChildren().add(cambioColor2(segunwile,velo));
                 
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transiciondown.setByY(100);
@@ -252,9 +250,11 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 
                 animacion.getChildren().addAll(grua.moverCarro(carro, j, velo),grua2.moverCarro(carro2, j+1, velo));
                 ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j, velo));
+                ParallelTransition pt2 = new ParallelTransition(transicionup,grua2.cambiarLinea(carro2,-0.45,velo));
+                animacion.getChildren().addAll(grua2.cambiarLinea(carro2,0.45,velo),pt2,grua2.moverCarro(carro2, j, velo),pt);
+                ParallelTransition pt3 = new ParallelTransition(grua2.cambiarLinea(carro2,0.45,velo),transiciondown);
+                animacion.getChildren().addAll(cambioColor3(segunwile,velo),pt3,grua2.cambiarLinea(carro2,-0.45,velo));
                 
-                animacion.getChildren().addAll(transicionup,grua2.moverCarro(carro2, j, velo),pt,transiciondown);
-             
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
@@ -262,11 +262,10 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 
 
                 j--;
-
             }
           
-            animacion.getChildren().add(cambioColor(finall));
-            numeros[j + 1] = valorActual;//
+            animacion.getChildren().add(cambioColor(finall,velo));
+            numeros[j + 1] = valorActual;
             indice++;
     
         }
@@ -296,17 +295,22 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
 
 
-public Transition cambioColor(Label label){
+public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
-
-//public Transition cambioColor2(Label label){
-//    SequentialTransition colorChange = new SequentialTransition(label);
-//    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
-//    return colorChange;
-//}
+public Transition cambioColor2(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    return colorChange;
+}
+public Transition cambioColor3(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
+}
 
 }

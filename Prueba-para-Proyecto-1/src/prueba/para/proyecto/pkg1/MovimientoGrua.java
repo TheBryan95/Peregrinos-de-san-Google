@@ -1,5 +1,7 @@
 package prueba.para.proyecto.pkg1;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -81,6 +83,7 @@ public class MovimientoGrua {
         grua.getChildren().addAll(linea5,linea6);
         return grua;
     }
+    
     public Group crearcarroGrua(int x){
         Rectangle carro1 = new Rectangle(x, 100, 80, 30);
         carro1.setFill(Color.BLUE);
@@ -91,6 +94,7 @@ public class MovimientoGrua {
         Group carro = new Group(cuerda,carro1);
         return carro;
     }
+    
     public Group crearSegundoCarroGrua(int x){
         Rectangle carro2 = new Rectangle(x, 140, 80, 30);
         carro2.setFill(Color.RED);
@@ -101,7 +105,18 @@ public class MovimientoGrua {
         Group carrito = new Group(cuerda2,carro2);
         return carrito;
     }
-
+    
+    public ParallelTransition cambiarLinea(Group carro,double y,double velo){
+        ParallelTransition pt = new ParallelTransition();
+        Line cuerda = (Line) carro.getChildren().get(0);
+        ScaleTransition st = new ScaleTransition(Duration.seconds(velo), cuerda);
+        st.setByY(y);
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(velo), cuerda);
+        tt.setByY(98*y);
+        pt.getChildren().addAll(st,tt);
+        return pt;
+    }
+    
     public TranslateTransition moverCarro(Group carro,int j,double velo){
         TranslateTransition tt = new TranslateTransition(Duration.seconds(velo),carro);
         tt.setByX(((j)-posx)*67);
