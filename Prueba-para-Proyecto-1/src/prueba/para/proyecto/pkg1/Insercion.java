@@ -250,10 +250,10 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
                 
                 animacion.getChildren().addAll(grua.moverCarro(carro, j, velo),grua2.moverCarro(carro2, j+1, velo));
                 ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j, velo));
-                ParallelTransition pt2 = new ParallelTransition(transicionup,grua2.cambiarLinea(carro2,-0.45,velo));
-                animacion.getChildren().addAll(grua2.cambiarLinea(carro2,0.45,velo),pt2,grua2.moverCarro(carro2, j, velo),pt);
-                ParallelTransition pt3 = new ParallelTransition(grua2.cambiarLinea(carro2,0.45,velo),transiciondown);
-                animacion.getChildren().addAll(cambioColor3(segunwile,velo),pt3,grua2.cambiarLinea(carro2,-0.45,velo));
+                ParallelTransition pt2 = new ParallelTransition(transicionup,grua2.cambiarLinea(carro2,-0.45,98,velo));
+                animacion.getChildren().addAll(grua2.cambiarLinea(carro2,0.45,98,velo),pt2,grua2.moverCarro(carro2, j, velo),pt);
+                ParallelTransition pt3 = new ParallelTransition(grua2.cambiarLinea(carro2,0.45,98,velo),transiciondown);
+                animacion.getChildren().addAll(cambioColor3(segunwile,velo),pt3,grua2.cambiarLinea(carro2,-0.45,98,velo));
                 
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);

@@ -106,13 +106,13 @@ public class MovimientoGrua {
         return carrito;
     }
     
-    public ParallelTransition cambiarLinea(Group carro,double y,double velo){
+    public ParallelTransition cambiarLinea(Group carro,double y,double x,double velo){
         ParallelTransition pt = new ParallelTransition();
         Line cuerda = (Line) carro.getChildren().get(0);
         ScaleTransition st = new ScaleTransition(Duration.seconds(velo), cuerda);
         st.setByY(y);
         TranslateTransition tt = new TranslateTransition(Duration.seconds(velo), cuerda);
-        tt.setByY(98*y);
+        tt.setByY(x*y);
         pt.getChildren().addAll(st,tt);
         return pt;
     }
