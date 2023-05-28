@@ -18,16 +18,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.crypto.AEADBadTagException;
 
 public class Burbuja extends Stage {
     
     ArrayList<Caja> cajas = new ArrayList();
     ArrayList<Group> cajas2 = new ArrayList(); 
-    double [] posx = new double[99];
     int j;
     Caja cajita;
     TextField velo = new TextField();
+    SequentialTransition animacion = new SequentialTransition();
     
     public Burbuja() {
         Label Nombre = new Label("Ordenamiento Burbuja");
@@ -124,6 +123,8 @@ public class Burbuja extends Stage {
         empezarordenamiento(cajas,cajas2,root,16,1, foor,segunfoor,iff, primerif,segunif,tercerif);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
+            animacion.stop();
+            animacion.getChildren().clear();
             root.getChildren().clear();
             
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
@@ -166,13 +167,13 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = burbuja(cajas2,root,numeros,velo,foor,segunfoor,iff, primerif,segunif,tercerif);
+      animacion = burbuja(cajas2,root,numeros,velo,foor,segunfoor,iff, primerif,segunif,tercerif);
       animacion.play();
 }    
 
     
 public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label segunfoor,Label iff, Label primerif,Label segunif,Label tercerif){
-        SequentialTransition animacion = new SequentialTransition();
+        animacion = new SequentialTransition();
         MovimientoGrua grua = new MovimientoGrua();
         Group carro = grua.crearcarroGrua(78);
         root.getChildren().addAll(carro);
@@ -244,7 +245,6 @@ public void moverjuntotamaño(double valor){
                     Group cajit = (Group) cajas2.get(j);
                     if (valor<100) {
                         TranslateTransition tt = caja.moverCaja(cajit, -valor*j*1.3,0);
-                        posx[j]=valor*j*1.3;
                         tt.setDuration(Duration.millis(01));
                         tt.play();
                     }

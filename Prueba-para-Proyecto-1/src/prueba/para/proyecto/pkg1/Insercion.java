@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -28,6 +27,7 @@ public class Insercion extends Stage {
     Caja cajita;
     int indice =0;
     TextField velo = new TextField();
+    SequentialTransition animacion = new SequentialTransition();
     
     public Insercion() {
         Label Nombre = new Label("Ordenamiento Inserción");
@@ -133,6 +133,8 @@ public class Insercion extends Stage {
         empezarordenamiento(cajas,cajas2,root,16,1, foor,primer,segundo, wile,primerwile,segunwile,finall,boton2);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
+            animacion.stop();
+            animacion.getChildren().clear();
             root.getChildren().clear();
             
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2); ////////////
@@ -195,7 +197,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = insercion(cajas2,root,numeros,velo, foor,primer,segundo, wile,primerwile,segunwile,finall);
+      animacion = insercion(cajas2,root,numeros,velo, foor,primer,segundo, wile,primerwile,segunwile,finall);
       boton2.setOnAction((event) -> {
             animacion.play();
         });
@@ -206,7 +208,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }  
     
 public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall){
-      SequentialTransition animacion = new SequentialTransition();
+      animacion = new SequentialTransition();
       MovimientoGrua grua = new MovimientoGrua();
       Group carro = grua.crearcarroGrua(78);
       MovimientoGrua grua2 = new MovimientoGrua();
