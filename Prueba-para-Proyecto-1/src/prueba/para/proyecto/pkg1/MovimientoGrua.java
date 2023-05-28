@@ -11,12 +11,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class MovimientoGrua {
-    
     int posx = 0;
-    
     public  Group dibujarGrua(Scene scene){
-        
-//        int largo = (int) scene.getWidth();
         int alto = (int) scene.getHeight();
         Group grua = new Group();
         for (int i = 0,j=alto; i < 5; i++) {
@@ -24,7 +20,6 @@ public class MovimientoGrua {
             linea.setStrokeWidth(7);
             Line linea2 = new Line(55,j,55,j-100);
             linea2.setStrokeWidth(7);
-            
             Line diag = new Line(7, j, 53, j-100);
             Line diag2 = new Line(53, j, 7, j-100);
             diag.setStrokeWidth(7);
@@ -32,21 +27,18 @@ public class MovimientoGrua {
             if (i%2==0) {
                 linea.setStroke(Color.RED);
                 linea2.setStroke(Color.RED);
-                
                 diag.setStroke(Color.WHITE);
                 diag2.setStroke(Color.WHITE);
             }
             else{
                 linea.setStroke(Color.WHITE);
                 linea2.setStroke(Color.WHITE);
-          
                 diag.setStroke(Color.RED);
                 diag2.setStroke(Color.RED);
             }
             grua.getChildren().addAll(diag,diag2,linea,linea2);
             j=j-100;
         }
-        
         
         for (int i = 0,j=alto; i < 5; i++) {
             Line linea3 = new Line(1300-15, j,1300-15, j-100);
@@ -122,6 +114,5 @@ public class MovimientoGrua {
         tt.setByX(((j)-posx)*67);
         posx=j;
         return tt;
-
         }
 }
