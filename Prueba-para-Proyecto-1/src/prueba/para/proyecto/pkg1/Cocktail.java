@@ -283,23 +283,25 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     animacion.getChildren().add(cambioColor2(swaped2,velo));
                     
 
-                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
-                    transicion.setByX(-(67));
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
+                    transicion.setByX((67));
 
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicionup.setByY(-100);
 
-                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transiciondown.setByY(100);
 
-                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
-                    transicion2.setByX((67));
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    transicion2.setByX((-67));
 
-                    animacion.getChildren().add(grua.moverCarro(carro, i,velo));
-                    ParallelTransition pt = new ParallelTransition(transicion,grua.moverCarro(carro, i+1,velo),transicion2);
-
-                    animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                    animacion.getChildren().add(cambioColor3(swaped2,velo));
+                    animacion.getChildren().addAll(grua.moverCarro(carro, i, velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, i+1, velo));
+                    ParallelTransition pt2 = new ParallelTransition(grua.cambiarLinea(carro,-0.28,150,velo),transicionup);
+                    animacion.getChildren().addAll(pt2,grua.moverCarro(carro, i+1, velo),pt);
+                    ParallelTransition pt3 = new ParallelTransition(grua.cambiarLinea(carro,0.28,150,velo),transiciondown);
+                    animacion.getChildren().addAll(cambioColor3(swaped2,velo),pt3);
+                    
                     Group cajaJ2 = (Group) cajas2.get(i + 1);
                     Group cajaI2 = (Group) cajas2.get(i);
                     cajas2.set(i + 1, cajaI2);
@@ -330,23 +332,25 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     arr[i+1] = temp;
                     animacion.getChildren().add(cambioColor2(swaped3,velo));
                     swapped = true;
-                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
-                    transicion.setByX(-(67));
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
+                    transicion.setByX((67));
 
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transicionup.setByY(-100);
 
-                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
                     transiciondown.setByY(100);
 
-                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i));
-                    transicion2.setByX(67);
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(i+1));
+                    transicion2.setByX(-67);
                     
-                    animacion.getChildren().add(grua.moverCarro(carro, i,velo));
-                    ParallelTransition pt = new ParallelTransition(transicion,grua.moverCarro(carro, i+1,velo),transicion2);
-
-                    animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                    animacion.getChildren().add(cambioColor3(swaped3,velo));  
+                    animacion.getChildren().addAll(grua.moverCarro(carro, i, velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, i+1, velo));
+                    ParallelTransition pt2 = new ParallelTransition(grua.cambiarLinea(carro,-0.28,150,velo),transicionup);
+                    animacion.getChildren().addAll(pt2,grua.moverCarro(carro, i+1, velo),pt);
+                    ParallelTransition pt3 = new ParallelTransition(grua.cambiarLinea(carro,0.28,150,velo),transiciondown);
+                    animacion.getChildren().addAll(cambioColor3(swaped2,velo),pt3); 
+                    
                     Group cajaJ2 = (Group) cajas2.get(i + 1);
                     Group cajaI2 = (Group) cajas2.get(i);
                     cajas2.set(i + 1, cajaI2);
