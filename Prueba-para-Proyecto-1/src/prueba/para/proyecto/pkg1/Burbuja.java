@@ -2,11 +2,14 @@ package prueba.para.proyecto.pkg1;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,16 +20,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.crypto.AEADBadTagException;
 
 public class Burbuja extends Stage {
     
     ArrayList<Caja> cajas = new ArrayList();
     ArrayList<Group> cajas2 = new ArrayList(); 
-    double [] posx = new double[99];
     int j;
     Caja cajita;
     TextField velo = new TextField();
+    SequentialTransition animacion = new SequentialTransition();
     
     public Burbuja() {
         Label Nombre = new Label("Ordenamiento Burbuja");
@@ -123,33 +125,43 @@ public class Burbuja extends Stage {
         empezarordenamiento(cajas,cajas2,root,16,1, foor,segunfoor,iff, primerif,segunif,tercerif);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
         boton.setOnAction((event) -> {
+            animacion.stop();
+            animacion.getChildren().clear();
             root.getChildren().clear();
             
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            if (velo.getText().isEmpty()||text.getText().isEmpty() ) {
-                velo.setPromptText("Necesita ingresar un valor");
-                text.setPromptText("Necesita ingresar un valor");
-            } else {
-                try {
-                    empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
-                } catch (NumberFormatException e) {
-                    Label error = new Label("Error necesita ser un numero");
-                    error.setLayoutX(550);
-                    error.setLayoutY(50);
-                    root.getChildren().add(error);
-                }
-                
-            }
             
+            if (validarNumero(text.getText()) && validarNumeroVelo(velo.getText())){
+                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
+            }else{
+                velo.setPromptText("Necesita ingresar un valor valido");
+                text.setPromptText("Necesita ingresar un valor valido");
+                Label error = new Label("Error necesita ser un valor valido");
+                error.setLayoutX(550);
+                error.setLayoutY(50);
+                root.getChildren().add(error);
+        }
+            
+//            if (velo.getText().isEmpty() || text.getText().isEmpty() || validarNumero(text.getText())==false || validarNumeroVelo((velo.getText()))==false){
+//                velo.setPromptText("Necesita ingresar un valor valido");
+//                text.setPromptText("Necesita ingresar un valor valido");
+//                Label error = new Label("Error necesita ser un valor valido");
+//                error.setLayoutX(550);
+//                error.setLayoutY(50);
+//                root.getChildren().add(error);
+//            } else {
+//                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);   
+//            } 
+
         });
         
             
         //Se inicia la pantalla
         stage.setScene(scene);
         stage.show();
-
+        
     }
 
     
@@ -165,48 +177,53 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      SequentialTransition animacion = burbuja(cajas2,root,numeros,velo,foor,segunfoor,iff, primerif,segunif,tercerif);
+      animacion = burbuja(cajas2,root,numeros,velo,foor,segunfoor,iff, primerif,segunif,tercerif);
       animacion.play();
 }    
 
     
 public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label segunfoor,Label iff, Label primerif,Label segunif,Label tercerif){
-        SequentialTransition animacion = new SequentialTransition();
+        animacion = new SequentialTransition();
         MovimientoGrua grua = new MovimientoGrua();
         Group carro = grua.crearcarroGrua(78);
         root.getChildren().addAll(carro);
          int n = numeros.length;
          
          for(int i = 0; i < n-1; i++){
-            animacion.getChildren().add(cambioColor(foor));
+            animacion.getChildren().add(cambioColor(foor,velo));
              for (int j = 0; j < n-i-1; j++){
-                 animacion.getChildren().add(cambioColor(segunfoor));
+                 animacion.getChildren().add(cambioColor(segunfoor,velo));
                  if (numeros[j] > numeros[j+1]){
-                     animacion.getChildren().add(cambioColor(iff));
+                     animacion.getChildren().add(cambioColor(iff,velo));
                      // intercambiar numeros[j] y numeros[j+1]
                     int temp = numeros[j];
-                    animacion.getChildren().add(cambioColor(primerif));
+                    animacion.getChildren().add(cambioColor(primerif,velo));
                     numeros[j] = numeros[j+1];
-                    animacion.getChildren().add(cambioColor(segunif));
+                    animacion.getChildren().add(cambioColor(segunif,velo));
                     numeros[j+1] = temp;
-                    animacion.getChildren().add(cambioColor(tercerif));
+                    animacion.getChildren().add(cambioColor2(tercerif,velo));
                     
                     
-                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
+                    TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
                     transicionup.setByY(-100);
-                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
-                    transicion.setByX(-(67));
-                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
-                    transicion2.setByX((67));
-                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
+                    TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
+                    transicion.setByX((67));
+                    TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
+                    transicion2.setByX(-(67));
+                    TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
                     transiciondown.setByY(100);
                      
-                     ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo));
-                     animacion.getChildren().addAll(transicionup,pt,transiciondown);
-                     Group cajaJ2 = (Group) cajas2.get(j + 1);
-                     Group cajaI2 = (Group) cajas2.get(j);
-                     cajas2.set(j + 1, cajaI2);
-                     cajas2.set(j, cajaJ2);
+                    animacion.getChildren().addAll(grua.moverCarro(carro, j, velo));
+                    ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1, velo));
+                    ParallelTransition pt2 = new ParallelTransition(grua.cambiarLinea(carro,-0.28,150,velo),transicionup);
+                    animacion.getChildren().addAll(pt2,grua.moverCarro(carro, j+1, velo),pt);
+                    ParallelTransition pt3 = new ParallelTransition(grua.cambiarLinea(carro,0.28,150,velo),transiciondown);
+                    animacion.getChildren().addAll(cambioColor3(tercerif,velo),pt3);
+                    
+                    Group cajaJ2 = (Group) cajas2.get(j + 1);
+                    Group cajaI2 = (Group) cajas2.get(j);
+                    cajas2.set(j + 1, cajaI2);
+                    cajas2.set(j, cajaJ2);
                  }
              }
          }
@@ -238,7 +255,6 @@ public void moverjuntotamaño(double valor){
                     Group cajit = (Group) cajas2.get(j);
                     if (valor<100) {
                         TranslateTransition tt = caja.moverCaja(cajit, -valor*j*1.3,0);
-                        posx[j]=valor*j*1.3;
                         tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
@@ -251,10 +267,37 @@ public void moverjuntotamaño(double valor){
                 }
 
 }
-public SequentialTransition cambioColor(Label label){
+public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(0.2),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
+public Transition cambioColor2(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    return colorChange;
+}
+public Transition cambioColor3(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
+}
+
+public static boolean validarNumero(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-9]|[1-9][0-9]|99)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
+
+public static boolean validarNumeroVelo(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-5](?:\\.\\d+)?|\\.\\d+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
 }
