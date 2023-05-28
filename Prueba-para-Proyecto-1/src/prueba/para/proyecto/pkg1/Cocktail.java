@@ -349,7 +349,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
                     ParallelTransition pt2 = new ParallelTransition(grua.cambiarLinea(carro,-0.28,150,velo),transicionup);
                     animacion.getChildren().addAll(pt2,grua.moverCarro(carro, i+1, velo),pt);
                     ParallelTransition pt3 = new ParallelTransition(grua.cambiarLinea(carro,0.28,150,velo),transiciondown);
-                    animacion.getChildren().addAll(cambioColor3(swaped2,velo),pt3); 
+                    animacion.getChildren().addAll(cambioColor3(swaped3,velo),pt3); 
                     
                     Group cajaJ2 = (Group) cajas2.get(i + 1);
                     Group cajaI2 = (Group) cajas2.get(i);
