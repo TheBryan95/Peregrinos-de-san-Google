@@ -2,6 +2,8 @@ package prueba.para.proyecto.pkg1;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
@@ -130,32 +132,36 @@ public class Burbuja extends Stage {
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            if (velo.getText().isEmpty()||text.getText().isEmpty()||Integer.parseInt(text.getText())<0||Double.parseDouble(velo.getText())<0) {
+            
+            if (validarNumero(text.getText()) && validarNumeroVelo(velo.getText())){
+                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
+            }else{
                 velo.setPromptText("Necesita ingresar un valor valido");
                 text.setPromptText("Necesita ingresar un valor valido");
                 Label error = new Label("Error necesita ser un valor valido");
                 error.setLayoutX(550);
                 error.setLayoutY(50);
                 root.getChildren().add(error);
-            } else {
-                try {
-                    empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
-                } catch (NumberFormatException e) {
-                    Label error = new Label("Error necesita ser un numero");
-                    error.setLayoutX(550);
-                    error.setLayoutY(50);
-                    root.getChildren().add(error);
-                }
-                
-            }
+        }
             
+//            if (velo.getText().isEmpty() || text.getText().isEmpty() || validarNumero(text.getText())==false || validarNumeroVelo((velo.getText()))==false){
+//                velo.setPromptText("Necesita ingresar un valor valido");
+//                text.setPromptText("Necesita ingresar un valor valido");
+//                Label error = new Label("Error necesita ser un valor valido");
+//                error.setLayoutX(550);
+//                error.setLayoutY(50);
+//                root.getChildren().add(error);
+//            } else {
+//                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);   
+//            } 
+
         });
         
             
         //Se inicia la pantalla
         stage.setScene(scene);
         stage.show();
-
+        
     }
 
     
@@ -278,4 +284,20 @@ public Transition cambioColor3(Label label,double velo){
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
+
+public static boolean validarNumero(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-9]|[1-9][0-9]|99)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
+
+public static boolean validarNumeroVelo(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-5](?:\\.\\d+)?|\\.\\d+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
 }
