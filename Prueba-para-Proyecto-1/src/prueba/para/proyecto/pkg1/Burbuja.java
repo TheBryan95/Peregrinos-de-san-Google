@@ -130,9 +130,13 @@ public class Burbuja extends Stage {
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            if (velo.getText().isEmpty()||text.getText().isEmpty() ) {
-                velo.setPromptText("Necesita ingresar un valor");
-                text.setPromptText("Necesita ingresar un valor");
+            if (velo.getText().isEmpty()||text.getText().isEmpty()||Integer.parseInt(text.getText())<0||Double.parseDouble(velo.getText())<0) {
+                velo.setPromptText("Necesita ingresar un valor valido");
+                text.setPromptText("Necesita ingresar un valor valido");
+                Label error = new Label("Error necesita ser un valor valido");
+                error.setLayoutX(550);
+                error.setLayoutY(50);
+                root.getChildren().add(error);
             } else {
                 try {
                     empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
