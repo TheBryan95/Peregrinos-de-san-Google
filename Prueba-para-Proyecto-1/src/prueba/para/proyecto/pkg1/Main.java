@@ -80,14 +80,9 @@ public class Main extends Application {
         botonCocktail.setOnAction((event) -> {
             Cocktail ventana = new Cocktail();
         });
-        
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-    
-    
-        
-        
     }
