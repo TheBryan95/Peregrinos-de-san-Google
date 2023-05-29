@@ -60,8 +60,6 @@ public class Caja {
         st.setToY(tamano);
         pt.getChildren().add(st);
         pt.play();
-       
-        
     }
     
     public TranslateTransition moverCaja(Group caja,double x,double y){
