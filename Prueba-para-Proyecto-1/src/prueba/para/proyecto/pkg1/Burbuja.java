@@ -127,7 +127,7 @@ public class Burbuja extends Stage {
             animacion.getChildren().clear();
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+            root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
             
