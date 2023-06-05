@@ -1,11 +1,20 @@
 package prueba.para.proyecto.pkg1;
 
+import java.io.File;
 import java.util.ArrayList;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -18,6 +27,108 @@ public class Seleccion extends  Stage{
     SequentialTransition animacion = new SequentialTransition();
     
     public Seleccion(){
+        Label Nombre = new Label("Ordenamiento Seleccion");
+        Label Titulo = new Label("Algoritmo");
+        Label foor = new Label("for (int i = 0; i < n - 1; i++)");
+        Label minIndex = new Label("int minIndex = i;");
+        Label segunfoor = new Label("for (int j = i + 1; j < n; j++)");
+        Label iff = new Label("if (arr[j] < arr[minIndex])");
+        Label minIndex2 = new Label("minIndex = j;");
+        Label temp = new Label("int temp = arr[minIndex];");
+        Label arr_minIndex = new Label("arr[minIndex] = arr[i];");
+        Label arr_i = new Label(" arr[i] = temp;");
+        
+        Group root = new Group();//Se le agregan los elemenos a la pantalla
+        //Se inician sliders, label, boton y caja de texto que iran en pantalla
+//        TextField text = new TextField();
+//        text.setLayoutX(550);
+//        text.setPromptText("Numero de Cajas");
+//        Button boton = new Button("Confirmar");
+//        boton.setLayoutX(480);
+        
+//        Button boton2 = new Button("Empezar");
+//        boton2.setLayoutX(300);
+        
+//        velo.setLayoutX(750);
+//        velo.setPromptText("Velocidad");
+        
+//        Label l =new Label();
+//        l.setLayoutX(400);
+//        Label l2 = new Label();
+//        l2.setLayoutX(650);
+
+        //Se inicia la pantalla 
+        String imagePath = "ciudad.jpg";
+        Image image = new Image(new File(imagePath).toURI().toString());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(1300);
+        imageView.setFitHeight(600);
+        imageView.setPreserveRatio(true);
+        
+        root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
+        
+        Nombre.setLayoutX(40);
+        Nombre.setScaleX(1.5);
+        Nombre.setScaleY(1.5);
+        Nombre.setStyle("-fx-font-weight: bold;");
+        
+        Titulo.setLayoutX(1350);
+        Titulo.setScaleX(1.5);
+        Titulo.setScaleY(1.5);
+        Titulo.setStyle("-fx-font-weight: bold;");
+    
+        foor.setLayoutX(1350);
+        foor.setLayoutY(50);
+        foor.setScaleX(1.5);
+        foor.setScaleY(1.5);
+
+        minIndex.setLayoutX(1370);
+        minIndex.setLayoutY(75);
+        minIndex.setScaleX(1.5);
+        minIndex.setScaleY(1.5);
+
+        segunfoor.setLayoutX(1382);
+        segunfoor.setLayoutY(100);
+        segunfoor.setScaleX(1.5);
+        segunfoor.setScaleY(1.5);
+
+        iff.setLayoutX(1400);
+        iff.setLayoutY(125);
+        iff.setScaleX(1.5);
+        iff.setScaleY(1.5);
+
+        minIndex2.setLayoutX(1410);
+        minIndex2.setLayoutY(150);
+        minIndex2.setScaleX(1.5);
+        minIndex2.setScaleY(1.5);
+
+        temp.setLayoutX(1380);
+        temp.setLayoutY(175);
+        temp.setScaleX(1.5);
+        temp.setScaleY(1.5);
+
+        arr_minIndex.setLayoutX(1374);
+        arr_minIndex.setLayoutY(200);
+        arr_minIndex.setScaleX(1.5);
+        arr_minIndex.setScaleY(1.5);
+        
+        arr_i.setLayoutX(1360);
+        arr_i.setLayoutY(225);
+        arr_i.setScaleX(1.5);
+        arr_i.setScaleY(1.5);
+       
+        Scene scene = new Scene(root, 1600, 600);
+        Stage stage = new Stage();
+
+//        //Se dibuja la grua
+//        MovimientoGrua grua = new MovimientoGrua();
+//        Group fondo = grua.dibujarGrua(scene);
+//        root.getChildren().add(fondo);
+        
+        
+        stage.setScene(scene);
+        stage.show();
+        
     
 }
     public int[] numerosaleatorios(int largo){
@@ -89,6 +200,23 @@ public void moverjuntotamaño(double valor){
                     caja.tamanoCaja(cajit,valor,j);
                 }
 
+}
+
+public Transition cambioColor(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
+}
+public Transition cambioColor2(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
+    return colorChange;
+}
+public Transition cambioColor3(Label label,double velo){
+    SequentialTransition colorChange = new SequentialTransition(label);
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    return colorChange;
 }
 
 }
