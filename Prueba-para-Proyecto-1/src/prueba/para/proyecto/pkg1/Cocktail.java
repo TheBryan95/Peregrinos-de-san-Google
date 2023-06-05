@@ -50,7 +50,6 @@ public class Cocktail extends Stage {
         //LE QUITA 1 AL FINAL
         Label end = new Label("end--");
 
-
         //A LA IZQUIERDA
         Label segunfoor = new Label("for (int i = end-1; i >= start; i--)");
         Label iff2 = new Label("if (arr[i] > arr[i + 1])");
@@ -61,44 +60,36 @@ public class Cocktail extends Stage {
 
         //LE QUITA UNO AL INICIO
         Label start = new Label("start++;");
-
-        
         //POSICIONES Y TAMAÑOS DE LABELS
         Titulo.setLayoutX(1350);
         Titulo.setScaleX(1.5);
         Titulo.setScaleY(1.5);
         Titulo.setStyle("-fx-font-weight: bold;");
     
-    
         wile.setLayoutX(1350);
         wile.setLayoutY(50);
         wile.setScaleX(1.5);
         wile.setScaleY(1.5);
-
 
         swaped.setLayoutX(1370);
         swaped.setLayoutY(75);
         swaped.setScaleX(1.5);
         swaped.setScaleY(1.5);
 
-
         foor.setLayoutX(1385);
         foor.setLayoutY(100);
         foor.setScaleX(1.5);
         foor.setScaleY(1.5);
-
 
         iff.setLayoutX(1390);
         iff.setLayoutY(125);
         iff.setScaleX(1.5);
         iff.setScaleY(1.5);
 
-
         primeriff.setLayoutX(1400);
         primeriff.setLayoutY(150);
         primeriff.setScaleX(1.5);
         primeriff.setScaleY(1.5);
-
 
         seguniff.setLayoutX(1400);
         seguniff.setLayoutY(175);
@@ -165,8 +156,6 @@ public class Cocktail extends Stage {
         start.setScaleX(1.5);
         start.setScaleY(1.5);
         
-
-        
         Group root = new Group();//Se le agregan los elemenos a la pantalla
         
         //Se inician sliders, label, boton y caja de texto que iran en pantalla
@@ -190,16 +179,21 @@ public class Cocktail extends Stage {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
+        
+        String imagePath1 = "yoda.png";
+        Image image1 = new Image(new File(imagePath1).toURI().toString());
+        ImageView imageView1 = new ImageView(image1);
+        imageView1.setX(1215);
+        imageView1.setY(27);
+        
+        root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
 
-        
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
         root.getChildren().add(fondo);
-
 
         empezarordenamiento(cajas,cajas2,root,16,1, Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
         
@@ -209,7 +203,7 @@ public class Cocktail extends Stage {
             animacion.stop();
             animacion.getChildren().clear();
             root.getChildren().clear();
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start); 
+            root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start); 
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
             
@@ -225,12 +219,10 @@ public class Cocktail extends Stage {
                 root.getChildren().add(error);
             }
         });
-        
-            
+           
         //Se inicia la pantalla
         stage.setScene(scene);
         stage.show();
-
     }
 
     
@@ -244,8 +236,6 @@ public int[] numerosaleatorios(int largo){
 public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label Titulo, Label wile, Label swaped, Label foor, Label iff, Label primeriff, Label seguniff, Label terceriff, Label swaped2, Label ifSwaped, Label breakk, Label end, Label segunfoor, Label iff2, Label primeriff2,Label seguniff2, Label terceriff2, Label swaped3, Label start){
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
-      
-      
       animacion = cocktail(numeros,cajas2,root,velo,wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
       animacion.play();
 }  

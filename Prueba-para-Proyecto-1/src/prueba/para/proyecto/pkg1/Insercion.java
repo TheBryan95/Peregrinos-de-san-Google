@@ -80,42 +80,35 @@ public class Insercion extends Stage {
         Titulo.setScaleY(1.5);
         Titulo.setStyle("-fx-font-weight: bold;");
     
-    
         foor.setLayoutX(1350);
         foor.setLayoutY(50);
         foor.setScaleX(1.5);
         foor.setScaleY(1.5);
-
 
         primer.setLayoutX(1380);
         primer.setLayoutY(75);
         primer.setScaleX(1.5);
         primer.setScaleY(1.5);
 
-
         segundo.setLayoutX(1375);
         segundo.setLayoutY(100);
         segundo.setScaleX(1.5);
         segundo.setScaleY(1.5);
-
 
         wile.setLayoutX(1400);
         wile.setLayoutY(125);
         wile.setScaleX(1.5);
         wile.setScaleY(1.5);
 
-
         primerwile.setLayoutX(1400);
         primerwile.setLayoutY(150);
         primerwile.setScaleX(1.5);
         primerwile.setScaleY(1.5);
 
-
         segunwile.setLayoutX(1390);
         segunwile.setLayoutY(175);
         segunwile.setScaleX(1.5);
         segunwile.setScaleY(1.5);
-
 
         finall.setLayoutX(1340);
         finall.setLayoutY(200);
@@ -125,12 +118,10 @@ public class Insercion extends Stage {
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
 
-        
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
         root.getChildren().add(fondo);
-
 
         empezarordenamiento(cajas,cajas2,root,16,1, foor,primer,segundo, wile,primerwile,segunwile,finall,boton2);
         //boton que genera nuevo arreglo y elimina el anterior de la pantalla
@@ -142,7 +133,6 @@ public class Insercion extends Stage {
             root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2); ////////////
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            
             
             if (validarNumero(text.getText()) && validarNumeroVelo(velo.getText())){
                 empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()), foor,primer,segundo, wile,primerwile,segunwile,finall,boton2);
@@ -163,7 +153,6 @@ public class Insercion extends Stage {
 
     }
 
-    
 public void moverjuntotamaño(double valor){
     for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
@@ -191,7 +180,6 @@ public int[] numerosaleatorios(int largo){
       return numeros;
 }
 
-
 public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label foor, Label primer, Label segundo, Label wile, Label primerwile, Label segunwile, Label finall,Button boton2){
      
       int []numeros=numerosaleatorios(largo);
@@ -217,62 +205,40 @@ public SequentialTransition  insercion (ArrayList<Group> cajas2,Group root,int[]
       
         for (int i = 1; i < numeros.length; i++) {
             animacion.getChildren().add(cambioColor(foor,velo));
-            
-            
             int valorActual = numeros[i];
             animacion.getChildren().add(cambioColor(primer,velo));
-            
-            
             int j = i - 1;
             animacion.getChildren().add(cambioColor(segundo,velo));
-            
-            
             while (j >= 0 && numeros[j] > valorActual) { 
                 animacion.getChildren().add(cambioColor(wile,velo));
-               
-                
                 TranslateTransition transicion = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transicion.setByX(-(67));
-                
                 TranslateTransition transicionup = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transicionup.setByY(-100);
-                
-                
                 numeros[j + 1] = numeros[j]; 
                 animacion.getChildren().add(cambioColor(primerwile,velo));
                 animacion.getChildren().add(cambioColor2(segunwile,velo));
-                
                 TranslateTransition transiciondown = new TranslateTransition(Duration.seconds(velo),cajas2.get(j+1));
                 transiciondown.setByY(100);
-                
-                
                 TranslateTransition transicion2 = new TranslateTransition(Duration.seconds(velo),cajas2.get(j));
                 transicion2.setByX((67));
-               
-                
                 animacion.getChildren().addAll(grua.moverCarro(carro, j, velo),grua2.moverCarro(carro2, j+1, velo));
                 ParallelTransition pt = new ParallelTransition(transicion,transicion2,grua.moverCarro(carro, j+1,velo),grua2.moverCarro(carro2, j, velo));
                 ParallelTransition pt2 = new ParallelTransition(transicionup,grua2.cambiarLinea(carro2,-0.45,98,velo));
                 animacion.getChildren().addAll(grua2.cambiarLinea(carro2,0.45,98,velo),pt2,grua2.moverCarro(carro2, j, velo),pt);
                 ParallelTransition pt3 = new ParallelTransition(grua2.cambiarLinea(carro2,0.45,98,velo),transiciondown);
                 animacion.getChildren().addAll(cambioColor3(segunwile,velo),pt3,grua2.cambiarLinea(carro2,-0.45,98,velo));
-                
                 Group cajaJ2 = (Group) cajas2.get(j + 1);
                 Group cajaI2 = (Group) cajas2.get(j);
                 cajas2.set(j + 1, cajaI2);
                 cajas2.set(j, cajaJ2);
-                
-
                 j--;
             }
-          
             animacion.getChildren().add(cambioColor(finall,velo));
             numeros[j + 1] = valorActual;
             indice++;
-    
         }
         return animacion;
-        
     }
 
 
@@ -280,26 +246,19 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
-    
     for (int x=0,i=70;x<numeros.length;x++){
             cajita = new Caja(i, 480, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearCaja();
             cajas2.add(cajis);
-
             i=i+125;
         }
-    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
 }
 
-
-
-
 public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
-    
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
