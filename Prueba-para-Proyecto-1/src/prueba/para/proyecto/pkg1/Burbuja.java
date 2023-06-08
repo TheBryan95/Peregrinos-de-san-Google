@@ -2,6 +2,8 @@ package prueba.para.proyecto.pkg1;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
@@ -60,7 +62,14 @@ public class Burbuja extends Stage {
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
-        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+        
+        String imagePath1 = "yoda.png";
+        Image image1 = new Image(new File(imagePath1).toURI().toString());
+        ImageView imageView1 = new ImageView(image1);
+        imageView1.setX(1215);
+        imageView1.setY(27);
+        
+        root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
@@ -72,48 +81,39 @@ public class Burbuja extends Stage {
         Titulo.setScaleY(1.5);
         Titulo.setStyle("-fx-font-weight: bold;");
     
-    
         foor.setLayoutX(1350);
         foor.setLayoutY(50);
         foor.setScaleX(1.5);
         foor.setScaleY(1.5);
-
 
         segunfoor.setLayoutX(1380);
         segunfoor.setLayoutY(75);
         segunfoor.setScaleX(1.5);
         segunfoor.setScaleY(1.5);
 
-
         iff.setLayoutX(1400);
         iff.setLayoutY(100);
         iff.setScaleX(1.5);
         iff.setScaleY(1.5);
-
 
         primerif.setLayoutX(1400);
         primerif.setLayoutY(125);
         primerif.setScaleX(1.5);
         primerif.setScaleY(1.5);
 
-
         segunif.setLayoutX(1405);
         segunif.setLayoutY(150);
         segunif.setScaleX(1.5);
         segunif.setScaleY(1.5);
-
 
         tercerif.setLayoutX(1400);
         tercerif.setLayoutY(175);
         tercerif.setScaleX(1.5);
         tercerif.setScaleY(1.5);
 
-
-       
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
 
-        
         //Se dibuja la grua
         MovimientoGrua grua = new MovimientoGrua();
         Group fondo = grua.dibujarGrua(scene);
@@ -127,38 +127,28 @@ public class Burbuja extends Stage {
             animacion.getChildren().clear();
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+            root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
-            if (velo.getText().isEmpty()||text.getText().isEmpty()||Integer.parseInt(text.getText())<0||Double.parseDouble(velo.getText())<0) {
+            
+            if (validarNumero(text.getText()) && validarNumeroVelo(velo.getText())){
+                empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
+            }else{
                 velo.setPromptText("Necesita ingresar un valor valido");
                 text.setPromptText("Necesita ingresar un valor valido");
                 Label error = new Label("Error necesita ser un valor valido");
                 error.setLayoutX(550);
                 error.setLayoutY(50);
                 root.getChildren().add(error);
-            } else {
-                try {
-                    empezarordenamiento(cajas,cajas2,root,Integer.parseInt(text.getText()),Double.parseDouble(velo.getText()),foor,segunfoor,iff, primerif,segunif,tercerif);
-                } catch (NumberFormatException e) {
-                    Label error = new Label("Error necesita ser un numero");
-                    error.setLayoutX(550);
-                    error.setLayoutY(50);
-                    root.getChildren().add(error);
-                }
-                
-            }
-            
+        }     
         });
         
             
         //Se inicia la pantalla
         stage.setScene(scene);
         stage.show();
-
     }
 
-    
 public int[] numerosaleatorios(int largo){
     int[]numeros = new int[largo];
       for (int x=0;x<numeros.length;x++){
@@ -175,7 +165,6 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       animacion.play();
 }    
 
-    
 public SequentialTransition  burbuja(ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label segunfoor,Label iff, Label primerif,Label segunif,Label tercerif){
         animacion = new SequentialTransition();
         MovimientoGrua grua = new MovimientoGrua();
@@ -237,13 +226,11 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
             i=i+125;
         }
-    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
 }
+
 public void moverjuntotamaño(double valor){
-    
-    
     for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
                     Group cajit = (Group) cajas2.get(j);
@@ -261,9 +248,9 @@ public void moverjuntotamaño(double valor){
                 }
 
 }
+
 public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
-    
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
@@ -278,4 +265,20 @@ public Transition cambioColor3(Label label,double velo){
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
     return colorChange;
 }
+
+public static boolean validarNumero(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-9]|[1-9][0-9]|99)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
+
+public static boolean validarNumeroVelo(String numero) {
+        String numero1 = String.valueOf(numero);
+        String regex = "^(?:[0-5](?:\\.\\d+)?|\\.\\d+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numero1);
+        return matcher.matches();
+    }
 }
