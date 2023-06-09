@@ -49,6 +49,34 @@ public class Caja {
 
         return caja;
     }
+    public Group crearVagon(){
+        
+        Group vagon = new Group();
+
+        fondo.setX(xinicial);
+        fondo.setY(yinicial);
+        fondo.setWidth(140);
+        fondo.setHeight(75);
+        fondo.setFill(Color.TURQUOISE);
+        fondo.setStrokeWidth(10);
+        fondo.setStroke(Color.DARKRED);
+
+
+        borde.setX(xinicial-8);
+        borde.setY(yinicial-8);
+        borde.setWidth(156);
+        borde.setHeight(91);
+        borde.setStrokeWidth(5);
+        
+        int digito1=numcaja/10;
+        int digito2=numcaja%10;
+        this.dig1=elegirNumDibujar( xinicial+45, yinicial+15, digito1);
+        this.dig2=elegirNumDibujar( xinicial+85, yinicial+15, digito2);
+        
+        vagon.getChildren().addAll(borde,fondo,dig1,dig2);
+
+        return vagon;
+    }
     
     //Funcion que cambia el tamaño de una caja
     public void tamanoCaja(Group caja,double tamano,int j){
