@@ -145,11 +145,11 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      animacion = seleccion(cajas2,root,numeros,velo);
+      animacion = seleccion(cajas,cajas2,root,numeros,velo);
       animacion.play();
 }
 
-public SequentialTransition seleccion(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
@@ -157,23 +157,47 @@ public SequentialTransition seleccion(ArrayList<Group> cajas2,Group root,int[] n
             pt.getChildren().add(tt);
         }
         animacion.getChildren().add(pt);
-        
+        int minimo = cajas.get(0).numcaja;
+        int indiceminimo = 0;
         SequentialTransition rotacion = new SequentialTransition();
         for (int i = numeros.length-1; i >= 0; i--) {
-            
-            RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
-            rt.setByAngle(45);
-            TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
-            moveradelante.setByX(100-i*-35);
-            moveradelante.setByY(100-i*-35);
-            
-            ParallelTransition pt2 = new ParallelTransition();
             for (int k = 0; k< i; k++) {
-                TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
-                tt.setByX(55);
-                pt2.getChildren().add(tt);
+                if (cajas.get(k).numcaja<minimo) {
+                        minimo = cajas.get(k).numcaja;
+                        indiceminimo=k;
+                    }
             }
-            rotacion.getChildren().addAll(rt,moveradelante,pt2);
+            if (i==indiceminimo) {
+                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
+                rt.setByAngle(-45);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                moveradelante.setByX(100-i*-35);
+                moveradelante.setByY(-100-i*35);
+
+                ParallelTransition pt2 = new ParallelTransition();
+                for (int k = 0; k< i; k++) {
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    tt.setByX(55);
+                    pt2.getChildren().add(tt);
+                }
+                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+            }
+            else{
+                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
+                rt.setByAngle(45);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                moveradelante.setByX(100-i*-35);
+                moveradelante.setByY(100-i*-35);
+
+                ParallelTransition pt2 = new ParallelTransition();
+                for (int k = 0; k< i; k++) {
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    tt.setByX(55);
+                    pt2.getChildren().add(tt);
+                }
+                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+            }
+            
         }
         animacion.getChildren().add(rotacion);
         
