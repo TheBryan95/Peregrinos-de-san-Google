@@ -203,7 +203,7 @@ public class Cocktail extends Stage {
             animacion.stop();
             animacion.getChildren().clear();
             root.getChildren().clear();
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start); 
+            root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start); 
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
             

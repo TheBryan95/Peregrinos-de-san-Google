@@ -127,7 +127,7 @@ public class Burbuja extends Stage {
             animacion.getChildren().clear();
             root.getChildren().clear();
             
-            root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+            root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
             root.getChildren().add(fondo);
             root.getChildren().removeAll(cajas2);
             
@@ -226,10 +226,10 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
             i=i+125;
         }
-    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
 }
+
 public void moverjuntotamaño(double valor){
     for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
@@ -248,6 +248,7 @@ public void moverjuntotamaño(double valor){
                 }
 
 }
+
 public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
