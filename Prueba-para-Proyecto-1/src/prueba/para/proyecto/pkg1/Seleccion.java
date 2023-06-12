@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
@@ -25,7 +26,7 @@ public class Seleccion extends  Stage{
     int j;
     Caja cajita;
     TextField velo = new TextField();
-    ParallelTransition animacion = new ParallelTransition();
+    SequentialTransition animacion = new SequentialTransition();
     
     public Seleccion(){
         Label Nombre = new Label("Ordenamiento Seleccion");
@@ -148,30 +149,50 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       animacion.play();
 }
 
-public ParallelTransition  seleccion(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
-        animacion = new ParallelTransition();
-        int n = numeros.length;
+public SequentialTransition seleccion(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+        ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-        tt.setByX(500);
-        tt.setCycleCount(TranslateTransition.INDEFINITE);
-        animacion.getChildren().add(tt);
-    }
-        for (int i = 0; i < n - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++) {
-                if (numeros[j] < numeros[minIndex]) {
-                    minIndex = j;
-                    
-                }
-            }
-            
-            // Intercambia el elemento mínimo encontrado con el primer elemento sin ordenar
-           
-            int temp = numeros[minIndex];
-            numeros[minIndex] = numeros[i];
-            numeros[i] = temp;
+            TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+            tt.setByX(440);
+            pt.getChildren().add(tt);
         }
+        animacion.getChildren().add(pt);
+        
+        SequentialTransition rotacion = new SequentialTransition();
+        for (int i = numeros.length-1; i >= 0; i--) {
+            
+            RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
+            rt.setByAngle(45);
+            TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+            moveradelante.setByX(100-i*-35);
+            moveradelante.setByY(100-i*-35);
+            
+            ParallelTransition pt2 = new ParallelTransition();
+            for (int k = 0; k< i; k++) {
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                tt.setByX(55);
+                pt2.getChildren().add(tt);
+            }
+            rotacion.getChildren().addAll(rt,moveradelante,pt2);
+        }
+        animacion.getChildren().add(rotacion);
+        
+        
+//        for (int i = 0; i < n - 1; i++) {
+//            int minIndex = i;
+//            for (int j = i + 1; j < n; j++) {
+//                if (numeros[j] < numeros[minIndex]) {
+//                    minIndex = j;
+//                    
+//                }
+//            }
+//            
+//            // Intercambia el elemento mínimo encontrado con el primer elemento sin ordenar
+//           
+//            int temp = numeros[minIndex];
+//            numeros[minIndex] = numeros[i];
+//            numeros[i] = temp;
+//        }
     return animacion;
 }
 
@@ -181,7 +202,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     cajas2.clear();
     
     for (int x=0,i=50;x<numeros.length;x++){
-            cajita = new Caja(i, 480, numeros[x]);
+            cajita = new Caja(i, 265, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
@@ -189,7 +210,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
             i=i+145;
         }
     root.getChildren().addAll(cajas2);
-    moverjuntotamaño(45);
+    moverjuntotamaño(30);
 }
 
 public void moverjuntotamaño(double valor){
@@ -197,12 +218,12 @@ public void moverjuntotamaño(double valor){
                     Caja caja = (Caja) cajas.get(j);
                     Group cajit = (Group) cajas2.get(j);
                     if (valor<100) {
-                        TranslateTransition tt = caja.moverCaja(cajit, -valor*j*1.3,0);
+                        TranslateTransition tt = caja.moverCaja(cajit, -valor*j*3,0);
                         tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
                     else{
-                        TranslateTransition tt =caja.moverCaja(cajit, valor*j*1.3, 0);
+                        TranslateTransition tt =caja.moverCaja(cajit, valor*j*3, 0);
                         tt.setDuration(Duration.millis(01));
                         tt.play();
                     }
