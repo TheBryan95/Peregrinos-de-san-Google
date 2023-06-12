@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
@@ -24,7 +25,7 @@ public class Seleccion extends  Stage{
     int j;
     Caja cajita;
     TextField velo = new TextField();
-    SequentialTransition animacion = new SequentialTransition();
+    ParallelTransition animacion = new ParallelTransition();
     
     public Seleccion(){
         Label Nombre = new Label("Ordenamiento Seleccion");
@@ -40,25 +41,25 @@ public class Seleccion extends  Stage{
         
         Group root = new Group();//Se le agregan los elemenos a la pantalla
         //Se inician sliders, label, boton y caja de texto que iran en pantalla
-//        TextField text = new TextField();
-//        text.setLayoutX(550);
-//        text.setPromptText("Numero de Cajas");
-//        Button boton = new Button("Confirmar");
-//        boton.setLayoutX(480);
+        TextField text = new TextField();
+        text.setLayoutX(550);
+        text.setPromptText("Numero de Cajas");
+        Button boton = new Button("Confirmar");
+        boton.setLayoutX(480);
         
-//        Button boton2 = new Button("Empezar");
-//        boton2.setLayoutX(300);
+        Button boton2 = new Button("Empezar");
+        boton2.setLayoutX(300);
         
-//        velo.setLayoutX(750);
-//        velo.setPromptText("Velocidad");
+        velo.setLayoutX(750);
+        velo.setPromptText("Velocidad");
         
-//        Label l =new Label();
-//        l.setLayoutX(400);
-//        Label l2 = new Label();
-//        l2.setLayoutX(650);
+        Label l =new Label();
+        l.setLayoutX(400);
+        Label l2 = new Label();
+        l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "ciudad.jpg";
+        String imagePath = "desierto.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(1300);
@@ -121,11 +122,11 @@ public class Seleccion extends  Stage{
         Stage stage = new Stage();
 
 //        //Se dibuja la grua
-//        MovimientoGrua grua = new MovimientoGrua();
-//        Group fondo = grua.dibujarGrua(scene);
-//        root.getChildren().add(fondo);
+        MovimientoGrua grua = new MovimientoGrua();
+        Group fondo = grua.dibujarGrua(scene);
+        root.getChildren().add(fondo);
         
-        
+        empezarordenamiento(cajas, cajas2, root, 6, 0.5);
         stage.setScene(scene);
         stage.show();
         
@@ -147,18 +148,26 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
       animacion.play();
 }
 
-public SequentialTransition  seleccion(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+public ParallelTransition  seleccion(ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+        animacion = new ParallelTransition();
         int n = numeros.length;
-        
+        for (int k = 0; k< numeros.length; k++) {
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
+        tt.setByX(500);
+        tt.setCycleCount(TranslateTransition.INDEFINITE);
+        animacion.getChildren().add(tt);
+    }
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
                 if (numeros[j] < numeros[minIndex]) {
                     minIndex = j;
+                    
                 }
             }
             
             // Intercambia el elemento mínimo encontrado con el primer elemento sin ordenar
+           
             int temp = numeros[minIndex];
             numeros[minIndex] = numeros[i];
             numeros[i] = temp;
@@ -171,13 +180,13 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     cajas.clear();
     cajas2.clear();
     
-    for (int x=0,i=70;x<numeros.length;x++){
+    for (int x=0,i=50;x<numeros.length;x++){
             cajita = new Caja(i, 480, numeros[x]);
             cajas.add(cajita);
-            Group cajis = cajita.crearCaja();
+            Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
 
-            i=i+125;
+            i=i+145;
         }
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
