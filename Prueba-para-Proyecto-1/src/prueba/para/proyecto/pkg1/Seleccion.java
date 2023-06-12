@@ -59,7 +59,7 @@ public class Seleccion extends  Stage{
         l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "desierto.jpg";
+        String imagePath = "fondodesierto.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(1300);
@@ -122,9 +122,9 @@ public class Seleccion extends  Stage{
         Stage stage = new Stage();
 
 //        //Se dibuja la grua
-        MovimientoGrua grua = new MovimientoGrua();
-        Group fondo = grua.dibujarGrua(scene);
-        root.getChildren().add(fondo);
+//        MovimientoGrua grua = new MovimientoGrua();
+//        Group fondo = grua.dibujarGrua(scene);
+//        root.getChildren().add(fondo);
         
         empezarordenamiento(cajas, cajas2, root, 6, 0.5);
         stage.setScene(scene);
