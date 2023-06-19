@@ -88,11 +88,11 @@ public class Caja {
         
         Rectangle bordeVagon = new Rectangle();
         
-        vagon.setX(50);
-        vagon.setY(50);
+        vagon.setX(xinicial);
+        vagon.setY(yinicial);
         
-        bordeVagon.setX(50-8);
-        bordeVagon.setY(50-8);
+        bordeVagon.setX(xinicial-8);
+        bordeVagon.setY(yinicial-8);
         bordeVagon.setWidth(156);
         bordeVagon.setHeight(91);
         bordeVagon.setStrokeWidth(5);
@@ -101,17 +101,17 @@ public class Caja {
         Circle circulo1 = new Circle(15, Color.BLACK);
         Circle circulo2 = new Circle(15, Color.BLACK);
         
-        circulo1.setCenterX(80);
-        circulo2.setCenterX(160);
-        circulo1.setCenterY(85);
-        circulo2.setCenterY(85);
+        circulo1.setCenterX(xinicial+30);
+        circulo2.setCenterX(xinicial+110);
+        circulo1.setCenterY(yinicial+35);
+        circulo2.setCenterY(yinicial+35);
         // Crear el triángulo amarillo en la parte delantera del vagón
         
         Polygon triangulo = new Polygon();
         triangulo.getPoints().addAll(
-                198.0, 47.0,
-                198.0, 128.0,
-                270.0, 89.0
+                xinicial+148.0, yinicial-3.0,
+                xinicial+148.0, yinicial+78.0,
+                xinicial+220.0, yinicial+39.0
         );
         triangulo.setFill(Color.YELLOW);
         
