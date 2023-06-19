@@ -91,11 +91,11 @@ public class Caja {
         vagon.setX(50);
         vagon.setY(50);
         
-        borde.setX(50-8);
-        borde.setY(50-8);
-        borde.setWidth(156);
-        borde.setHeight(91);
-        borde.setStrokeWidth(5);
+        bordeVagon.setX(50-8);
+        bordeVagon.setY(50-8);
+        bordeVagon.setWidth(156);
+        bordeVagon.setHeight(91);
+        bordeVagon.setStrokeWidth(5);
 
         // Crear los círculos negros en la parte superior del vagón
         Circle circulo1 = new Circle(15, Color.BLACK);
