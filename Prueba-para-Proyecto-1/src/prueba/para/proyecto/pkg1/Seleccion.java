@@ -150,6 +150,10 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }
 
 public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+        Tren tren = new Tren();
+        Group trensito = tren.crearTren();
+        root.getChildren().addAll(trensito);
+
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
