@@ -57,9 +57,9 @@ public class Caja {
         fondo.setY(yinicial);
         fondo.setWidth(140);
         fondo.setHeight(75);
-        fondo.setFill(Color.TURQUOISE);
+            fondo.setFill(Color.YELLOW);
         fondo.setStrokeWidth(10);
-        fondo.setStroke(Color.DARKRED);
+        fondo.setStroke(Color.GREY);
 
 
         borde.setX(xinicial-8);

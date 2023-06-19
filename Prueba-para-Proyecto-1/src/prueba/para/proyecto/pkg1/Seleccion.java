@@ -51,6 +51,12 @@ public class Seleccion extends  Stage{
         Button boton2 = new Button("Empezar");
         boton2.setLayoutX(300);
         
+        Button backButton = new Button("Cerrar");
+        backButton.setOnAction(event -> {
+            ((Stage) backButton.getScene().getWindow()).close();
+        });
+        backButton.setLayoutX(1250);
+        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -67,7 +73,13 @@ public class Seleccion extends  Stage{
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
         
-        root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
+        String imagePath1 = "yoda.png";
+        Image image1 = new Image(new File(imagePath1).toURI().toString());
+        ImageView imageView1 = new ImageView(image1);
+        imageView1.setX(900);
+        imageView1.setY(260);
+        
+        root.getChildren().addAll(imageView,imageView1, Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i, backButton);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
