@@ -165,6 +165,12 @@ public class Cocktail extends Stage {
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         
+        Button backButton = new Button("Cerrar");
+        backButton.setOnAction(event -> {
+            ((Stage) backButton.getScene().getWindow()).close();
+        });
+        backButton.setLayoutX(1250);
+        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -186,7 +192,7 @@ public class Cocktail extends Stage {
         imageView1.setX(1215);
         imageView1.setY(27);
         
-        root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
+        root.getChildren().addAll(imageView,imageView1, text,boton,backButton, velo,l,l2,Titulo, wile, swaped, foor, iff, primeriff, seguniff, terceriff, swaped2, ifSwaped, breakk, end, segunfoor, iff2, primeriff2,seguniff2, terceriff2, swaped3, start);
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
 
