@@ -5,7 +5,9 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -48,6 +50,80 @@ public class Caja {
         caja.getChildren().addAll(borde,fondo,dig1,dig2);
 
         return caja;
+    }
+    public Group crearVagon(){
+        
+        Group vagon = new Group();
+
+        fondo.setX(xinicial);
+        fondo.setY(yinicial);
+        fondo.setWidth(140);
+        fondo.setHeight(75);
+            fondo.setFill(Color.YELLOW);
+        fondo.setStrokeWidth(10);
+        fondo.setStroke(Color.GREY);
+
+
+        borde.setX(xinicial-8);
+        borde.setY(yinicial-8);
+        borde.setWidth(156);
+        borde.setHeight(91);
+        borde.setStrokeWidth(5);
+        
+        int digito1=numcaja/10;
+        int digito2=numcaja%10;
+        this.dig1=elegirNumDibujar( xinicial+45, yinicial+15, digito1);
+        this.dig2=elegirNumDibujar( xinicial+85, yinicial+15, digito2);
+        
+        vagon.getChildren().addAll(borde,fondo,dig1,dig2);
+
+        return vagon;
+    }
+    
+    public Group crearTren(){
+        
+        Group tren = new Group();
+
+        Rectangle vagon = new Rectangle(140,75 , Color.DARKRED);
+        
+        Rectangle bordeVagon = new Rectangle();
+        
+        vagon.setX(50);
+        vagon.setY(50);
+        
+        bordeVagon.setX(50-8);
+        bordeVagon.setY(50-8);
+        bordeVagon.setWidth(156);
+        bordeVagon.setHeight(91);
+        bordeVagon.setStrokeWidth(5);
+
+        // Crear los círculos negros en la parte superior del vagón
+        Circle circulo1 = new Circle(15, Color.BLACK);
+        Circle circulo2 = new Circle(15, Color.BLACK);
+        
+        circulo1.setCenterX(80);
+        circulo2.setCenterX(160);
+        circulo1.setCenterY(85);
+        circulo2.setCenterY(85);
+        // Crear el triángulo amarillo en la parte delantera del vagón
+        
+        Polygon triangulo = new Polygon();
+        triangulo.getPoints().addAll(
+                198.0, 47.0,
+                198.0, 128.0,
+                270.0, 89.0
+        );
+        triangulo.setFill(Color.YELLOW);
+        
+        triangulo.setStroke(Color.BLACK);
+        triangulo.setStrokeWidth(7);
+        
+       
+        
+        
+        tren.getChildren().addAll(bordeVagon,vagon, circulo1, circulo2, triangulo);
+
+        return tren;
     }
     
     //Funcion que cambia el tamaño de una caja
