@@ -66,7 +66,7 @@ public class Seleccion extends  Stage{
         l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "fondodesierto.jpg";
+        String imagePath = "fondonuevo.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(1300);
@@ -162,6 +162,7 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }
 
 public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
@@ -236,6 +237,9 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
+    Caja grande = new Caja(numeros.length, 400, 25);
+    Group trensito = grande.crearTren();
+    
     
     for (int x=0,i=50;x<numeros.length;x++){
             cajita = new Caja(i, 265, numeros[x]);
@@ -245,8 +249,10 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
             i=i+145;
         }
+    cajas2.add(trensito);
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(30);
+    
 }
 
 public void moverjuntotamaño(double valor){
