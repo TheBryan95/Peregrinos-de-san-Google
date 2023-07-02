@@ -48,6 +48,12 @@ public class Burbuja extends Stage {
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         
+        Button backButton = new Button("Cerrar");
+        backButton.setOnAction(event -> {
+            ((Stage) backButton.getScene().getWindow()).close();
+        });
+        backButton.setLayoutX(1250);
+        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -69,7 +75,7 @@ public class Burbuja extends Stage {
         imageView1.setX(1215);
         imageView1.setY(27);
         
-        root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+        root.getChildren().addAll(imageView,imageView1, text,boton,backButton, velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
