@@ -51,12 +51,6 @@ public class Seleccion extends  Stage{
         Button boton2 = new Button("Empezar");
         boton2.setLayoutX(300);
         
-        Button backButton = new Button("Cerrar");
-        backButton.setOnAction(event -> {
-            ((Stage) backButton.getScene().getWindow()).close();
-        });
-        backButton.setLayoutX(1250);
-        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -73,13 +67,7 @@ public class Seleccion extends  Stage{
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
         
-        String imagePath1 = "yoda.png";
-        Image image1 = new Image(new File(imagePath1).toURI().toString());
-        ImageView imageView1 = new ImageView(image1);
-        imageView1.setX(900);
-        imageView1.setY(260);
-        
-        root.getChildren().addAll(imageView,imageView1, Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i, backButton);
+        root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
@@ -165,16 +153,18 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
 
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
-            TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
-            tt.setByX(440);
+            TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
+            tt.setByX(290);
             pt.getChildren().add(tt);
         }
         animacion.getChildren().add(pt);
+        int n = cajas.size();
+    for (int o = 0; o < n; o++) {
         int minimo = cajas.get(0).numcaja;
         int indiceminimo = 0;
         SequentialTransition rotacion = new SequentialTransition();
-        for (int i = numeros.length-1; i >= 0; i--) {
-            for (int k = 0; k< i; k++) {
+        for (int i = cajas.size()-1; i >= 0; i--) {
+            for (int k = 0; k<=i; k++) {
                 if (cajas.get(k).numcaja<minimo) {
                         minimo = cajas.get(k).numcaja;
                         indiceminimo=k;
@@ -186,33 +176,56 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
                 moveradelante.setByX(100-i*-35);
                 moveradelante.setByY(-100-i*35);
+                
 
                 ParallelTransition pt2 = new ParallelTransition();
                 for (int k = 0; k< i; k++) {
-                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
                     tt.setByX(55);
                     pt2.getChildren().add(tt);
                 }
                 rotacion.getChildren().addAll(rt,moveradelante,pt2);
             }
             else{
-                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
-                rt.setByAngle(45);
-                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
-                moveradelante.setByX(100-i*-35);
-                moveradelante.setByY(100-i*-35);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));//Mueve la caja despues de la separacion
+                moveradelante.setByX((200-i*-50));
 
                 ParallelTransition pt2 = new ParallelTransition();
+             
                 for (int k = 0; k< i; k++) {
-                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(0.7), cajas2.get(k));
                     tt.setByX(55);
                     pt2.getChildren().add(tt);
                 }
-                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+                rotacion.getChildren().addAll(moveradelante,pt2);
             }
             
         }
+        TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
+        moveradelante.setByX(-100-indiceminimo*35);
+        moveradelante.setByY(100-indiceminimo*-35);
+
+        RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
+        rt.setByAngle(45);
+
+        TranslateTransition moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
+        moveratras.setByX(-55*numeros.length);
+
+        rotacion.getChildren().addAll(moveradelante,rt,moveratras);
+        cajas.remove(indiceminimo);
+        cajas2.remove(indiceminimo);
+        
+        ParallelTransition pt3 = new ParallelTransition();
+
+        pt3 = new ParallelTransition();
+        for (int i = 0; i <=cajas.size()-1; i++) {
+                moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                moveratras.setByX(-478-o*50);
+                pt3.getChildren().add(moveratras);
+        }
+        rotacion.getChildren().add(pt3);
         animacion.getChildren().add(rotacion);
+    }
         
         
 //        for (int i = 0; i < n - 1; i++) {
@@ -237,19 +250,19 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
-    Caja grande = new Caja(numeros.length, 400, 25);
-    Group trensito = grande.crearTren();
+//    Caja grande = new Caja(numeros.length, 400, 25);
+//    Group trensito = grande.crearTren();
     
     
     for (int x=0,i=50;x<numeros.length;x++){
-            cajita = new Caja(i, 265, numeros[x]);
+            cajita = new Caja(i, 280, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
 
             i=i+145;
         }
-    cajas2.add(trensito);
+    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(30);
     
@@ -292,4 +305,5 @@ public Transition cambioColor3(Label label,double velo){
 }
 
 }
+
 
