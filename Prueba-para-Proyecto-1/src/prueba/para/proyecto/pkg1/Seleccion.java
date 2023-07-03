@@ -66,7 +66,7 @@ public class Seleccion extends  Stage{
         l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "fondonuevo.jpg";
+        String imagePath = "fondodesierto.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(1300);
@@ -166,7 +166,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
-            tt.setByX(290);
+            tt.setByX(440);
             pt.getChildren().add(tt);
         }
         animacion.getChildren().add(pt);
@@ -213,6 +213,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                     rotacion.getChildren().addAll(rt,moveradelante,pt2);
                 }
             }
+<<<<<<< HEAD
             //////////////////////////////////////////////////
             
             TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
@@ -249,6 +250,40 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 
             }
         
+=======
+            if (i==indiceminimo) {
+                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
+                rt.setByAngle(-45);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                moveradelante.setByX(100-i*-35);
+                moveradelante.setByY(-100-i*35);
+
+                ParallelTransition pt2 = new ParallelTransition();
+                for (int k = 0; k< i; k++) {
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    tt.setByX(55);
+                    pt2.getChildren().add(tt);
+                }
+                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+            }
+            else{
+                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
+                rt.setByAngle(45);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
+                moveradelante.setByX(100-i*-35);
+                moveradelante.setByY(100-i*-35);
+
+                ParallelTransition pt2 = new ParallelTransition();
+                for (int k = 0; k< i; k++) {
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    tt.setByX(55);
+                    pt2.getChildren().add(tt);
+                }
+                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+            }
+            
+        }
+>>>>>>> parent of dd0829b (Merge remote-tracking branch 'origin/Jeremy' into Bryan)
         animacion.getChildren().add(rotacion);
         
         
@@ -279,7 +314,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     
     
     for (int x=0,i=50;x<numeros.length;x++){
-            cajita = new Caja(i, 280, numeros[x]);
+            cajita = new Caja(i, 265, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
