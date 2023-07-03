@@ -166,7 +166,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
         ParallelTransition pt = new ParallelTransition();
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
-            tt.setByX(440);
+            tt.setByX(290);
             pt.getChildren().add(tt);
         }
         animacion.getChildren().add(pt);
@@ -279,7 +279,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     
     
     for (int x=0,i=50;x<numeros.length;x++){
-            cajita = new Caja(i, 265, numeros[x]);
+            cajita = new Caja(i, 280, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
