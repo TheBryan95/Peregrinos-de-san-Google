@@ -51,12 +51,6 @@ public class Seleccion extends  Stage{
         Button boton2 = new Button("Empezar");
         boton2.setLayoutX(300);
         
-        Button backButton = new Button("Cerrar");
-        backButton.setOnAction(event -> {
-            ((Stage) backButton.getScene().getWindow()).close();
-        });
-        backButton.setLayoutX(1250);
-        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -66,20 +60,14 @@ public class Seleccion extends  Stage{
         l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "fondodesierto.jpg";
+        String imagePath = "fondonuevo.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(1300);
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
         
-        String imagePath1 = "yoda.png";
-        Image image1 = new Image(new File(imagePath1).toURI().toString());
-        ImageView imageView1 = new ImageView(image1);
-        imageView1.setX(900);
-        imageView1.setY(260);
-        
-        root.getChildren().addAll(imageView,imageView1, Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i, backButton);
+        root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
@@ -186,6 +174,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
                 moveradelante.setByX(100-i*-35);
                 moveradelante.setByY(-100-i*35);
+                
 
                 ParallelTransition pt2 = new ParallelTransition();
                 for (int k = 0; k< i; k++) {
@@ -196,20 +185,20 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 rotacion.getChildren().addAll(rt,moveradelante,pt2);
             }
             else{
-                RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(i));
-                rt.setByAngle(45);
-                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));
-                moveradelante.setByX(100-i*-35);
-                moveradelante.setByY(100-i*-35);
+                TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(i));//Mueve la caja despues de la separacion
+                moveradelante.setByX((200-i*-50));
 
                 ParallelTransition pt2 = new ParallelTransition();
+             
                 for (int k = 0; k< i; k++) {
-                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), cajas2.get(k));
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
                     tt.setByX(55);
                     pt2.getChildren().add(tt);
                 }
-                rotacion.getChildren().addAll(rt,moveradelante,pt2);
+                rotacion.getChildren().addAll(moveradelante,pt2);
             }
+            
+            
             
         }
         animacion.getChildren().add(rotacion);
@@ -292,4 +281,5 @@ public Transition cambioColor3(Label label,double velo){
 }
 
 }
+
 
