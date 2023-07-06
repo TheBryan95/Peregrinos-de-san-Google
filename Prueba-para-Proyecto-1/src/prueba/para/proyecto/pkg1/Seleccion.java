@@ -150,9 +150,24 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 }
 
 public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
-    
-
+    //Cajas para que sirvan de locomotora
+        Caja grande = new Caja(770, 130, 00);
+        Group locomotora = grande.crearCaja();
+        grande.tamanoCaja(locomotora, 30,1);
+        
+        Caja grande2 = new Caja(1080, 270, 00);
+        Group locomotora2 = grande2.crearCaja();
+        grande2.tamanoCaja(locomotora2, 30, 1);
+        
+        Caja grande3 = new Caja(20, 270, 00);
+        Group locomotora3 = grande3.crearCaja();
+        grande2.tamanoCaja(locomotora3, 30, 1);
+        
+        root.getChildren().addAll(locomotora,locomotora2,locomotora3);
+        
+        //Se mueven todas de donde se crearon al cruce
         ParallelTransition pt = new ParallelTransition();
+        
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
             tt.setByX(290);
@@ -173,6 +188,13 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                         indiceminimo=k;
                     }
             }
+            //INTENTO LOCOMOTORA 1
+            
+                TranslateTransition movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+                movilocomo2.setByX(-400);
+                rotacion.getChildren().add(movilocomo2);  
+            
+            
             
             //Se mueve la seccion en frente del minimo
             ParallelTransition pt2 = new ParallelTransition();
@@ -183,6 +205,11 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 pt2.getChildren().add(tt);
                 contador++;
             }
+            
+            movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(400);
+            pt2.getChildren().add(movilocomo2);
+            
             rotacion.getChildren().addAll(pt2);
             
             //Se mueve lo demas dejando el minimo para rotar
@@ -195,13 +222,25 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             rotacion.getChildren().addAll(pt2);
             
             //el elemento menor se hacen las animaciones para que se mueva hacia arriba
+            TranslateTransition moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
+            moverdiag2loc.setByX(-100);
+            moverdiag2loc.setByY(100);
+            
             RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             rt.setByAngle(-45);
+            
+            ParallelTransition arriba = new ParallelTransition();
             TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveradelante.setByX(100);
             moveradelante.setByY(-100);
+            arriba.getChildren().add(moveradelante);
             
-            rotacion.getChildren().addAll(rt,moveradelante);
+            TranslateTransition moverdiagloc = new TranslateTransition(Duration.seconds(1), locomotora);
+            moverdiagloc.setByX(100);
+            moverdiagloc.setByY(-100);
+            arriba.getChildren().add(moverdiagloc);
+            
+            rotacion.getChildren().addAll(moverdiag2loc,rt,arriba);
             
             //Vuelve el segmento que estaba delante al minimo para enganchar al que estaba detras del minimo
             ParallelTransition pt4 = new ParallelTransition();
@@ -210,6 +249,9 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 tt.setByX(-400+(contador-1)*55);
                 pt4.getChildren().add(tt);
             }
+            movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(-400+(contador-1)*55);
+            pt4.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt4);
             
             //Mueve todas las cajas juntas hacia adelante
@@ -224,6 +266,9 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                 tt.setByX(400-(contador-1)*55);
                 pt2.getChildren().add(tt);
             }
+            movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(400-(contador-1)*55);
+            pt2.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt2);
             
             //El elemento menor que esta arriba baja y queda ordenado
