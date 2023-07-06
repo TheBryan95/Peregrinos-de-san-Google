@@ -60,12 +60,12 @@ public class Seleccion extends  Stage{
         l2.setLayoutX(650);
 
         //Se inicia la pantalla 
-        String imagePath = "fondonuevo.jpg";
+        String imagePath = "fondonuevoalargado.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(1300);
-        imageView.setFitHeight(600);
-        imageView.setPreserveRatio(true);
+//        imageView.setFitWidth(1300);
+//        imageView.setFitHeight(600);
+//        imageView.setPreserveRatio(true);
         
         root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
         
@@ -127,7 +127,7 @@ public class Seleccion extends  Stage{
 //        Group fondo = grua.dibujarGrua(scene);
 //        root.getChildren().add(fondo);
         
-        empezarordenamiento(cajas, cajas2, root, 6, 0.5);
+        empezarordenamiento(cajas, cajas2, root, 16, 0.5);
         stage.setScene(scene);
         stage.show();
         
@@ -151,15 +151,15 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 
 public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
     //Cajas para que sirvan de locomotora
-        Caja grande = new Caja(770, 130, 00);
+        Caja grande = new Caja(1070, 130, 00);
         Group locomotora = grande.crearCaja();
         grande.tamanoCaja(locomotora, 30,1);
         
-        Caja grande2 = new Caja(1080, 270, 00);
+        Caja grande2 = new Caja(1880, 270, 00);
         Group locomotora2 = grande2.crearCaja();
         grande2.tamanoCaja(locomotora2, 30, 1);
         
-        Caja grande3 = new Caja(20, 270, 00);
+        Caja grande3 = new Caja(-10, 270, 00);
         Group locomotora3 = grande3.crearCaja();
         grande2.tamanoCaja(locomotora3, 30, 1);
         
@@ -170,7 +170,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
         
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-            tt.setByX(290);
+            tt.setByX(40);
             pt.getChildren().add(tt);
         }
         animacion.getChildren().add(pt);
@@ -191,7 +191,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             //INTENTO LOCOMOTORA 1
             
                 TranslateTransition movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-                movilocomo2.setByX(-400);
+                movilocomo2.setByX(-900);
                 rotacion.getChildren().add(movilocomo2);  
             
             
@@ -201,13 +201,13 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             int contador = 0;
             for (int k = cajas.size()-1; k>indiceminimo; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-                tt.setByX(400);
+                tt.setByX(900);
                 pt2.getChildren().add(tt);
                 contador++;
             }
             
             movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-            movilocomo2.setByX(400);
+            movilocomo2.setByX(900);
             pt2.getChildren().add(movilocomo2);
             
             rotacion.getChildren().addAll(pt2);
@@ -246,11 +246,11 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             ParallelTransition pt4 = new ParallelTransition();
             for (int k = cajas.size()-1; k>indiceminimo; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-                tt.setByX(-400+(contador-1)*55);
+                tt.setByX(-900+(contador-1)*55);
                 pt4.getChildren().add(tt);
             }
             movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-            movilocomo2.setByX(-400+(contador-1)*55);
+            movilocomo2.setByX(-900+(contador-1)*55);
             pt4.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt4);
             
@@ -258,21 +258,20 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             pt2 = new ParallelTransition();
             for (int k = 0; k< indiceminimo; k++) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-                tt.setByX((400)-(contador-1)*55);
+                tt.setByX((900)-(contador-1)*55);
                 pt2.getChildren().add(tt);
             }
             for (int k = cajas.size()-1; k>indiceminimo; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
-                tt.setByX(400-(contador-1)*55);
+                tt.setByX(900-(contador-1)*55);
                 pt2.getChildren().add(tt);
             }
             movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-            movilocomo2.setByX(400-(contador-1)*55);
+            movilocomo2.setByX(900-(contador-1)*55);
             pt2.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt2);
             
-            
-           //El elemento menor que esta arriba baja y queda ordenado
+            //El elemento menor que esta arriba baja y queda ordenado
             ParallelTransition diags = new ParallelTransition();
             moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
             moverdiag2loc.setByX(-100);
@@ -293,7 +292,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             diags2.getChildren().addAll(rt,moverdiag2loc);
             
             TranslateTransition moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
-            moveratras.setByX(-400+55*(i));
+            moveratras.setByX(-900+55*(i));
 
             rotacion.getChildren().addAll(diags,diags2,moveratras);
             
@@ -306,16 +305,16 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             pt3 = new ParallelTransition();
             for (int j = 0; j <=cajas.size()-1; j++) {
                     moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(j));
-                    moveratras.setByX(-400);
+                    moveratras.setByX(-900);
                     pt3.getChildren().add(moveratras);
             }
             movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-            movilocomo2.setByX(-400);
+            movilocomo2.setByX(-900);
             pt3.getChildren().add(movilocomo2);
             rotacion.getChildren().add(pt3);
             
             movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-            movilocomo2.setByX(400);
+            movilocomo2.setByX(900);
             rotacion.getChildren().add(movilocomo2);
             animacion.getChildren().add(rotacion);
     }
