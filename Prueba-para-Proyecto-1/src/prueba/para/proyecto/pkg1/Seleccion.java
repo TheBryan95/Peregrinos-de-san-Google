@@ -174,10 +174,9 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                     }
             }
             
-            ParallelTransition pt2 = new ParallelTransition();
-            
-            int contador = 0;
             //Se mueve la seccion en frente del minimo
+            ParallelTransition pt2 = new ParallelTransition();
+            int contador = 0;
             for (int k = cajas.size()-1; k>indiceminimo; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
                 tt.setByX(400);
@@ -201,22 +200,38 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveradelante.setByX(100);
             moveradelante.setByY(-100);
-
-            //Mueve todas las demas cajas hacia adelante
-             pt2 = new ParallelTransition();
+            
+            rotacion.getChildren().addAll(rt,moveradelante);
+            
+            //Vuelve el segmento que estaba delante al minimo para enganchar al que estaba detras del minimo
+            ParallelTransition pt4 = new ParallelTransition();
+            for (int k = cajas.size()-1; k>indiceminimo; k--) {
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
+                tt.setByX(-400+(contador-1)*55);
+                pt4.getChildren().add(tt);
+            }
+            rotacion.getChildren().addAll(pt4);
+            
+            //Mueve todas las cajas juntas hacia adelante
+            pt2 = new ParallelTransition();
             for (int k = 0; k< indiceminimo; k++) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
                 tt.setByX((400)-(contador-1)*55);
                 pt2.getChildren().add(tt);
             }
-            rotacion.getChildren().addAll(rt,moveradelante,pt2);
-
+            for (int k = cajas.size()-1; k>indiceminimo; k--) {
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
+                tt.setByX(400-(contador-1)*55);
+                pt2.getChildren().add(tt);
+            }
+            rotacion.getChildren().addAll(pt2);
+            
             //El elemento menor que esta arriba baja y queda ordenado
-             moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
+            moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveradelante.setByX(-100);
             moveradelante.setByY(100);
 
-             rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
+            rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             rt.setByAngle(45);
 
             TranslateTransition moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
@@ -238,7 +253,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             }
             rotacion.getChildren().add(pt3);
             animacion.getChildren().add(rotacion);
-        }
+    }
         
         
 //        for (int i = 0; i < n - 1; i++) {
