@@ -271,23 +271,36 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             pt2.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt2);
             
-            //El elemento menor que esta arriba baja y queda ordenado
+            
+           //El elemento menor que esta arriba baja y queda ordenado
+            ParallelTransition diags = new ParallelTransition();
+            moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
+            moverdiag2loc.setByX(-100);
+            moverdiag2loc.setByY(100);
+            
             moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveradelante.setByX(-100);
             moveradelante.setByY(100);
-
+            
+            diags.getChildren().addAll(moveradelante,moverdiag2loc);
+            
+            ParallelTransition diags2 = new ParallelTransition();
             rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             rt.setByAngle(45);
-
+            moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
+            moverdiag2loc.setByX(100);
+            moverdiag2loc.setByY(-100);
+            diags2.getChildren().addAll(rt,moverdiag2loc);
+            
             TranslateTransition moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveratras.setByX(-400+55*(i));
 
-            rotacion.getChildren().addAll(moveradelante,rt,moveratras);
+            rotacion.getChildren().addAll(diags,diags2,moveratras);
             
             //Se elimina del arreglo el menor para asi poder tratar lo que queda como otro arreglo
             cajas.remove(indiceminimo);
             cajas2.remove(indiceminimo);
-
+            
             //Se mueven todos los demas hacia atras para volver a buscar el menor
             ParallelTransition pt3 = new ParallelTransition();
             pt3 = new ParallelTransition();
@@ -296,10 +309,24 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
                     moveratras.setByX(-400);
                     pt3.getChildren().add(moveratras);
             }
+            movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(-400);
+            pt3.getChildren().add(movilocomo2);
             rotacion.getChildren().add(pt3);
+            
+            movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(400);
+            rotacion.getChildren().add(movilocomo2);
             animacion.getChildren().add(rotacion);
     }
         
+    return animacion;
+}
+
+        
+        
+        
+    
         
 //        for (int i = 0; i < n - 1; i++) {
 //            int minIndex = i;
@@ -316,8 +343,7 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
 //            numeros[minIndex] = numeros[i];
 //            numeros[i] = temp;
 //        }
-    return animacion;
-}
+
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
     root.getChildren().removeAll(cajas2);
