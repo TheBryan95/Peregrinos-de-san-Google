@@ -48,6 +48,12 @@ public class Burbuja extends Stage {
         Button boton = new Button("Confirmar");
         boton.setLayoutX(480);
         
+        Button backButton = new Button("Cerrar");
+        backButton.setOnAction(event -> {
+            ((Stage) backButton.getScene().getWindow()).close();
+        });
+        backButton.setLayoutX(1250);
+        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -69,7 +75,7 @@ public class Burbuja extends Stage {
         imageView1.setX(1215);
         imageView1.setY(27);
         
-        root.getChildren().addAll(imageView,imageView1, text,boton,velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
+        root.getChildren().addAll(imageView,imageView1, text,boton,backButton, velo,l,l2,Nombre,Titulo,foor,segunfoor,iff, primerif,segunif,tercerif);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
@@ -226,10 +232,10 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
             i=i+125;
         }
-    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(45);
 }
+
 public void moverjuntotamaño(double valor){
     for (int j = 0; j < cajas.size(); j++) {
                     Caja caja = (Caja) cajas.get(j);
@@ -248,6 +254,7 @@ public void moverjuntotamaño(double valor){
                 }
 
 }
+
 public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));

@@ -34,6 +34,7 @@ public class Main extends Application {
         Button botonInsert = new Button("Insert Sort");
         Button botonBubble = new Button("Bubble Sort");
         Button botonCocktail = new Button("Cocktail Sort");
+        Button botonSelection = new Button("Selection Sort");
         
         String imagePath = "menu.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
@@ -52,7 +53,7 @@ public class Main extends Application {
         botonBubble.setTextFill(Color.WHITE);
         botonBubble.setFont(Font.font("Times New Roman", 14));
         botonBubble.setLayoutX(230);
-        botonBubble.setLayoutY(450);
+        botonBubble.setLayoutY(350);
         botonBubble.setPrefWidth(200);
         botonBubble.setScaleX(2);
         botonBubble.setScaleY(2);
@@ -61,12 +62,22 @@ public class Main extends Application {
         botonCocktail.setTextFill(Color.WHITE);
         botonCocktail.setFont(Font.font("Times New Roman", 14));
         botonCocktail.setLayoutX(230);
-        botonCocktail.setLayoutY(680);
+        botonCocktail.setLayoutY(500);
         botonCocktail.setPrefWidth(200);
         botonCocktail.setScaleX(2);
         botonCocktail.setScaleY(2);
         
-        Group root = new Group(imageView,l1,l2,botonInsert,botonBubble,botonCocktail);
+        
+        botonSelection.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(5), null)));
+        botonSelection.setTextFill(Color.WHITE);
+        botonSelection.setFont(Font.font("Times New Roman", 14));
+        botonSelection.setLayoutX(230);
+        botonSelection.setLayoutY(650);
+        botonSelection.setPrefWidth(200);
+        botonSelection.setScaleX(2);
+        botonSelection.setScaleY(2);
+        
+        Group root = new Group(imageView,l1,l2,botonInsert,botonBubble,botonCocktail, botonSelection);
         Scene scene = new Scene(root, 640, 960);
         scene.setFill(Color.LIGHTSKYBLUE);
         primaryStage.setScene(scene);
@@ -80,9 +91,13 @@ public class Main extends Application {
         botonCocktail.setOnAction((event) -> {
             Cocktail ventana = new Cocktail();
         });
+        botonSelection.setOnAction((event) -> {
+            Seleccion ventana = new Seleccion();
+        });
     }
 
     public static void main(String[] args) {
         launch(args);
+        System.out.println("holiuwu");
     }
     }

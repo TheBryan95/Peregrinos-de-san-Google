@@ -53,6 +53,12 @@ public class Insercion extends Stage {
         Button boton2 = new Button("Empezar");
         boton2.setLayoutX(300);
         
+        Button backButton = new Button("Cerrar");
+        backButton.setOnAction(event -> {
+            ((Stage) backButton.getScene().getWindow()).close();
+        });
+        backButton.setLayoutX(1250);
+        
         velo.setLayoutX(750);
         velo.setPromptText("Velocidad");
         
@@ -68,7 +74,7 @@ public class Insercion extends Stage {
         imageView.setFitHeight(600);
         imageView.setPreserveRatio(true);
         
-        root.getChildren().addAll(imageView,text,boton,velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2);
+        root.getChildren().addAll(imageView,text,boton,backButton, velo,l,l2,Nombre,Titulo,foor,primer,segundo,wile,primerwile,segunwile,finall,boton2);
         
         Nombre.setLayoutX(40);
         Nombre.setScaleX(1.5);
