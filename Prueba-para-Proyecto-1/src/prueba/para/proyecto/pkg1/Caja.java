@@ -7,7 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -61,7 +60,7 @@ public class Caja {
         fondo.setY(yinicial);
         fondo.setWidth(140);
         fondo.setHeight(75);
-            fondo.setFill(Color.YELLOW);
+        fondo.setFill(Color.YELLOW);
         fondo.setStrokeWidth(10);
         fondo.setStroke(Color.GREY);
 
@@ -72,12 +71,15 @@ public class Caja {
         borde.setHeight(91);
         borde.setStrokeWidth(5);
         
+        Circle cir1 = new Circle(xinicial-15, yinicial+37, 10, Color.BLACK);
+        Circle cir2 = new Circle(xinicial+156, yinicial+37, 10, Color.BLACK);
+        
         int digito1=numcaja/10;
         int digito2=numcaja%10;
         this.dig1=elegirNumDibujar( xinicial+45, yinicial+15, digito1);
         this.dig2=elegirNumDibujar( xinicial+85, yinicial+15, digito2);
         
-        vagon.getChildren().addAll(borde,fondo,dig1,dig2);
+        vagon.getChildren().addAll(borde,fondo,dig1,dig2,cir1,cir2);
 
         return vagon;
     }
@@ -103,22 +105,7 @@ public class Caja {
         circulo2.setCenterX(xinicial+40);
         circulo1.setCenterY(yinicial+35);
         circulo2.setCenterY(yinicial+35);
-        // Crear el triángulo amarillo en la parte delantera del vagón
-        
-//        Polygon triangulo = new Polygon();
-//        triangulo.getPoints().addAll(
-//                198.0, 47.0,
-//                198.0, 128.0,
-//                270.0, 89.0
-//        );
-//        triangulo.setFill(Color.YELLOW);
-//        
-//        triangulo.setStroke(Color.BLACK);
-//        triangulo.setStrokeWidth(7);
-        
        
-        
-        
         tren.getChildren().addAll(bordeVagon,vagon, circulo1, circulo2);
 
         return tren;
