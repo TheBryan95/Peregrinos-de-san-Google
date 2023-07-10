@@ -63,7 +63,7 @@ public class Seleccion extends  Stage{
         backButton.setOnAction(event -> {
             ((Stage) backButton.getScene().getWindow()).close();
         });
-        backButton.setLayoutX(1230);
+        backButton.setLayoutX(1530);
         backButton.setLayoutY(10);
         
         velo.setLayoutX(750);
@@ -85,7 +85,7 @@ public class Seleccion extends  Stage{
         String imagePath1 = "yoda.png";
         Image image1 = new Image(new File(imagePath1).toURI().toString());
         ImageView imageView1 = new ImageView(image1);
-        imageView1.setX(775);
+        imageView1.setX(1100);
         imageView1.setY(220);
         
         root.getChildren().addAll(imageView,Nombre,Titulo,foor,minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i, backButton, imageView1);
@@ -148,7 +148,7 @@ public class Seleccion extends  Stage{
 //        Group fondo = grua.dibujarGrua(scene);
 //        root.getChildren().add(fondo);
         
-        empezarordenamiento(cajas, cajas2, root, 16, 0.5);
+        empezarordenamiento(cajas, cajas2, root, 16, 0.5, foor, minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
         stage.setScene(scene);
         stage.show();
         
@@ -161,27 +161,27 @@ public class Seleccion extends  Stage{
       }
       return numeros;
 }
-public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo){
+public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int largo,double velo, Label foor,Label minIndex,Label segunfoor, Label iff,Label minIndex2,Label temp, Label arr_minIndex, Label arr_i){
      
       int []numeros=numerosaleatorios(largo);
       sinOrdenar(cajas,cajas2,root,numeros);
       j=0;
-      animacion = seleccion(cajas,cajas2,root,numeros,velo);
+      animacion = seleccion(cajas,cajas2,root,numeros,velo, foor, minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
       animacion.play();
 }
 
-public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo){
+public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label minIndex,Label segunfoor, Label iff,Label minIndex2,Label temp, Label arr_minIndex, Label arr_i){
     //Cajas para que sirvan de locomotora
         Caja grande = new Caja(1070, 130, 00);
-        Group locomotora = grande.crearCaja();
+        Group locomotora = grande.crearTren();
         grande.tamanoCaja(locomotora, 30,1);
         
-        Caja grande2 = new Caja(1880, 270, 00);
-        Group locomotora2 = grande2.crearCaja();
+        Caja grande2 = new Caja(1875, 280, 00);
+        Group locomotora2 = grande2.crearTren();
         grande2.tamanoCaja(locomotora2, 30, 1);
         
-        Caja grande3 = new Caja(-10, 270, 00);
-        Group locomotora3 = grande3.crearCaja();
+        Caja grande3 = new Caja(-7, 280, 00);
+        Group locomotora3 = grande3.crearTren();
         grande2.tamanoCaja(locomotora3, 30, 1);
         
         root.getChildren().addAll(locomotora,locomotora2,locomotora3);
@@ -192,31 +192,40 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
         for (int k = 0; k< numeros.length; k++) {
             TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
             tt.setByX(40);
+            TranslateTransition movilocomo3 = new TranslateTransition(Duration.seconds(1), locomotora3);
+            movilocomo3.setByX(40);
             pt.getChildren().add(tt);
+            pt.getChildren().add(movilocomo3);
         }
-        animacion.getChildren().add(pt);
+        RotateTransition rtloco = new RotateTransition(Duration.seconds(0),locomotora);
+        rtloco.setByAngle(-45);
+         pt.getChildren().add(rtloco);
+        animacion.getChildren().add( pt);
         
         int n = cajas.size();
         for (int i = 0; i < n; i++) {
+            animacion.getChildren().add(cambioColor(foor, velo));
+            animacion.getChildren().add(cambioColor(minIndex, velo));
             int minimo = cajas.get(0).numcaja;
             int indiceminimo = 0;
             SequentialTransition rotacion = new SequentialTransition();
 
             //se busca el minimo en esta iteracion
             for (int k = 0; k<=cajas.size()-1; k++) {
+                animacion.getChildren().add(cambioColor(segunfoor, velo));
                 if (cajas.get(k).numcaja<minimo) {
+                        animacion.getChildren().add(cambioColor(iff, velo));
+                         animacion.getChildren().add(cambioColor(minIndex2, velo));
                         minimo = cajas.get(k).numcaja;
                         indiceminimo=k;
                     }
             }
+            
             //INTENTO LOCOMOTORA 1
-            
-                TranslateTransition movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
-                movilocomo2.setByX(-900);
-                rotacion.getChildren().add(movilocomo2);  
-            
-            
-            
+            TranslateTransition movilocomo2 = new TranslateTransition(Duration.seconds(1), locomotora2);
+            movilocomo2.setByX(-900);
+            rotacion.getChildren().add(movilocomo2);  
+               
             //Se mueve la seccion en frente del minimo
             ParallelTransition pt2 = new ParallelTransition();
             int contador = 0;
@@ -231,39 +240,45 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             movilocomo2.setByX(900);
             pt2.getChildren().add(movilocomo2);
             
-            rotacion.getChildren().addAll(pt2);
-            
+            rotacion.getChildren().addAll( pt2);
+
             //Se mueve lo demas dejando el minimo para rotar
+            
             pt2 = new ParallelTransition();
             for (int k = indiceminimo; k>=0; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
                 tt.setByX(55*contador);
+                TranslateTransition movilocomo3 = new TranslateTransition(Duration.seconds(1), locomotora3);
+                movilocomo3.setByX(55*contador);
                 pt2.getChildren().add(tt);
+                pt2.getChildren().add(movilocomo3);
             }
             rotacion.getChildren().addAll(pt2);
-            
             //el elemento menor se hacen las animaciones para que se mueva hacia arriba
+             
             TranslateTransition moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
-            moverdiag2loc.setByX(-100);
-            moverdiag2loc.setByY(100);
+            moverdiag2loc.setByX(-115);
+            moverdiag2loc.setByY(115);
             
             RotateTransition rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             rt.setByAngle(-45);
             
             ParallelTransition arriba = new ParallelTransition();
             TranslateTransition moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
-            moveradelante.setByX(100);
-            moveradelante.setByY(-100);
+            moveradelante.setByX(115);
+            moveradelante.setByY(-115);
             arriba.getChildren().add(moveradelante);
+            animacion.getChildren().add(cambioColor2(temp, velo)); 
             
             TranslateTransition moverdiagloc = new TranslateTransition(Duration.seconds(1), locomotora);
-            moverdiagloc.setByX(100);
-            moverdiagloc.setByY(-100);
+            moverdiagloc.setByX(115);
+            moverdiagloc.setByY(-115);
             arriba.getChildren().add(moverdiagloc);
             
             rotacion.getChildren().addAll(moverdiag2loc,rt,arriba);
             
             //Vuelve el segmento que estaba delante al minimo para enganchar al que estaba detras del minimo
+            
             ParallelTransition pt4 = new ParallelTransition();
             for (int k = cajas.size()-1; k>indiceminimo; k--) {
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(1), cajas2.get(k));
@@ -274,7 +289,6 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             movilocomo2.setByX(-900+(contador-1)*55);
             pt4.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt4);
-            
             //Mueve todas las cajas juntas hacia adelante
             pt2 = new ParallelTransition();
             for (int k = 0; k< indiceminimo; k++) {
@@ -292,32 +306,44 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             pt2.getChildren().add(movilocomo2);
             rotacion.getChildren().addAll(pt2);
             
+            
             //El elemento menor que esta arriba baja y queda ordenado
             ParallelTransition diags = new ParallelTransition();
             moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
-            moverdiag2loc.setByX(-100);
-            moverdiag2loc.setByY(100);
+            moverdiag2loc.setByX(-115);
+            moverdiag2loc.setByY(115);
             
             moveradelante = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
-            moveradelante.setByX(-100);
-            moveradelante.setByY(100);
-            
+            moveradelante.setByX(-115);
+            moveradelante.setByY(115);
+ 
             diags.getChildren().addAll(moveradelante,moverdiag2loc);
+            animacion.getChildren().add(cambioColor2(temp, velo));
             
             ParallelTransition diags2 = new ParallelTransition();
             rt = new RotateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             rt.setByAngle(45);
             moverdiag2loc = new TranslateTransition(Duration.seconds(1), locomotora);
-            moverdiag2loc.setByX(100);
-            moverdiag2loc.setByY(-100);
-            diags2.getChildren().addAll(rt,moverdiag2loc);
+            moverdiag2loc.setByX(115);
+            moverdiag2loc.setByY(-115);
+            ParallelTransition ajustarloco3 = new ParallelTransition();
+            TranslateTransition movilocomo3 = new TranslateTransition(Duration.seconds(1), locomotora3);
+            movilocomo3.setByX(770-(contador-1)*55);
+            ajustarloco3.getChildren().add(movilocomo3);
             
+            diags2.getChildren().addAll(rt,moverdiag2loc, movilocomo3);
+            
+            ParallelTransition atrass = new ParallelTransition();
             TranslateTransition moveratras = new TranslateTransition(Duration.seconds(1),cajas2.get(indiceminimo));
             moveratras.setByX(-900+55*(i));
-
-            rotacion.getChildren().addAll(diags,diags2,moveratras);
+            TranslateTransition atraslocomo3 = new TranslateTransition(Duration.seconds(1), locomotora3);
+            atraslocomo3.setByX(-900+55*(i));
+            atrass.getChildren().addAll(moveratras, atraslocomo3);
+            rotacion.getChildren().addAll(diags,diags2, atrass);
+            
             
             //Se elimina del arreglo el menor para asi poder tratar lo que queda como otro arreglo
+            
             cajas.remove(indiceminimo);
             cajas2.remove(indiceminimo);
             
@@ -338,6 +364,9 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
             movilocomo2.setByX(900);
             rotacion.getChildren().add(movilocomo2);
             animacion.getChildren().add(rotacion);
+            animacion.getChildren().add(cambioColor3(temp, velo));
+            animacion.getChildren().add(cambioColor(arr_minIndex, velo));
+            animacion.getChildren().add(cambioColor(arr_i, velo)); 
     }
         
     return animacion;
@@ -369,10 +398,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     root.getChildren().removeAll(cajas2);
     cajas.clear();
     cajas2.clear();
-//    Caja grande = new Caja(numeros.length, 400, 25);
-//    Group trensito = grande.crearTren();
-    
-    
+
     for (int x=0,i=50;x<numeros.length;x++){
             cajita = new Caja(i, 280, numeros[x]);
             cajas.add(cajita);
@@ -381,10 +407,8 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
 
             i=i+145;
         }
-    
     root.getChildren().addAll(cajas2);
     moverjuntotamaño(30);
-    
 }
 
 public void moverjuntotamaño(double valor){
@@ -403,13 +427,12 @@ public void moverjuntotamaño(double valor){
                     }
                     caja.tamanoCaja(cajit,valor,j);
                 }
-
 }
 
 public Transition cambioColor(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
     colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color: #71abdb;"))));
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:#fcd793;"))));
     return colorChange;
 }
 public Transition cambioColor2(Label label,double velo){
@@ -419,7 +442,7 @@ public Transition cambioColor2(Label label,double velo){
 }
 public Transition cambioColor3(Label label,double velo){
     SequentialTransition colorChange = new SequentialTransition(label);
-    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:white;"))));
+    colorChange.getChildren().add(new Timeline(new KeyFrame(Duration.seconds(velo/5),new KeyValue(label.styleProperty(), "-fx-background-color:#fcd793;"))));
     return colorChange;
 }
 

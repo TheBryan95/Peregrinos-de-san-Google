@@ -15,6 +15,8 @@ public class Caja {
     int xinicial,yinicial,numcaja;
     Rectangle fondo= new Rectangle();
     Rectangle borde= new Rectangle();
+    Rectangle vagon = new Rectangle(140,75 , Color.DARKRED);
+    Rectangle bordeVagon = new Rectangle();
     Group dig1 = new Group();
     Group dig2= new Group();
     public Caja(int xinicial, int yinicial, int numcaja) {
@@ -83,16 +85,12 @@ public class Caja {
     public Group crearTren(){
         
         Group tren = new Group();
-
-        Rectangle vagon = new Rectangle(140,75 , Color.DARKRED);
         
-        Rectangle bordeVagon = new Rectangle();
+        vagon.setX(xinicial);
+        vagon.setY(yinicial);
         
-        vagon.setX(50);
-        vagon.setY(50);
-        
-        bordeVagon.setX(50-8);
-        bordeVagon.setY(50-8);
+        bordeVagon.setX(xinicial-8);
+        bordeVagon.setY(yinicial-8);
         bordeVagon.setWidth(156);
         bordeVagon.setHeight(91);
         bordeVagon.setStrokeWidth(5);
@@ -101,27 +99,27 @@ public class Caja {
         Circle circulo1 = new Circle(15, Color.BLACK);
         Circle circulo2 = new Circle(15, Color.BLACK);
         
-        circulo1.setCenterX(80);
-        circulo2.setCenterX(160);
-        circulo1.setCenterY(85);
-        circulo2.setCenterY(85);
+        circulo1.setCenterX(xinicial+110);
+        circulo2.setCenterX(xinicial+40);
+        circulo1.setCenterY(yinicial+35);
+        circulo2.setCenterY(yinicial+35);
         // Crear el triángulo amarillo en la parte delantera del vagón
         
-        Polygon triangulo = new Polygon();
-        triangulo.getPoints().addAll(
-                198.0, 47.0,
-                198.0, 128.0,
-                270.0, 89.0
-        );
-        triangulo.setFill(Color.YELLOW);
-        
-        triangulo.setStroke(Color.BLACK);
-        triangulo.setStrokeWidth(7);
+//        Polygon triangulo = new Polygon();
+//        triangulo.getPoints().addAll(
+//                198.0, 47.0,
+//                198.0, 128.0,
+//                270.0, 89.0
+//        );
+//        triangulo.setFill(Color.YELLOW);
+//        
+//        triangulo.setStroke(Color.BLACK);
+//        triangulo.setStrokeWidth(7);
         
        
         
         
-        tren.getChildren().addAll(bordeVagon,vagon, circulo1, circulo2, triangulo);
+        tren.getChildren().addAll(bordeVagon,vagon, circulo1, circulo2);
 
         return tren;
     }
