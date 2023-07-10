@@ -78,9 +78,6 @@ public class Seleccion extends  Stage{
         String imagePath = "fondonuevoalargado.jpg";
         Image image = new Image(new File(imagePath).toURI().toString());
         ImageView imageView = new ImageView(image);
-//        imageView.setFitWidth(1300);
-//        imageView.setFitHeight(600);
-//        imageView.setPreserveRatio(true);
         
         String imagePath1 = "yoda.png";
         Image image1 = new Image(new File(imagePath1).toURI().toString());
@@ -142,11 +139,6 @@ public class Seleccion extends  Stage{
        
         Scene scene = new Scene(root, 1600, 600);
         Stage stage = new Stage();
-
-//        //Se dibuja la grua
-//        MovimientoGrua grua = new MovimientoGrua();
-//        Group fondo = grua.dibujarGrua(scene);
-//        root.getChildren().add(fondo);
         
         empezarordenamiento(cajas, cajas2, root, 16, 0.5, foor, minIndex, segunfoor, iff, minIndex2, temp, arr_minIndex, arr_i);
         stage.setScene(scene);
@@ -371,27 +363,6 @@ public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> caj
         
     return animacion;
 }
-
-        
-        
-        
-    
-        
-//        for (int i = 0; i < n - 1; i++) {
-//            int minIndex = i;
-//            for (int j = i + 1; j < n; j++) {
-//                if (numeros[j] < numeros[minIndex]) {
-//                    minIndex = j;
-//                    
-//                }
-//            }
-//            
-//            // Intercambia el elemento mínimo encontrado con el primer elemento sin ordenar
-//           
-//            int temp = numeros[minIndex];
-//            numeros[minIndex] = numeros[i];
-//            numeros[i] = temp;
-//        }
 
 
 public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[]numeros){
