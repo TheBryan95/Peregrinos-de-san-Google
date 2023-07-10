@@ -15,7 +15,7 @@ public class Caja {
     int xinicial,yinicial,numcaja;
     Rectangle fondo= new Rectangle();
     Rectangle borde= new Rectangle();
-    Rectangle vagon = new Rectangle(140,75 , Color.DARKRED);
+    Rectangle vagon = new Rectangle(140,75 , Color.RED);
     Rectangle bordeVagon = new Rectangle();
     Group dig1 = new Group();
     Group dig2= new Group();

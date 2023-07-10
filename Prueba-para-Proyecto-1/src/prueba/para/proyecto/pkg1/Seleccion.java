@@ -172,15 +172,15 @@ public void empezarordenamiento(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Gr
 
 public SequentialTransition seleccion(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,int[] numeros,double velo, Label foor,Label minIndex,Label segunfoor, Label iff,Label minIndex2,Label temp, Label arr_minIndex, Label arr_i){
     //Cajas para que sirvan de locomotora
-        Caja grande = new Caja(1070, 130, 00);
+        Caja grande = new Caja(1064, 130, 00);
         Group locomotora = grande.crearTren();
         grande.tamanoCaja(locomotora, 30,1);
         
-        Caja grande2 = new Caja(1875, 280, 00);
+        Caja grande2 = new Caja(1875, 282, 00);
         Group locomotora2 = grande2.crearTren();
         grande2.tamanoCaja(locomotora2, 30, 1);
         
-        Caja grande3 = new Caja(-7, 280, 00);
+        Caja grande3 = new Caja(-7, 282, 00);
         Group locomotora3 = grande3.crearTren();
         grande2.tamanoCaja(locomotora3, 30, 1);
         
@@ -400,7 +400,7 @@ public void sinOrdenar(ArrayList<Caja> cajas,ArrayList<Group> cajas2,Group root,
     cajas2.clear();
 
     for (int x=0,i=50;x<numeros.length;x++){
-            cajita = new Caja(i, 280, numeros[x]);
+            cajita = new Caja(i, 282, numeros[x]);
             cajas.add(cajita);
             Group cajis = cajita.crearVagon();
             cajas2.add(cajis);
